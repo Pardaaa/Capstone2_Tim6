@@ -1,1 +1,7 @@
-GET http://localhost:8000/
+GET http://localhost:8000/users
+
+###
+post http://localhost:8000/
+
+###
+get http://localhost:8000/updateUsers

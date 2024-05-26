@@ -1,11 +1,19 @@
 const express = require("express");
-const { loginPage, getUsers, forgetPass, recoverPass } = require('../controller/userController.js');
+const {
+    getUsers,
+    getUsersById,
+    createUser,
+    updateUsers,
+    updateUser,
+    deleteUser } = require('../controller/userController.js');
 
 const router = express.Router();
 
-// Rute untuk halaman login
-router.get('/', getUsers);
-router.get('/forgetPass', forgetPass)
-router.get('/recoverPass', recoverPass)
+router.get('/users', getUsers);
+router.get('/users/:id', getUsersById);
+router.post('/users', createUser);
+router.get('/updateUsers/:id', updateUsers);
+router.patch('/users/:id', updateUser);
+router.delete('/users/:id', deleteUser);
 
 module.exports = router;

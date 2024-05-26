@@ -21,16 +21,17 @@
     <div class="container-fluid">
         <div class="card p-4">
             <div class="card-title">
-                <a href="" role="button" class="btn btn-success">Tambah Users</a>
+                <a href="updateUsers" role="button" class="btn btn-success">Tambah Users</a>
             </div>
             <div class="card-body">
-                <table id="table-kk" class="table table-bordered table-striped">
+                <table id="table-users" class="table table-bordered table-striped">
                     <caption>List of Penduduk</caption>
                     <thead>
                         <tr>
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,6 +45,17 @@
                                 </td>
                                 <td>
                                     <%= user.role %>
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <form action="/updateUsers/<%= user.id %>" method="get">
+                                            <button type="submit" class="btn btn-warning">Edit</button>
+                                        </form>
+                                        <form action="/users/<%= user.id %>" method="delete"
+                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             <% }) %>
