@@ -21,9 +21,15 @@
     <div class="container-fluid">
         <div class="content">
             <div class="container-fluid">
-                <div class="alert alert-success">
-                    <%= message %>
-                </div>
+                <% if (typeof message !=='undefined' && action=='succsess' ) { %>
+                    <div id="alertMessage" class="alert alert-success">
+                        <%= message %>
+                    </div>
+                    <% } if (typeof message !=='undefined' && action=='error' ) { %>
+                        <div id="alertMessage" class="alert alert-danger">
+                            <%= message %>
+                        </div>
+                        <% } %>
             </div>
         </div>
         <div class="card p-4">
@@ -75,3 +81,11 @@
     </div>
 </div><!-- /.container-fluid -->
 <!-- /.content -->
+
+<script>
+    var alertElement = document.querySelector('.alert');
+
+    setTimeout(function () {
+        alertElement.style.display = 'none';
+    }, 2000);
+</script>

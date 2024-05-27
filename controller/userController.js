@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 exports.getUsers = async (req, res) => {
     try {
         const users = await user.findAll();
-        res.render('administrator/users', { users: users, title: 'Users' });
+        res.render('administrator/users', { users: users, title: 'Users', message: req.query.message, action: req.query.action });
     } catch (error) {
         res.status(404).send('Users not found');
     }
@@ -42,7 +42,7 @@ exports.createUser = async (req, res) => {
             role: role,
             fakultas_id: fakultas_id
         });
-        res.redirect('/users', { message: 'Input Berhasil' });
+        res.redirect('/users?message=Input Berhasil&action=success');
     } catch (error) {
         res.status(400);
     }
