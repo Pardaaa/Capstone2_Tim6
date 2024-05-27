@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 exports.getUsers = async (req, res) => {
     try {
         const users = await user.findAll();
-        res.render('administrator/users', { users: users, title: 'Users', message: req.query.message, action: req.query.action });
+        res.render('administrator/users', { users: users, title: 'Users', message: req.query.message });
     } catch (error) {
         res.status(404).send('Users not found');
     }
@@ -18,7 +18,7 @@ exports.getUsersById = async (req, res) => {
             }
         });
         if (users) {
-            res.render('administrator/updateUsers', { users: users, title: 'Update Users' });
+            res.render('administrator/updateUsers', { users: users, title: 'Update Users', message: req.query.message });
         } else {
             res.status(404).send('User not found');
         }
@@ -42,7 +42,7 @@ exports.createUser = async (req, res) => {
             role: role,
             fakultas_id: fakultas_id
         });
-        res.redirect('/users?message=Input Berhasil&action=success');
+        res.redirect('/users?message=Input Berhasil');
     } catch (error) {
         res.status(400);
     }
@@ -55,8 +55,9 @@ exports.updateUser = async (req, res) => {
         }
     });
     const { username, email, password, confPassword, role, fakultas_id } = req.body;
+    const userId = req.params.id;
     if (password !== confPassword) {
-        return res.status(400).json({ message: "Password dan Confirm Password tidak cocok" });
+        return res.status(400).redirect(`/updateUsers/${userId}?message=Password dan Confirm Password Tidak Cocok`);
     };
     try {
         let hashPassword;
@@ -76,7 +77,7 @@ exports.updateUser = async (req, res) => {
                 id: users.id
             }
         });
-        res.status(200).redirect('/users');
+        res.status(200).redirect('/users?message=Update Berhasil');
     } catch (error) {
         res.status(400);
     }
@@ -88,14 +89,13 @@ exports.deleteUser = async (req, res) => {
             id: req.params.id
         }
     });
-    if (!users) res.status(404).json("User tidka ditemukan");
     try {
         await user.destroy({
             where: {
                 id: users.id
             }
         });
-        res.status(200).redirect('/users');
+        res.status(200).redirect('/users?message=Delete Berhasil');
 
     } catch (error) {
         res.status(400);

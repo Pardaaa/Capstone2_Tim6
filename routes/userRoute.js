@@ -10,8 +10,8 @@ const {
 const router = express.Router();
 
 router.get('/users', getUsers);
-router.get('/users/:id', getUsersById);
-router.post('/users/:id', updateUser);
+router.get('/updateUsers/:id', getUsersById);
+router.post('/updateUsers/:id', updateUser);
 router.get('/createUsers', createUserPage);
 router.post('/Createusers', createUser);
 router.get('/deleteUsers/:id', deleteUser);

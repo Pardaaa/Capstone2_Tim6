@@ -20,8 +20,13 @@
 <!-- Main content -->
 <div class="content">
     <div class="container-fluid">
+    <% if (typeof message !== 'undefined') { %>
+       <div id="alertMessage" class="alert alert-danger">
+            <%= message %>
+       </div>
+    <% } %>
         <div class="card p-4">
-            <form method="post" action="/users/<%= users.id %>">
+            <form method="post" action="/updateUsers/<%= users.id %>">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="username">Username</label>
@@ -67,3 +72,11 @@
     </div>
 </div><!-- /.container-fluid -->
 <!-- /.content -->
+
+<script>
+    var alertElement = document.querySelector('.alert');
+
+    setTimeout(function () {
+        alertElement.style.display = 'none';
+    }, 2000);
+</script>
