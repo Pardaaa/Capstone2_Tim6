@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.STRING(100)
       },
       role: {
-        type: Sequelize.ENUM('admin', 'mahasiswa', 'fakultas', 'program_studi')
+        type: Sequelize.ENUM('Admin', 'Mahasiswa', 'Fakultas', 'Program Studi')
       },
       fakultas_id: {
         type: Sequelize.STRING(20)

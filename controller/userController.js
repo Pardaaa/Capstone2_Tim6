@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 exports.getUsers = async (req, res) => {
     try {
         const users = await user.findAll();
-        res.render('administrator/users', { users: users });
+        res.render('administrator/users', { users: users, title: 'Users' });
     } catch (error) {
         res.status(404).send('Users not found');
     }
@@ -12,48 +12,41 @@ exports.getUsers = async (req, res) => {
 
 exports.getUsersById = async (req, res) => {
     try {
-        const response = await user.findOne({
+        const users = await user.findOne({
             where: {
-                id: req.param.id
+                id: req.params.id
             }
         });
-        res.status(200).json(response);
-    } catch (error) {
-        res.status(500);
-    }
-}
-exports.createUser = async (req, res) => {
-    const { username, email, password, confPassword, role, fakultas_id } = req.body;
-    if (password !== confPassword) return res.status(400).req.json("Password dan Confirm Password tidak cocok");
-    const hashPassword = await bcrypt.hash(password);
-    try {
-        await user.create({
-            username: username,
-            email: email,
-            password: password,
-            role: role,
-            fakultas_id: fakultas_id
-        });
-        res.status(201).req.json("Input Berhasil");
-    } catch (error) {
-        res.status(400);
-    }
-}
-
-exports.updateUsers = async (req, res) => {
-    try {
-        const users = await user.findAll();
         if (users) {
-            console.log(users);
-            res.render('administrator/updateUsers', { users: users });
+            res.render('administrator/updateUsers', { users: users, title: 'Update Users' });
         } else {
             res.status(404).send('User not found');
         }
     } catch (error) {
-        console.error(error);
         res.status(500).send('Internal Server Error');
     }
-};
+}
+
+exports.createUserPage = (req, res) => {
+    res.render('administrator/addUsers', { title: 'Tambah Users' })
+}
+
+exports.createUser = async (req, res) => {
+    const { username, email, password, confPassword, role, fakultas_id } = req.body;
+    try {
+        const hashPassword = await bcrypt.hash(password, 10);
+        await user.create({
+            username: username,
+            email: email,
+            password: hashPassword,
+            role: role,
+            fakultas_id: fakultas_id
+        });
+        res.redirect('/users', { message: 'Input Berhasil' });
+    } catch (error) {
+        res.status(400);
+    }
+}
 
 exports.updateUser = async (req, res) => {
     const users = await user.findOne({
@@ -61,20 +54,21 @@ exports.updateUser = async (req, res) => {
             id: req.params.id
         }
     });
-    if (!users) res.status(404).json("User tidka ditemukan");
     const { username, email, password, confPassword, role, fakultas_id } = req.body;
-    let hashPassword;
-    if (password === "" || password === null) {
-        hashPassword = users.password
-    } else {
-        hashPassword = await bcrypt.hash(password);
-    }
-    if (password !== confPassword) return res.status(400).req.json("Password dan Confirm Password tidak cocok");
+    if (password !== confPassword) {
+        return res.status(400).json({ message: "Password dan Confirm Password tidak cocok" });
+    };
     try {
+        let hashPassword;
+        if (password === "" || password === null) {
+            hashPassword = users.password
+        } else {
+            hashPassword = await bcrypt.hash(password, 10);
+        }
         await user.update({
             username: username,
             email: email,
-            password: password,
+            password: hashPassword,
             role: role,
             fakultas_id: fakultas_id
         }, {
@@ -82,7 +76,7 @@ exports.updateUser = async (req, res) => {
                 id: users.id
             }
         });
-        res.status(200).req.json("Update Berhasil");
+        res.status(200).redirect('/users');
     } catch (error) {
         res.status(400);
     }
@@ -101,7 +95,8 @@ exports.deleteUser = async (req, res) => {
                 id: users.id
             }
         });
-        res.status(200).req.json("Delete Berhasil");
+        res.status(200).redirect('/users');
+
     } catch (error) {
         res.status(400);
     }

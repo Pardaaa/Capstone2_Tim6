@@ -21,41 +21,41 @@
 <div class="content">
     <div class="container-fluid">
         <div class="card p-4">
-            <form method="post" action="/users/<%= users.id %>">
+            <form method="post" action="/Createusers">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" class="form-control" id="username" placeholder="NathanRaphael"
-                            value="<%= users.username %>" autofocus maxlength="15" name="username">
+                            name="username" required autofocus maxlength="50">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" maxlength="100" class="form-control" id="email"
-                            placeholder="example@example.com" value="<%= users.email %>" name="email">
+                        <input type="email" maxlength="30" class="form-control" id="email"
+                            placeholder="example@example.com" required name="email">
                     </div>
                     <div class="form-group">
                         <label for="Password">Password</label>
-                        <input type="password" maxlength="100" class="form-control" id="Password"
-                            placeholder="Your Secret Code" name="password">
+                        <input type="password" maxlength="15" class="form-control" id="Password"
+                            placeholder="Your Secret Code" required name="password">
                     </div>
                     <div class="form-group">
                         <label for="confPassword">Confirm Password</label>
-                        <input type="password" maxlength="100" class="form-control" id="confPassword"
-                            placeholder="Your Secret Code" name="confPassword">
+                        <input type="password" maxlength="15" class="form-control" id="confPassword"
+                            placeholder="Your Secret Code" required name="confPassword">
                     </div>
                     <div class="form-group">
                         <label for="role">Role</label>
-                        <select class="form-control" id="role" value="<%= users.role %>" required name="role">
+                        <select class="form-control" id="role" name="role" required>
                             <option value="Program Studi">Program Studi (Ketua Program Studi)</option>
-                            <option value="fakultas">Fakultas (Dekan)</option>
-                            <option value="fakultas">Fakultas (Wakil Dekan)</option>
-                            <option value="mahasiswa">Mahasiswa</option>
+                            <option value="Fakultas">Fakultas (Dekan)</option>
+                            <option value="Fakultas">Fakultas (Wakil Dekan)</option>
+                            <option value="Mahasiswa">Mahasiswa</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="fakultas_id">ID Fakultas</label>
-                        <input type="text" maxlength="100" class="form-control" id="fakultas_id" placeholder=""
-                            value="<%= users.fakultas_id %>" name="fakultas_id">
+                        <input type="text" maxlength="100" class="form-control" id="fakultas_id-kk" placeholder=""
+                            required name="fakultas_id">
                     </div>
                 </div>
 
