@@ -1,14 +1,16 @@
 const express = require("express");
 const {
+    dashboard,
     getUsers,
     getUsersById,
     createUser,
     createUserPage,
     updateUser,
-    deleteUser } = require('../controller/userController.js');
+    deleteUser } = require('../controller/adminController.js');
 
 const router = express.Router();
 
+router.get('/dashboard', dashboard)
 router.get('/users', getUsers);
 router.get('/updateUsers/:id', getUsersById);
 router.post('/updateUsers/:id', updateUser);

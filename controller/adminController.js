@@ -1,6 +1,10 @@
 const user = require('../models/user.js');
 const bcrypt = require('bcrypt');
 
+exports.dashboard = (req, res) => {
+    res.render('administrator/dashboard', { title: 'Admin' })
+}
+
 exports.getUsers = async (req, res) => {
     try {
         const users = await user.findAll();
@@ -28,11 +32,14 @@ exports.getUsersById = async (req, res) => {
 }
 
 exports.createUserPage = (req, res) => {
-    res.render('administrator/addUsers', { title: 'Tambah Users' })
+    res.render('administrator/addUsers', { title: 'Tambah Users', message: req.query.message })
 }
 
 exports.createUser = async (req, res) => {
     const { username, email, password, confPassword, role, fakultas_id } = req.body;
+    if (password !== confPassword) {
+        return res.status(400).redirect(`/createUsers?message=Password dan Confirm Password Tidak Cocok`);
+    };
     try {
         const hashPassword = await bcrypt.hash(password, 10);
         await user.create({

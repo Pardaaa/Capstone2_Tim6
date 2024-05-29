@@ -21,11 +21,11 @@
     <div class="container-fluid">
         <div class="content">
             <div class="container-fluid">
-                <% if (typeof message !== 'undefined') { %>
+                <% if (typeof message !=='undefined' ) { %>
                     <div id="alertMessage" class="alert alert-success">
-                         <%= message %>
+                        <%= message %>
                     </div>
-                <% } %>
+                    <% } %>
             </div>
         </div>
         <div class="card p-4">
@@ -47,29 +47,31 @@
                     </thead>
                     <tbody>
                         <% users.forEach(user=> { %>
-                            <tr>
-                                <td>
-                                    <%= user.username %>
-                                </td>
-                                <td>
-                                    <%= user.email %>
-                                </td>
-                                <td>
-                                    <%= user.role %>
-                                </td>
-                                <td>
-                                    <div class="d-flex">
-                                        <form action="/updateUsers/<%= user.id %>" method="get">
-                                            <button type="submit" class="btn btn-warning mr-2">Edit</button>
-                                        </form>
-                                        <form action="/deleteUsers/<%= user.id %>" method="get"
-                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
-                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                            <% }) %>
+                            <% if (user.role !=='Admin' ) { %>
+                                <tr>
+                                    <td>
+                                        <%= user.username %>
+                                    </td>
+                                    <td>
+                                        <%= user.email %>
+                                    </td>
+                                    <td>
+                                        <%= user.role %>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <form action="/updateUsers/<%= user.id %>" method="get">
+                                                <button type="submit" class="btn btn-warning mr-2">Edit</button>
+                                            </form>
+                                            <form action="/deleteUsers/<%= user.id %>" method="get"
+                                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% } %>
+                                    <% }) %>
                     </tbody>
                 </table>
             </div>

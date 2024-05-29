@@ -23,13 +23,18 @@
         <div class="card card-outline card-dark">
             <div class="card-header text-center">
                 <h1 class="font-weight-bold">Login</h1>
+                <% if (typeof message !=='undefined' ) { %>
+                    <p id="alertMessage">
+                        <%= message %>
+                    </p>
+                    <% } %>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
-                <form action="../../index3.html" method="post">
+                <form action="/" method="post">
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" class="form-control" name="email" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -37,7 +42,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -70,6 +75,14 @@
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../../dist/js/adminlte.min.js"></script>
+
+    <script>
+        var alertElement = document.querySelector('.alert');
+
+        setTimeout(function () {
+            alertElement.style.display = 'none';
+        }, 2000);
+    </script>
 </body>
 
 </html>
