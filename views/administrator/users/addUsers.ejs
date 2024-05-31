@@ -1,3 +1,33 @@
+<script>
+    function jabatanList() {
+        const roleSelect = document.getElementById('role');
+        const jabatan = document.getElementById('jabatan');
+        const jabatanSelect = document.getElementById('jabatanSelect');
+
+        if (roleSelect.value === 'Fakultas') {
+            jabatan.style.display = 'block';
+            jabatanSelect.removeAttribute('disabled');
+            jabatanSelect.innerHTML = `
+                <option value="Dekan">Dekan</option>
+                <option value="Wakil Dekan">Wakil Dekan</option>
+            `;
+        } else if (roleSelect.value === 'Program Studi') {
+            jabatan.style.display = 'block';
+            jabatanSelect.setAttribute('disabled', 'disabled');
+            jabatanSelect.innerHTML = `
+                <option value="Ketua Program Studi">Ketua Program Studi</option>
+            `;
+        } else {
+            jabatan.style.display = 'none';
+            jabatanSelect.innerHTML = '';
+        }
+    }
+
+    window.onload = function () {
+        jabatanList();
+        document.getElementById('role').addEventListener('change', jabatanList);
+    };
+</script>
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
@@ -26,12 +56,18 @@
             </div>
             <% } %>
                 <div class="card p-4">
-                    <form method="post" action="/Createusers">
+                    <form method="post" action="/users/create">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <input type="text" class="form-control" id="username" placeholder="NathanRaphael"
                                     name="username" required autofocus maxlength="50">
+                            </div>
+                            <div class="form-group">
+                                <label for="fullName">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="fullName"
+                                    placeholder="Nathan Raphael Pardamean Hutagalung" name="fullName" required autofocus
+                                    maxlength="50">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
@@ -51,21 +87,35 @@
                             <div class="form-group">
                                 <label for="role">Role</label>
                                 <select class="form-control" id="role" name="role" required>
-                                    <option value="Program Studi">Program Studi (Ketua Program Studi)</option>
-                                    <option value="Fakultas">Fakultas (Dekan)</option>
-                                    <option value="Fakultas">Fakultas (Wakil Dekan)</option>
+                                    <option value="Fakultas">Fakultas</option>
+                                    <option value="Program Studi">Program Studi</option>
                                     <option value="Mahasiswa">Mahasiswa</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="jabatan" style="display:none;">
+                                <label for="jabatan">Jabatan</label>
+                                <select class="form-control" id="jabatanSelect" name="jabatan">
+
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="fakultas_id">ID Fakultas</label>
-                                <input type="text" maxlength="100" class="form-control" id="fakultas_id-kk"
-                                    placeholder="" required name="fakultas_id">
+                                <select class="form-control" id="fakultas_id" required name="fakultas_id">
+                                    <% fakultasList.forEach(fakultas=> { %>
+                                        <option value="<%= fakultas.fakultas_id %>">
+                                            <%= fakultas.namaFakultas %>
+                                        </option>
+                                        <% }); %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="prodi_id">ID Program Studi</label>
+                                <input type="text" maxlength="100" class="form-control" id="prodi_id" placeholder=""
+                                    name="prodi_id">
                             </div>
                         </div>
-
                         <div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Tambah Users</button>
                         </div>
                     </form>
                 </div>

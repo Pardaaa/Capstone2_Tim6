@@ -9,7 +9,6 @@ dotenv.config();
 
 const adminRoute = require('./routes/adminRoute.js');
 const authRoute = require('./routes/authRoute.js');
-const mahasiswaRoute = require('./routes/mahasiswaRoute.js');
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -35,7 +34,8 @@ app.use(expressLayouts);
 app.set('layout', 'layouts/master');
 
 app.use(express.json());
-app.use(adminRoute);
+app.use(userRoute);
+app.use(fakultasRoute);
 app.use(authRoute);
 app.use('/mahasiswa', mahasiswaRoute);
 

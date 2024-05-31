@@ -1,0 +1,57 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Tambah Fakultas Form</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/fakultas">Fakultas</a></li>
+                    <li class="breadcrumb-item active">Tambah Fakultas Form</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <% if (typeof message !=='undefined' ) { %>
+            <div id="alertMessage" class="alert alert-danger">
+                <%= message %>
+            </div>
+            <% } %>
+                <div class="card p-4">
+                    <form method="post" action="/fakultas/create">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="fakultas_id">Id Fakultas</label>
+                                <input type="text" class="form-control" id="fakultas_id" placeholder="72" autofocus
+                                    maxlength="20" name="fakultas_id">
+                            </div>
+                            <div class="form-group">
+                                <label for="namaFakultas">Nama Fakultas</label>
+                                <input type="text" class="form-control" id="namaFakultas" placeholder="Teknik"
+                                    name="namaFakultas" required autofocus maxlength="30">
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Tambah Fakultas</button>
+                            </div>
+                    </form>
+                </div>
+    </div>
+</div>
+</div>
+<!-- /.container-fluid -->
+<!-- /.content -->
+
+<script>
+    var alertElement = document.querySelector('.alert');
+    setTimeout(function () {
+        alertElement.style.display = 'none';
+    }, 2000);
+</script>

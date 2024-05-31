@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       fakultas_id: {
-        primaryKey: true,
+        unique: true,
         type: Sequelize.STRING(20)
       },
       namaFakultas: {
