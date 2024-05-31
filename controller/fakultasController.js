@@ -1,4 +1,5 @@
 const fakultas = require('../models/fakultas');
+const user = require('../models/user');
 
 exports.getFakultas = async (req, res) => {
     try {
@@ -8,6 +9,15 @@ exports.getFakultas = async (req, res) => {
         res.status(404).send('Fakultas not found');
     }
 };
+
+exports.viewFakultas = async (req, res) => {
+    try {
+        const users = await user.findAll({ where: { fakultas_id: req.params.id } });
+        res.render('administrator/fakultas/viewFakultas', { users, fakultas_id: req.params.id, title: 'Views Fakultas' });
+    } catch (error) {
+        res.status(500).send('Internal Server Error');
+    }
+}
 
 exports.getFakultasById = async (req, res) => {
     try {

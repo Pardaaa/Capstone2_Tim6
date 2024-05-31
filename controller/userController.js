@@ -1,4 +1,5 @@
 const user = require('../models/user');
+const fakultas = require('../models/fakultas');
 const bcrypt = require('bcrypt');
 
 exports.dashboard = (req, res) => {
@@ -31,8 +32,14 @@ exports.getUsersById = async (req, res) => {
     }
 }
 
-exports.createUserPage = (req, res) => {
-    res.render('administrator/users/addUsers', { title: 'Tambah Users', message: req.query.message })
+exports.createUserPage = async (req, res) => {
+    try {
+        const fakultasList = await fakultas.findAll();
+        res.render('administrator/users/addUsers', { fakultasList: fakultasList, title: 'Tambah Users', message: req.query.message })
+    } catch (error) {
+        res.status(500).send('Internal Server Error');
+    }
+
 }
 
 exports.createUser = async (req, res) => {

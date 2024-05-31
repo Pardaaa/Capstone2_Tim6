@@ -55,12 +55,15 @@
                                 </td>
                                 <td>
                                     <div class="d-flex">
+                                        <form action="/fakultas/views/<%= fakultas.fakultas_id %>" method="get">
+                                            <button type="submit" class="btn btn-info mr-2">Views</button>
+                                        </form>
                                         <form action="/fakultas/edit/<%= fakultas.id %>" method="get">
                                             <button type="submit" class="btn btn-warning mr-2">Edit</button>
                                         </form>
                                         <form action="/fakultas/delete/<%= fakultas.id %>" method="get"
                                             onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
-                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                            <button type="submit" class="btn btn-danger ">Hapus</button>
                                         </form>
                                     </div>
                                 </td>

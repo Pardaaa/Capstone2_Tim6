@@ -5,9 +5,6 @@ const Fakultas = require('./fakultas');
 
 class User extends Model {
   static associate(models) {
-    User.hasMany(models.Fakultas, {
-      foreignKey: 'fakultas_id'
-    });
   }
 }
 
@@ -52,8 +49,9 @@ User.init({
 });
 
 User.associate = function (models) {
-  User.hasMany(models.Fakultas, {
-    foreignKey: 'fakultas_id'
+  User.belongsTo(models.Fakultas, {
+    foreignKey: 'fakultas_id',
+    targetKey: 'fakultas_id'
   });
 };
 

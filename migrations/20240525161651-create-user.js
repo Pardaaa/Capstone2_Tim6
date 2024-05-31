@@ -28,7 +28,13 @@ module.exports = {
         type: Sequelize.ENUM('Dekan', 'Wakil Dekan', 'Ketua Program Studi')
       },
       fakultas_id: {
-        type: Sequelize.STRING(20)
+        type: Sequelize.STRING(20),
+        references: {
+          model: 'fakultas',
+          key: 'fakultas_id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       },
       prodi_id: {
         type: Sequelize.STRING(20)

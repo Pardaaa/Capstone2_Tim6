@@ -1,6 +1,7 @@
 const express = require("express");
 const {
     getFakultas,
+    viewFakultas,
     createFakultas,
     createFakultasPage,
     getFakultasById,
@@ -10,6 +11,7 @@ const router = express.Router();
 
 // Fakultas
 router.get('/fakultas', getFakultas);
+router.get('/fakultas/views/:id', viewFakultas);
 router.get('/fakultas/edit/:id', getFakultasById);
 router.post('/fakultas/edit/:id', updateFakultas);
 router.get('/fakultas/create', createFakultasPage);
