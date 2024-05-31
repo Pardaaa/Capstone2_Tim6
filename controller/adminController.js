@@ -5,6 +5,7 @@ exports.dashboard = (req, res) => {
     res.render('administrator/dashboard', { title: 'Admin' })
 }
 
+// Users Start
 exports.getUsers = async (req, res) => {
     try {
         const users = await user.findAll();
@@ -36,7 +37,7 @@ exports.createUserPage = (req, res) => {
 }
 
 exports.createUser = async (req, res) => {
-    const { username, email, password, confPassword, role, fakultas_id } = req.body;
+    const { username, fullName, email, password, confPassword, role, jabatan, fakultas_id, prodi_id } = req.body;
     if (password !== confPassword) {
         return res.status(400).redirect(`/createUsers?message=Password dan Confirm Password Tidak Cocok`);
     };
@@ -44,10 +45,13 @@ exports.createUser = async (req, res) => {
         const hashPassword = await bcrypt.hash(password, 10);
         await user.create({
             username: username,
+            fullName: fullName,
             email: email,
             password: hashPassword,
             role: role,
-            fakultas_id: fakultas_id
+            jabatan: jabatan,
+            fakultas_id: fakultas_id,
+            prodi_id: prodi_id
         });
         res.redirect('/users?message=Input Berhasil');
     } catch (error) {
@@ -61,7 +65,7 @@ exports.updateUser = async (req, res) => {
             id: req.params.id
         }
     });
-    const { username, email, password, confPassword, role, fakultas_id } = req.body;
+    const { username, fullName, email, password, confPassword, role, jabatan, fakultas_id, prodi_id } = req.body;
     const userId = req.params.id;
     if (password !== confPassword) {
         return res.status(400).redirect(`/updateUsers/${userId}?message=Password dan Confirm Password Tidak Cocok`);
@@ -75,10 +79,13 @@ exports.updateUser = async (req, res) => {
         }
         await user.update({
             username: username,
+            fullName: fullName,
             email: email,
             password: hashPassword,
             role: role,
-            fakultas_id: fakultas_id
+            jabatan: jabatan,
+            fakultas_id: fakultas_id,
+            prodi_id: prodi_id
         }, {
             where: {
                 id: users.id
@@ -108,3 +115,5 @@ exports.deleteUser = async (req, res) => {
         res.status(400);
     }
 }
+
+// Users End

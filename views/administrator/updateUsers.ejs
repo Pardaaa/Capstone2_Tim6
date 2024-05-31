@@ -1,3 +1,20 @@
+<script>
+    function toggleJabatan() {
+        const roleValue = document.getElementById('role').value;
+        const jabatanGroup = document.getElementById('jabatan-group');
+
+        if (roleValue === 'Fakultas' || roleValue === 'Program Studi') {
+            jabatanGroup.style.display = 'block';
+        } else {
+            jabatanGroup.style.display = 'none';
+        }
+    }
+
+    window.onload = function () {
+        toggleJabatan();
+    };
+</script>
+
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
@@ -26,12 +43,18 @@
             </div>
             <% } %>
                 <div class="card p-4">
-                    <form method="post" action="/updateUsers/<%= users.id %>">
+                    <form method="post" action="/users/edit/<%= users.id %>">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <input type="text" class="form-control" id="username" placeholder="NathanRaphael"
                                     value="<%= users.username %>" autofocus maxlength="15" name="username">
+                            </div>
+                            <div class="form-group">
+                                <label for="fullName">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="fullName"
+                                    placeholder="Nathan Raphael Pardamean Hutagalung" value="<%= users.fullName %>"
+                                    name="fullName" required autofocus maxlength="50">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
@@ -50,16 +73,27 @@
                             </div>
                             <div class="form-group">
                                 <label for="role">Role</label>
-                                <select class="form-control" id="role" value="<%= users.role %>" required name="role">
-                                    <option value="Program Studi">Program Studi</option>
-                                    <option value="fakultas">Fakultas</option>
-                                    <option value="mahasiswa">Mahasiswa</option>
-                                </select>
+                                <input type="hidden" maxlength="100" class="form-control" id="role" placeholder=""
+                                    value="<%= users.role %>" name="role">
+                                <input type="text" maxlength="100" class="form-control" id="role"
+                                    value="<%= users.role %>" name="role" disabled>
+                            </div>
+                            <div class="form-group" id="jabatan-group" style="display:none;">
+                                <label for="jabatan">Jabatan</label>
+                                <input type="hidden" maxlength="100" class="form-control" id="jabatan" placeholder=""
+                                    value="<%= users.jabatan %>" name="jabatan">
+                                <input type="text" maxlength="100" class="form-control" id="jabatan"
+                                    value="<%= users.jabatan %>" name="jabatan" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="fakultas_id">ID Fakultas</label>
                                 <input type="text" maxlength="100" class="form-control" id="fakultas_id" placeholder=""
                                     value="<%= users.fakultas_id %>" name="fakultas_id">
+                            </div>
+                            <div class="form-group">
+                                <label for="prodi_id">ID Program Studi</label>
+                                <input type="text" maxlength="100" class="form-control" id="prodi_id"
+                                    value="<%= users.prodi_id %>" placeholder="" name="prodi_id">
                             </div>
                         </div>
 

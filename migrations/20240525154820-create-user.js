@@ -12,6 +12,9 @@ module.exports = {
       username: {
         type: Sequelize.STRING(50)
       },
+      fullName: {
+        type: Sequelize.STRING(50)
+      },
       email: {
         type: Sequelize.STRING(30)
       },
@@ -21,7 +24,13 @@ module.exports = {
       role: {
         type: Sequelize.ENUM('Admin', 'Mahasiswa', 'Fakultas', 'Program Studi')
       },
+      jabatan: {
+        type: Sequelize.ENUM('Dekan', 'Wakil Dekan', 'Ketua Program Studi')
+      },
       fakultas_id: {
+        type: Sequelize.STRING(20)
+      },
+      prodi_id: {
         type: Sequelize.STRING(20)
       },
       createdAt: {

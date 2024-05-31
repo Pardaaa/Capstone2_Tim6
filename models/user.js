@@ -16,6 +16,10 @@ User.init({
     type: DataTypes.STRING(50),
     allowNull: false
   },
+  fullName: {
+    type: DataTypes.STRING(50),
+    allowNull: false
+  },
   email: {
     type: DataTypes.STRING(30),
     allowNull: false,
@@ -29,7 +33,15 @@ User.init({
     type: DataTypes.ENUM('admin', 'mahasiswa', 'fakultas', 'program_studi'),
     allowNull: false
   },
+  jabatan: {
+    type: DataTypes.ENUM('Dekan', 'Wakil Dekan', 'Ketua Program Studi'),
+    allowNull: true
+  },
   fakultas_id: {
+    type: DataTypes.STRING(20),
+    allowNull: true
+  },
+  prodi_id: {
     type: DataTypes.STRING(20),
     allowNull: true
   }

@@ -30,7 +30,7 @@
         </div>
         <div class="card p-4">
             <div class="card-title">
-                <form action="createUsers" method="get">
+                <form action="/users/create" method="get">
                     <button type="submit" class="h2 btn btn-success">Tambah Users</button>
                 </form>
             </div>
@@ -60,10 +60,10 @@
                                     </td>
                                     <td>
                                         <div class="d-flex">
-                                            <form action="/updateUsers/<%= user.id %>" method="get">
+                                            <form action="/users/edit/<%= user.id %>" method="get">
                                                 <button type="submit" class="btn btn-warning mr-2">Edit</button>
                                             </form>
-                                            <form action="/deleteUsers/<%= user.id %>" method="get"
+                                            <form action="/users/delete/<%= user.id %>" method="get"
                                                 onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                                 <button type="submit" class="btn btn-danger">Hapus</button>
                                             </form>
