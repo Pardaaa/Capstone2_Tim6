@@ -13,7 +13,8 @@ exports.getFakultas = async (req, res) => {
 exports.viewFakultas = async (req, res) => {
     try {
         const users = await user.findAll({ where: { fakultas_id: req.params.id } });
-        res.render('administrator/fakultas/viewFakultas', { users, fakultas_id: req.params.id, title: 'Views Fakultas' });
+        const Fakultas = await fakultas.findOne({ where: { fakultas_id: req.params.id } });
+        res.render('administrator/fakultas/viewFakultas', { users, Fakultas, title: 'Views Fakultas' });
     } catch (error) {
         res.status(500).send('Internal Server Error');
     }

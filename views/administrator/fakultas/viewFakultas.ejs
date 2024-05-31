@@ -1,10 +1,86 @@
-</h1>
-<ul>
-    <% users.forEach(user=> { %>
-        <li>
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2 class="text-bold">Informasi Fakultas <%= Fakultas.namaFakultas %>
+                </h2>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/fakultas">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/fakultas">Fakultas</a></li>
+                    <li class="breadcrumb-item active">Views Fakultas Page</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
 
-            <%= user.username %>
-                <%= user.jabatan %>
-        </li>
-        <% }) %>
-</ul>
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="content">
+            <div class="container-fluid">
+                <% if (typeof message !=='undefined' ) { %>
+                    <div id="alertMessage" class="alert alert-success">
+                        <%= message %>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+        <div class="card p-4">
+            <div class="card-title">
+
+            </div>
+            <div class="card-body">
+                <table id="table-users" class="table table-bordered table-striped mb-5">
+                    <h3 class="text-bold">Pejabat Fakultas</h3>
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Jabatan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach(user=> { %>
+                            <tr>
+                                <td>
+                                    <%= user.username %>
+                                </td>
+                                <td>
+                                    <%= user.jabatan %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+                <table id="table-users" class="table table-bordered table-striped">
+                    <h3 class="text-bold">List Of Program Studi</h3>
+                    <caption>List Of Program Studi</caption>
+                    <thead>
+                        <tr>
+                            <th>Id Program Studi</th>
+                            <th>Nama Program Studi</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach(user=> { %>
+                            <tr>
+                                <td>
+                                    <%= user.username %>
+                                </td>
+                                <td>
+                                    <%= user.jabatan %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div><!-- /.container-fluid -->
+<!-- /.content -->

@@ -1,0 +1,85 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var fakultasSelect = document.getElementById('fakultas_id');
+        var namaFakultasInput = document.getElementById('namaFakultas');
+
+        fakultasSelect.addEventListener('change', function () {
+            var selectedOption = fakultasSelect.options[fakultasSelect.selectedIndex];
+            namaFakultasInput.value = selectedOption.text;
+        });
+    });
+</script>
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Tambah Program Studi Form</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/prodi">Program Studi</a></li>
+                    <li class="breadcrumb-item active">Tambah Program Studi Form</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <% if (typeof message !=='undefined' ) { %>
+            <div id="alertMessage" class="alert alert-danger">
+                <%= message %>
+            </div>
+            <% } %>
+                <div class="card p-4">
+                    <form method="post" action="/prodi/create">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="programStudi_id">Id Program Studi</label>
+                                <input type="text" class="form-control" id="programStudi_id" placeholder="12" autofocus
+                                    maxlength="20" name="programStudi_id">
+                            </div>
+                            <div class="form-group">
+                                <label for="namaProgramStudi">Nama Program Studi</label>
+                                <input type="text" class="form-control" id="namaProgramStudi"
+                                    placeholder="Teknik Informatika" name="namaProgramStudi" required autofocus
+                                    maxlength="30">
+                            </div>
+                            <div class="form-group">
+                                <label for="fakultas_id">Nama Fakultas</label>
+                                <select class="form-control" id="fakultas_id" required name="fakultas_id">
+                                    <% fakultasList.forEach(fakultas=> { %>
+                                        <option value="<%= fakultas.fakultas_id %>">
+                                            <%= fakultas.namaFakultas %>
+                                        </option>
+                                        <% }); %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="namaFakultas"
+                                    placeholder="Teknik Informatika" name="namaFakultas" required autofocus
+                                    maxlength="30">
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Tambah Program Studi</button>
+                            </div>
+                    </form>
+                </div>
+    </div>
+</div>
+</div>
+<!-- /.container-fluid -->
+<!-- /.content -->
+
+<script>
+    var alertElement = document.querySelector('.alert');
+    setTimeout(function () {
+        alertElement.style.display = 'none';
+    }, 2000);
+</script>

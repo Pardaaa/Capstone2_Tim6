@@ -2,10 +2,14 @@
     function jabatanList() {
         const roleSelect = document.getElementById('role');
         const jabatan = document.getElementById('jabatan');
+        const prodi = document.getElementById('prodi');
         const jabatanSelect = document.getElementById('jabatanSelect');
+        const programStudiSelect = document.getElementById('programStudi_id');
 
         if (roleSelect.value === 'Fakultas') {
             jabatan.style.display = 'block';
+            prodi.style.display = 'none';
+            programStudiSelect.value = "";
             jabatanSelect.removeAttribute('disabled');
             jabatanSelect.innerHTML = `
                 <option value="Dekan">Dekan</option>
@@ -13,6 +17,7 @@
             `;
         } else if (roleSelect.value === 'Program Studi') {
             jabatan.style.display = 'block';
+            prodi.style.display = 'block';
             jabatanSelect.setAttribute('disabled', 'disabled');
             jabatanSelect.innerHTML = `
                 <option value="Ketua Program Studi">Ketua Program Studi</option>
@@ -95,11 +100,10 @@
                             <div class="form-group" id="jabatan" style="display:none;">
                                 <label for="jabatan">Jabatan</label>
                                 <select class="form-control" id="jabatanSelect" name="jabatan">
-
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="fakultas_id">ID Fakultas</label>
+                                <label for="fakultas_id">Nama Fakultas</label>
                                 <select class="form-control" id="fakultas_id" required name="fakultas_id">
                                     <% fakultasList.forEach(fakultas=> { %>
                                         <option value="<%= fakultas.fakultas_id %>">
@@ -108,10 +112,15 @@
                                         <% }); %>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="prodi_id">ID Program Studi</label>
-                                <input type="text" maxlength="100" class="form-control" id="prodi_id" placeholder=""
-                                    name="prodi_id">
+                            <div class="form-group" id="prodi" style="display:none;">
+                                <label for="programStudi_id">Nama Program Studi</label>
+                                <select class="form-control" id="programStudi_id" name="programStudi_id">
+                                    <% prodiList.forEach(prodi=> { %>
+                                        <option value="<%= prodi.programStudi_id %>">
+                                            <%= prodi.namaProgramStudi %>
+                                        </option>
+                                        <% }); %>
+                                </select>
                             </div>
                         </div>
                         <div>

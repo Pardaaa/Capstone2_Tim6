@@ -2,30 +2,19 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('programStudis', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
-        type: Sequelize.STRING(50)
+      programStudi_id: {
+        unique: true,
+        type: Sequelize.STRING(20)
       },
-      fullName: {
-        type: Sequelize.STRING(50)
-      },
-      email: {
+      namaProgramStudi: {
         type: Sequelize.STRING(30)
-      },
-      password: {
-        type: Sequelize.STRING(100)
-      },
-      role: {
-        type: Sequelize.ENUM('Admin', 'Mahasiswa', 'Fakultas', 'Program Studi')
-      },
-      jabatan: {
-        type: Sequelize.ENUM('Dekan', 'Wakil Dekan', 'Ketua Program Studi')
       },
       fakultas_id: {
         type: Sequelize.STRING(20),
@@ -36,8 +25,8 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
       },
-      prodi_id: {
-        type: Sequelize.STRING(20)
+      namaFakultas: {
+        type: Sequelize.STRING(30)
       },
       createdAt: {
         allowNull: false,
@@ -50,6 +39,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('programStudis');
   }
 };

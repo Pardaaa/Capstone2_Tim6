@@ -1,5 +1,6 @@
 const user = require('../models/user');
 const fakultas = require('../models/fakultas');
+const prodi = require('../models/programstudi');
 const bcrypt = require('bcrypt');
 
 exports.dashboard = (req, res) => {
@@ -35,7 +36,8 @@ exports.getUsersById = async (req, res) => {
 exports.createUserPage = async (req, res) => {
     try {
         const fakultasList = await fakultas.findAll();
-        res.render('administrator/users/addUsers', { fakultasList: fakultasList, title: 'Tambah Users', message: req.query.message })
+        const prodiList = await prodi.findAll();
+        res.render('administrator/users/addUsers', { fakultasList: fakultasList, prodiList: prodiList, title: 'Tambah Users', message: req.query.message })
     } catch (error) {
         res.status(500).send('Internal Server Error');
     }

@@ -5,7 +5,8 @@ const {
     createFakultas,
     createFakultasPage,
     getFakultasById,
-    updateFakultas } = require('../controller/fakultasController.js');
+    updateFakultas,
+    deleteFakultas } = require('../controller/fakultasController.js');
 
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.get('/fakultas/edit/:id', getFakultasById);
 router.post('/fakultas/edit/:id', updateFakultas);
 router.get('/fakultas/create', createFakultasPage);
 router.post('/fakultas/create', createFakultas);
+router.get('/fakultas/delete/:id', deleteFakultas);
 
 module.exports = router;

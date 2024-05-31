@@ -7,8 +7,11 @@ const db = require('./config/database.js');
 const expressLayouts = require('express-ejs-layouts');
 dotenv.config();
 
-const adminRoute = require('./routes/adminRoute.js');
-const authRoute = require('./routes/authRoute.js');
+const userRoute = require('./routes/userRoute');
+const fakultasRoute = require('./routes/fakultasRoute');
+const authRoute = require('./routes/authRoute');
+const prodiRoute = require('./routes/prodiRoute');
+const mahasiswaRoute = require('./routes/mahasiswaRoute');
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -37,6 +40,7 @@ app.use(express.json());
 app.use(userRoute);
 app.use(fakultasRoute);
 app.use(authRoute);
+app.use(prodiRoute);
 app.use('/mahasiswa', mahasiswaRoute);
 
 app.listen(process.env.APP_PORT, () => {
