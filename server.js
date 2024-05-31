@@ -7,7 +7,8 @@ const db = require('./config/database.js')
 const expressLayouts = require("express-ejs-layouts");
 dotenv.config();
 
-const adminRoute = require('./routes/adminRoute.js');
+const userRoute = require('./routes/userRoute.js');
+const fakultasRoute = require('./routes/fakultasRoute.js')
 const authRoute = require('./routes/authRoute.js')
 
 const app = express();
@@ -32,7 +33,8 @@ app.use(expressLayouts);
 app.set('layout', 'layouts/master');
 
 app.use(express.json());
-app.use(adminRoute);
+app.use(userRoute);
+app.use(fakultasRoute);
 app.use(authRoute);
 
 app.listen(process.env.APP_PORT, () => {
