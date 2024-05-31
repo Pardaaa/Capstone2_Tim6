@@ -7,8 +7,62 @@
             </div>
             <div class="card-body">
                 <h1 class="text-center">DashBoard Mahasiswa</h1>
+
+                <h2 class="mt-4">Pengajuan Beasiswa</h2>
+                <form action="/mahasiswa/beasiswa<%= beasiswa ? `/${beasiswa.id}?_method=PUT` : '' %>" method="POST"
+                    enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="ipkTerakhir">IPK Terakhir</label>
+                        <input type="number" step="0.01" class="form-control" id="ipkTerakhir" name="ipkTerakhir"
+                            value="<%= beasiswa ? beasiswa.ipkTerakhir : '' %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jenisBeasiswa">Jenis Beasiswa</label>
+                        <select class="form-control" id="jenisBeasiswa" name="jenisBeasiswa" required>
+                            <option value="Prestasi" <%=beasiswa && beasiswa.jenisBeasiswa==='Prestasi' ? 'selected'
+                                : '' %>>Prestasi</option>
+                            <option value="Bantuan Ekonomi" <%=beasiswa && beasiswa.jenisBeasiswa==='Bantuan Ekonomi'
+                                ? 'selected' : '' %>>Bantuan Ekonomi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dokumen">Dokumen</label>
+                        <input type="file" class="form-control" id="dokumen" name="dokumen" required>
+                        <% if (beasiswa) { %>
+                            <small class="form-text text-muted">Dokumen saat ini: <%= beasiswa.dokumen %></small>
+                            <% } %>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kirim</button>
+                    <% if (beasiswa) { %>
+                        <button type="button" class="btn btn-danger"
+                            onclick="deleteSubmission('<%= beasiswa.id %>')">Hapus</button>
+                        <% } %>
+                </form>
             </div>
         </div>
-    </div>
-</div><!-- /.container-fluid -->
-<!-- /.content -->
+    </div><!-- /.container-fluid -->
+    <!-- /.content -->
+</div>
+
+<script>
+    function deleteSubmission(id) {
+        if (confirm('Apakah Anda yakin ingin menghapus pengajuan ini?')) {
+            fetch(`/mahasiswa/beasiswa/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/mahasiswa/beasiswa';
+                } else {
+                    alert('Gagal menghapus pengajuan.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat menghapus pengajuan.');
+            });
+        }
+    }
+</script>
