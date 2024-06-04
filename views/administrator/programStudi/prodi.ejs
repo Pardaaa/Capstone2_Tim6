@@ -33,6 +33,17 @@
                 <form action="/prodi/create" method="get">
                     <button type="submit" class="h2 btn btn-success text-bold">Tambah Program Studi</button>
                 </form>
+                <div class="form-group mb-0 ml-auto">
+                    <label for="filterFakultas" class="mr-2">Filter by Fakultas:</label>
+                    <select class="form-control d-inline-block w-auto" id="filterFakultas">
+                        <option value="">All</option>
+                        <% prodi.forEach(prodis=> { %>
+                            <option value="<%= prodis.namaFakultas %>">
+                                <%= prodis.namaFakultas %>
+                            </option>
+                            <% }) %>
+                    </select>
+                </div>
             </div>
             <div class="card-body">
                 <table id="table-users" class="table table-bordered table-striped">
@@ -47,7 +58,7 @@
                     </thead>
                     <tbody>
                         <% prodi.forEach(prodis=> { %>
-                            <tr>
+                            <tr data-fakultas="<%= prodis.namaFakultas %>">
                                 <td>
                                     <%= prodis.programStudi_id %>
                                 </td>
@@ -59,10 +70,13 @@
                                 </td>
                                 <td>
                                     <div class="d-flex">
-                                        <form action="/prodi/edit/<%= prodis.id %>" method="get">
+                                        <form action="/prodi/views/<%= prodis.fakultas_id %>" method="get">
+                                            <button type="submit" class="btn btn-info mr-2">Views</button>
+                                        </form>
+                                        <form action="" method="get">
                                             <button type="submit" class="btn btn-warning mr-2">Edit</button>
                                         </form>
-                                        <form action="/prodi/delete/<%= prodis.id %>" method="get"
+                                        <form action="" method="get"
                                             onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                             <button type="submit" class="btn btn-danger ">Hapus</button>
                                         </form>
@@ -86,5 +100,18 @@
                 alertElement.style.display = 'none';
             }, 2000);
         }
+
+        document.getElementById('filterFakultas').addEventListener('change', function () {
+            var selectedFakultas = this.value;
+            var rows = document.querySelectorAll('#table-users tbody tr');
+
+            rows.forEach(function (row) {
+                if (selectedFakultas === "" || row.getAttribute('data-fakultas') === selectedFakultas) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
     });
 </script>

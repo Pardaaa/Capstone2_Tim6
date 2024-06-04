@@ -27,6 +27,9 @@ module.exports = {
       jabatan: {
         type: Sequelize.ENUM('Dekan', 'Wakil Dekan', 'Ketua Program Studi')
       },
+      status: {
+        type: Sequelize.ENUM('Aktif', 'Pasif')
+      },
       fakultas_id: {
         type: Sequelize.STRING(20),
         references: {

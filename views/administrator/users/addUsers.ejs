@@ -1,38 +1,3 @@
-<script>
-    function jabatanList() {
-        const roleSelect = document.getElementById('role');
-        const jabatan = document.getElementById('jabatan');
-        const prodi = document.getElementById('prodi');
-        const jabatanSelect = document.getElementById('jabatanSelect');
-        const programStudiSelect = document.getElementById('programStudi_id');
-
-        if (roleSelect.value === 'Fakultas') {
-            jabatan.style.display = 'block';
-            prodi.style.display = 'none';
-            programStudiSelect.value = "";
-            jabatanSelect.removeAttribute('disabled');
-            jabatanSelect.innerHTML = `
-                <option value="Dekan">Dekan</option>
-                <option value="Wakil Dekan">Wakil Dekan</option>
-            `;
-        } else if (roleSelect.value === 'Program Studi') {
-            jabatan.style.display = 'block';
-            prodi.style.display = 'block';
-            jabatanSelect.setAttribute('disabled', 'disabled');
-            jabatanSelect.innerHTML = `
-                <option value="Ketua Program Studi">Ketua Program Studi</option>
-            `;
-        } else {
-            jabatan.style.display = 'none';
-            jabatanSelect.innerHTML = '';
-        }
-    }
-
-    window.onload = function () {
-        jabatanList();
-        document.getElementById('role').addEventListener('change', jabatanList);
-    };
-</script>
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
@@ -97,6 +62,11 @@
                                     <option value="Mahasiswa">Mahasiswa</option>
                                 </select>
                             </div>
+                            <div class="form-group" id="status" style="display:none;">
+                                <label for="status">Status</label>
+                                <select class="form-control" id="statusSelect" name="status">
+                                </select>
+                            </div>
                             <div class="form-group" id="jabatan" style="display:none;">
                                 <label for="jabatan">Jabatan</label>
                                 <select class="form-control" id="jabatanSelect" name="jabatan">
@@ -138,4 +108,48 @@
     setTimeout(function () {
         alertElement.style.display = 'none';
     }, 2000);
+</script>
+
+<script>
+    function jabatanList() {
+        const roleSelect = document.getElementById('role');
+        const jabatan = document.getElementById('jabatan');
+        const prodi = document.getElementById('prodi');
+        const status = document.getElementById('status');
+        const jabatanSelect = document.getElementById('jabatanSelect');
+        const programStudiSelect = document.getElementById('programStudi_id');
+        const statusSelect = document.getElementById('statusSelect');
+
+        if (roleSelect.value === 'Fakultas') {
+            jabatan.style.display = 'block';
+            prodi.style.display = 'none';
+            programStudiSelect.value = "";
+            jabatanSelect.removeAttribute('disabled');
+            jabatanSelect.innerHTML = `
+                <option value="Dekan">Dekan</option>
+                <option value="Wakil Dekan">Wakil Dekan</option>
+            `;
+        } else if (roleSelect.value === 'Program Studi') {
+            jabatan.style.display = 'block';
+            prodi.style.display = 'block';
+            jabatanSelect.removeAttribute('disabled');
+            jabatanSelect.innerHTML = `
+                <option value="Ketua Program Studi">Ketua Program Studi</option>
+            `;
+        } else {
+            status.style.display = 'block';
+            jabatan.style.display = 'none';
+            prodi.style.display = 'block';
+            jabatanSelect.innerHTML = '';
+            statusSelect.innerHTML = `
+                <option value="Aktif">Aktif</option>
+                <option value="Pasif">Pasif</option>
+            `;
+        }
+    }
+
+    window.onload = function () {
+        jabatanList();
+        document.getElementById('role').addEventListener('change', jabatanList);
+    };
 </script>

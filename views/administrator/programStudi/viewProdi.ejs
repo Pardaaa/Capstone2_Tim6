@@ -3,14 +3,14 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h2 class="text-bold">Informasi Fakultas <%= Fakultas.namaFakultas %>
+                <h2 class="text-bold">Informasi <%= prodis.namaProgramStudi %>
                 </h2>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/fakultas">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/fakultas">Fakultas</a></li>
-                    <li class="breadcrumb-item active">Views Fakultas Page</li>
+                    <li class="breadcrumb-item"><a href="/prodi">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/prodi">Program Studi</a></li>
+                    <li class="breadcrumb-item active">Views Program Studi Page</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -36,7 +36,7 @@
             </div>
             <div class="card-body">
                 <table id="table-users" class="table table-bordered table-striped mb-5">
-                    <h3 class="text-bold">Pejabat Fakultas</h3>
+                    <h3 class="text-bold">Pejabat Program Studi</h3>
                     <thead>
                         <tr>
                             <th>Nama</th>
@@ -45,7 +45,7 @@
                     </thead>
                     <tbody>
                         <% users.forEach(user=> { %>
-                            <% if (user.role=='Fakultas' ) { %>
+                            <% if (user.role=='Program Studi' ) { %>
                                 <tr>
                                     <td>
                                         <%= user.username %>
@@ -58,32 +58,31 @@
                                     <% }) %>
                     </tbody>
                 </table>
-                <table id="table-users" class="table table-bordered table-striped">
-                    <h3 class="text-bold">List Of Program Studi</h3>
-                    <caption>List Of Program Studi</caption>
+                <table id="table-users" class="table table-bordered table-striped mb-5">
+                    <h3 class="text-bold">Daftar Mahasiswa</h3>
                     <thead>
                         <tr>
-                            <th>Id Program Studi</th>
-                            <th>Nama Program Studi</th>
-                            <th>Action</th>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% prodis.forEach(prodi=> { %>
-                            <tr>
-                                <td>
-                                    <%= prodi.programStudi_id %>
-                                </td>
-                                <td>
-                                    <%= prodi.namaProgramStudi %>
-                                </td>
-                                <td>
-                                    <form action="/prodi/views/<%= prodi.fakultas_id %>" method="get">
-                                        <button type="submit" class="btn btn-info mr-2">Views</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <% }) %>
+                        <% users.forEach(user=> { %>
+                            <% if (user.role=='Mahasiswa' ) { %>
+                                <tr>
+                                    <td>
+                                        <%= user.id %>
+                                    </td>
+                                    <td>
+                                        <%= user.fullName %>
+                                    </td>
+                                    <td>
+                                        <%= user.status %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                                    <% }) %>
                     </tbody>
                 </table>
             </div>

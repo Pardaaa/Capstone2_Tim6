@@ -1,5 +1,6 @@
 const fakultas = require('../models/fakultas');
 const user = require('../models/user');
+const prodi = require('../models/programstudi')
 
 exports.getFakultas = async (req, res) => {
     try {
@@ -13,8 +14,9 @@ exports.getFakultas = async (req, res) => {
 exports.viewFakultas = async (req, res) => {
     try {
         const users = await user.findAll({ where: { fakultas_id: req.params.id } });
+        const prodis = await prodi.findAll({ where: { fakultas_id: req.params.id } });
         const Fakultas = await fakultas.findOne({ where: { fakultas_id: req.params.id } });
-        res.render('administrator/fakultas/viewFakultas', { users, Fakultas, title: 'Views Fakultas' });
+        res.render('administrator/fakultas/viewFakultas', { users, Fakultas, prodis, title: 'Views Fakultas' });
     } catch (error) {
         res.status(500).send('Internal Server Error');
     }

@@ -9,6 +9,19 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
+const sequelize = require('../config/database.js');
+const ProgramStudi = require('./programstudi.js');
+const Fakultas = require('./fakultas.js');
+
+ProgramStudi.associate({ fakultas: Fakultas });
+Fakultas.associate({ programStudi: ProgramStudi });
+
+module.exports = {
+  ProgramStudi,
+  Fakultas
+};
+
+
 let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);

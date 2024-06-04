@@ -22,7 +22,7 @@ programStudi.init({
   },
   namaFakultas: {
     type: DataTypes.STRING(30),
-    allowNull: false
+    allowNull: true
   },
 }, {
   sequelize,
@@ -31,7 +31,7 @@ programStudi.init({
 });
 
 programStudi.associate = function (models) {
-  User.belongsTo(models.fakultas, {
+  programStudi.belongsTo(models.fakultas, {
     foreignKey: 'fakultas_id',
     targetKey: 'fakultas_id'
   });

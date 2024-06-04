@@ -7,6 +7,7 @@ class fakultas extends Model {
   }
 }
 
+
 fakultas.init({
   fakultas_id: {
     type: DataTypes.STRING(20),

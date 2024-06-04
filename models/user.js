@@ -35,6 +35,10 @@ User.init({
     type: DataTypes.ENUM('Dekan', 'Wakil Dekan', 'Ketua Program Studi'),
     allowNull: true
   },
+  status: {
+    type: DataTypes.ENUM('Aktif', 'Pasif'),
+    allowNull: true
+  },
   fakultas_id: {
     type: DataTypes.STRING(20),
     allowNull: true

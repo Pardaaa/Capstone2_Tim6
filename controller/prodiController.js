@@ -11,6 +11,17 @@ exports.getProdi = async (req, res) => {
     }
 };
 
+exports.viewProdi = async (req, res) => {
+    try {
+        const users = await user.findAll({ where: { fakultas_id: req.params.id } });
+        const Fakultas = await fakultas.findAll({ where: { fakultas_id: req.params.id } });
+        const prodis = await programStudi.findOne({ where: { fakultas_id: req.params.id } });
+        res.render('administrator/programStudi/viewProdi', { users, Fakultas, prodis, title: 'Views Fakultas' });
+    } catch (error) {
+        res.status(500).send('Internal Server Error');
+    }
+}
+
 exports.getProdiById = async (req, res) => {
     try {
         const prodi = await programStudi.findOne({
@@ -35,8 +46,6 @@ exports.createProdiPage = async (req, res) => {
     } catch (error) {
         res.status(500).send('Internal Server Error');
     }
-
-
 }
 
 exports.createProdi = async (req, res) => {
