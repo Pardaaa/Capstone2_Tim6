@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "30012004",
+    "password": "",
     "database": "capstone_development",
     "host": "127.0.0.1",
     "dialect": "mysql"
