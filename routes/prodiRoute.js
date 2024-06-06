@@ -6,7 +6,9 @@ const {
     createProdi,
     createProdiPage,
     updateProdi,
-    deleteProdi } = require('../controller/prodiController');
+    deleteProdi,
+    getDashboard
+ } = require('../controller/prodiController');
 
 const router = express.Router();
 
@@ -18,5 +20,7 @@ router.post('/prodi/edit/:id', updateProdi);
 router.get('/prodi/create', createProdiPage);
 router.post('/prodi/create', createProdi);
 router.get('/prodi/delete/:id', deleteProdi);
+
+router.get('/prodi/dashboard', getDashboard);
 
 module.exports = router;
