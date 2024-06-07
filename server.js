@@ -11,8 +11,8 @@ const userRoute = require('./routes/userRoute');
 const fakultasRoute = require('./routes/fakultasRoute');
 const authRoute = require('./routes/authRoute');
 const prodiRoute = require('./routes/prodiRoute');
-const beasiswaRoute = require('./routes/beasiswaRoute');
-
+// const beasiswaRoute = require('./routes/beasiswaRoute');
+const mahasiswaRoute = require('./routes/mahasiswa');
 const app = express();
 app.set('view engine', 'ejs');
 
@@ -40,8 +40,12 @@ app.use(express.json());
 app.use(userRoute);
 app.use(fakultasRoute);
 app.use(authRoute);
-app.use(prodiRoute);
-app.use(beasiswaRoute);
+// app.use(prodiRoute);
+app.use('/mahasiswa', mahasiswaRoute);
+
+app.get('/dokpengajuan', function (req, res) {
+   res.render('mahasiswa/dokpengajuan');
+});
 
 app.listen(process.env.APP_PORT, () => {
    console.log('Server Berjalan');
