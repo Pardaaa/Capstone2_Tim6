@@ -5,41 +5,194 @@
             Admin
          </div>
          <div class="card-body">
-            <h1 class="text-center">DashBoard Mahasiswa</h1>
+            <h1 class="text-center">Tambah Dokumen Pengajuan Beasiswa</h1>
          </div>
       </div>
    </div>
 </div>
-<div class="row">
-   <div class="col-md-6">
-      <!-- general form elements -->
+
+<!-- Main content -->
+<section class="content">
+   <div class="container-fluid">
       <div class="card card-primary">
          <div class="card-header">
-            <h3 class="card-title">Form Tambah Dokumen</h3>
+            <h3 class="card-title">Form Pengajuan Beasiswa</h3>
          </div>
          <!-- /.card-header -->
          <!-- form start -->
-         <form role="form">
+         <form action="/mahasiswa/dokpengajuan" method="post" enctype="multipart/form-data">
             <div class="card-body">
                <div class="form-group">
                   <label for="nama">Nama</label>
-                  <input type="text" class="form-control" id="nama" placeholder="Masukkan nama">
+                  <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama" required>
                </div>
                <div class="form-group">
-                  <label for="dokumen">Dokumen</label>
-                  <input type="file" class="form-control" id="dokumen">
+                  <label for="nomor_mahasiswa">NRP Mahasiswa</label>
+                  <input type="text" class="form-control" id="nomor_mahasiswa" name="nomor_mahasiswa"
+                     placeholder="Masukkan Nomor Mahasiswa" required>
+               </div>
+               <div class="form-group">
+                  <label for="jenis_beasiswa">Jenis Beasiswa:</label>
+                  <select class="form-control" id="jenis_beasiswa" name="jenis_beasiswa" required>
+                     <option value="beasiswa_akademik">Beasiswa Prestasi Akademik</option>
+                     <option value="beasiswa_ekonomi">Beasiswa Kurang Mampu</option>
+                     <option value="beasiswa_olahraga">Beasiswa Atlet Berprestasi</option>
+                  </select>
+               </div>
+               <div id="syarat_akademik" class="syarat">
+                  <h3>Beasiswa Prestasi Akademik</h3>
+                  <p>Syarat:</p>
+                  <ul>
+                     <li>IPK minimal 3.5 (skala 4.0) untuk mahasiswa atau nilai rata-rata raport minimal 85 untuk siswa
+                        SMA</li>
+                     <li>Surat rekomendasi dari dosen atau guru</li>
+                     <li>Esai motivasi 500 kata tentang tujuan akademik</li>
+                  </ul>
+                  <div class="form-group">
+                     <label for="dokumen_ipk">Transkrip Nilai/IPK</label>
+                     <div class="input-group">
+                        <div class="custom-file">
+                           <input type="file" class="custom-file-input" id="dokumen_ipk" name="dokumen_ipk" required>
+                           <label class="custom-file-label" for="dokumen_ipk">Pilih file</label>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="dokumen_rekomendasi">Surat Rekomendasi</label>
+                     <div class="input-group">
+                        <div class="custom-file">
+                           <input type="file" class="custom-file-input" id="dokumen_rekomendasi"
+                              name="dokumen_rekomendasi" required>
+                           <label class="custom-file-label" for="dokumen_rekomendasi">Pilih file</label>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="dokumen_esai">Esai Motivasi</label>
+                     <div class="input-group">
+                        <div class="custom-file">
+                           <input type="file" class="custom-file-input" id="dokumen_esai" name="dokumen_esai" required>
+                           <label class="custom-file-label" for="dokumen_esai">Pilih file</label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div id="syarat_ekonomi" class="syarat">
+                  <h3>Beasiswa Kurang Mampu</h3>
+                  <p>Syarat:</p>
+                  <ul>
+                     <li>Surat keterangan tidak mampu dari kelurahan atau RT/RW</li>
+                     <li>IPK minimal 2.8 atau nilai rata-rata raport minimal 75</li>
+                     <li>Esai motivasi 300 kata tentang pentingnya pendidikan bagi masa depan</li>
+                  </ul>
+                  <div class="form-group">
+                     <label for="dokumen_sktm">Keterangan Tidak Mampu</label>
+                     <div class="input-group">
+                        <div class="custom-file">
+                           <input type="file" class="custom-file-input" id="dokumen_sktm" name="dokumen_sktm" required>
+                           <label class="custom-file-label" for="dokumen_sktm">Pilih file</label>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="dokumen_ipk_ekonomi">Transkrip Nilai/IPK</label>
+                     <div class="input-group">
+                        <div class="custom-file">
+                           <input type="file" class="custom-file-input" id="dokumen_ipk_ekonomi"
+                              name="dokumen_ipk_ekonomi" required>
+                           <label class="custom-file-label" for="dokumen_ipk_ekonomi">Pilih file</label>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="dokumen_esai_ekonomi">Esai Motivasi</label>
+                     <div class="input-group">
+                        <div class="custom-file">
+                           <input type="file" class="custom-file-input" id="dokumen_esai_ekonomi"
+                              name="dokumen_esai_ekonomi" required>
+                           <label class="custom-file-label" for="dokumen_esai_ekonomi">Pilih file</label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div id="syarat_olahraga" class="syarat">
+                  <h3>Beasiswa Atlet Berprestasi</h3>
+                  <p>Syarat:</p>
+                  <ul>
+                     <li>Prestasi olahraga di tingkat daerah/nasional/internasional</li>
+                     <li>Sertifikat atau bukti penghargaan</li>
+                     <li>Surat rekomendasi dari pelatih olahraga</li>
+                     <li>IPK minimal 2.5 atau nilai rata-rata raport minimal 70</li>
+                  </ul>
+                  <div class="form-group">
+                     <label for="dokumen_prestasi">Bukti Prestasi</label>
+                     <div class="input-group">
+                        <div class="custom-file">
+                           <input type="file" class="custom-file-input" id="dokumen_prestasi" name="dokumen_prestasi"
+                              required>
+                           <label class="custom-file-label" for="dokumen_prestasi">Pilih file</label>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="dokumen_rekomendasi_olahraga">Surat Rekomendasi</label>
+                     <div class="input-group">
+                        <div class="custom-file">
+                           <input type="file" class="custom-file-input" id="dokumen_rekomendasi_olahraga"
+                              name="dokumen_rekomendasi_olahraga" required>
+                           <label class="custom-file-label" for="dokumen_rekomendasi_olahraga">Pilih file</label>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="dokumen_ipk_olahraga">Unggah Transkrip Nilai/IPK</label>
+                     <div class="input-group">
+                        <div class="custom-file">
+                           <input type="file" class="custom-file-input" id="dokumen_ipk_olahraga"
+                              name="dokumen_ipk_olahraga" required>
+                           <label class="custom-file-label" for="dokumen_ipk_olahraga">Pilih file</label>
+                        </div>
+                     </div>
+                  </div>
                </div>
             </div>
             <!-- /.card-body -->
-
             <div class="card-footer">
                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
          </form>
       </div>
       <!-- /.card -->
-   </div>
-</div>
-<!-- /.row -->
-</div><!-- /.container-fluid -->
-<!-- /.content-wrapper -->
+   </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+<script>
+   document.getElementById('jenis_beasiswa').addEventListener('change', function () {
+      var syaratDivs = document.querySelectorAll('.syarat');
+      syaratDivs.forEach(function (div) {
+         div.style.display = 'none';
+      });
+
+      var selectedBeasiswa = this.value;
+      var selectedDiv = document.getElementById('syarat_' + selectedBeasiswa.split('_')[1]);
+      if (selectedDiv) {
+         selectedDiv.style.display = 'block';
+      }
+   });
+
+   // Menangkap perubahan pada input file
+   document.querySelectorAll('.custom-file-input').forEach(function (input) {
+      input.addEventListener('change', function () {
+         // Mengambil nama file yang dipilih
+         var fileName = this.files[0].name;
+         // Menampilkan nama file pada label custom-file-label yang sesuai
+         var label = this.nextElementSibling;
+         label.innerHTML = fileName;
+      });
+   });
+
+
+   // Initialize the first option's requirements to be visible
+   document.getElementById('jenis_beasiswa').dispatchEvent(new Event('change'));
+</script>

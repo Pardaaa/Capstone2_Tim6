@@ -9,6 +9,6 @@ router.get('/dashboard', (req, res) => {
 });
 
 router.get('/dokpengajuan', (req, res) => {
-   res.render('mahasiswa/pengajuan', { title: 'Dashboard Mahasiswa' });
+   res.render('mahasiswa/dokpengajuan', { title: 'Dashboard Mahasiswa' });
 });
 module.exports = router;
