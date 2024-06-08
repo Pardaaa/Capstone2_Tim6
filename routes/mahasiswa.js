@@ -11,4 +11,8 @@ router.get('/dashboard', (req, res) => {
 router.get('/dokpengajuan', (req, res) => {
    res.render('mahasiswa/dokpengajuan', { title: 'Dashboard Mahasiswa' });
 });
+
+router.get('/pengaturan', (req, res) => {
+   res.render('mahasiswa/pengaturan', { title: 'Dashboard Mahasiswa' });
+});
 module.exports = router;
