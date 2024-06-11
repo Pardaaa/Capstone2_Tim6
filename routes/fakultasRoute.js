@@ -1,12 +1,13 @@
-const express = require("express");
+const express = require('express');
 const {
-    getFakultas,
-    viewFakultas,
-    createFakultas,
-    createFakultasPage,
-    getFakultasById,
-    updateFakultas,
-    deleteFakultas } = require('../controller/fakultasController.js');
+   getFakultas,
+   viewFakultas,
+   createFakultas,
+   createFakultasPage,
+   getFakultasById,
+   updateFakultas,
+   deleteFakultas,
+} = require('../controller/fakultasController.js');
 
 const router = express.Router();
 

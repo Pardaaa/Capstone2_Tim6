@@ -15,12 +15,8 @@
 <section class="content">
    <div class="container-fluid">
       <div class="card card-primary">
-         <div class="card-header">
-            <h3 class="card-title">Form Pengajuan Beasiswa</h3>
-         </div>
-         <!-- /.card-header -->
          <!-- form start -->
-         <form action="/mahasiswa/dokpengajuan" method="post" enctype="multipart/form-data">
+         <form id="beasiswaForm" action="/mahasiswa/dokpengajuan" method="post" enctype="multipart/form-data">
             <div class="card-body">
                <div class="form-group">
                   <label for="nama">Nama</label>
@@ -30,6 +26,25 @@
                   <label for="nomor_mahasiswa">NRP Mahasiswa</label>
                   <input type="text" class="form-control" id="nomor_mahasiswa" name="nomor_mahasiswa"
                      placeholder="Masukkan Nomor Mahasiswa" required>
+               </div>
+               <div class="form-group">
+                  <label for="ipk_terakhir">IPK Terakhir</label>
+                  <input type="number" step="0.01" class="form-control" id="ipk_terakhir" name="ipk_terakhir"
+                     placeholder="Masukkan IPK Terakhir" required>
+               </div>
+
+               <div class="form-group">
+                  <label for="agama">Agama</label>
+                  <select class="form-control" id="agama" name="agama" required>
+                     <option value="">Pilih Agama</option>
+                     <option value="Islam">Islam</option>
+                     <option value="Kristen">Kristen</option>
+                     <option value="Katolik">Katolik</option>
+                     <option value="Hindu">Hindu</option>
+                     <option value="Buddha">Buddha</option>
+                     <option value="Konghucu">Konghucu</option>
+                     <option value="Lainnya">Lainnya</option>
+                  </select>
                </div>
                <div class="form-group">
                   <label for="jenis_beasiswa">Jenis Beasiswa:</label>
@@ -167,32 +182,53 @@
 </section>
 <!-- /.content -->
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
-   document.getElementById('jenis_beasiswa').addEventListener('change', function () {
-      var syaratDivs = document.querySelectorAll('.syarat');
-      syaratDivs.forEach(function (div) {
-         div.style.display = 'none';
+   $(document).ready(function () {
+      $('#jenis_beasiswa').on('change', function () {
+         var selectedBeasiswa = $(this).val();
+         $('.syarat').hide();
+         $('#syarat_' + selectedBeasiswa.split('_')[1]).show();
       });
 
-      var selectedBeasiswa = this.value;
-      var selectedDiv = document.getElementById('syarat_' + selectedBeasiswa.split('_')[1]);
-      if (selectedDiv) {
-         selectedDiv.style.display = 'block';
-      }
-   });
-
-   // Menangkap perubahan pada input file
-   document.querySelectorAll('.custom-file-input').forEach(function (input) {
-      input.addEventListener('change', function () {
-         // Mengambil nama file yang dipilih
-         var fileName = this.files[0].name;
-         // Menampilkan nama file pada label custom-file-label yang sesuai
-         var label = this.nextElementSibling;
-         label.innerHTML = fileName;
+      $('.custom-file-input').on('change', function () {
+         var fileName = $(this).val().split('\\').pop();
+         $(this).next('.custom-file-label').addClass('selected').html(fileName);
       });
+
+      $('#beasiswaForm').on('submit', function (event) {
+         event.preventDefault();
+         var form = $(this);
+         var isValid = true;
+         form.find('[required]').each(function () {
+            if (!$(this).val().trim()) {
+               isValid = false;
+               return false; // Keluar dari loop jika ada input kosong
+            }
+         });
+
+         if (isValid) {
+            Swal.fire({
+               icon: 'success',
+               title: 'Berhasil',
+               text: 'Dokumen telah berhasil dikirim!'
+            }).then(() => {
+               form.submit();
+            });
+         } else {
+            Swal.fire({
+               icon: 'error',
+               title: 'Oops...',
+               text: 'Pastikan semua kolom sudah terisi dengan benar.',
+               footer: '<a href="#">Ayo periksa kembali</a>'
+            });
+         }
+      });
+
+      $('#jenis_beasiswa').trigger('change'); // Jalankan perubahan jenis beasiswa saat halaman dimuat
    });
-
-
-   // Initialize the first option's requirements to be visible
-   document.getElementById('jenis_beasiswa').dispatchEvent(new Event('change'));
 </script>

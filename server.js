@@ -39,7 +39,7 @@ app.use(express.json());
 app.use(userRoute);
 app.use(fakultasRoute);
 app.use(authRoute);
-app.use('/mahasiswa', mahasiswaRoute);
+app.use(mahasiswaRoute);
 
 app.listen(process.env.APP_PORT, () => {
    console.log('Server Berjalan');
