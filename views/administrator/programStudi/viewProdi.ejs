@@ -39,7 +39,7 @@
                     <h3 class="text-bold">Pejabat Program Studi</h3>
                     <thead>
                         <tr>
-                            <th>Nama</th>
+                            <th class="w-50">Nama</th>
                             <th>Jabatan</th>
                         </tr>
                     </thead>
@@ -48,7 +48,7 @@
                             <% if (user.role=='Program Studi' ) { %>
                                 <tr>
                                     <td>
-                                        <%= user.username %>
+                                        <%= user.fullName %>
                                     </td>
                                     <td>
                                         <%= user.jabatan %>

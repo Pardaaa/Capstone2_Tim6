@@ -123,6 +123,7 @@
         if (roleSelect.value === 'Fakultas') {
             jabatan.style.display = 'block';
             prodi.style.display = 'none';
+            status.style.display = 'none';
             programStudiSelect.value = "";
             jabatanSelect.removeAttribute('disabled');
             jabatanSelect.innerHTML = `
@@ -132,11 +133,12 @@
         } else if (roleSelect.value === 'Program Studi') {
             jabatan.style.display = 'block';
             prodi.style.display = 'block';
+            status.style.display = 'none';
             jabatanSelect.removeAttribute('disabled');
             jabatanSelect.innerHTML = `
                 <option value="Ketua Program Studi">Ketua Program Studi</option>
             `;
-        } else {
+        } else if (roleSelect.value === 'Mahasiswa') {
             status.style.display = 'block';
             jabatan.style.display = 'none';
             prodi.style.display = 'block';
@@ -147,7 +149,6 @@
             `;
         }
     }
-
     window.onload = function () {
         jabatanList();
         document.getElementById('role').addEventListener('change', jabatanList);
