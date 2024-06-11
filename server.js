@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const session = require('express-session');
@@ -9,11 +10,11 @@ dotenv.config();
 
 const userRoute = require('./routes/userRoute');
 const fakultasRoute = require('./routes/fakultasRoute');
+const prodiRoute = require('./routes/prodiRoute');
 const authRoute = require('./routes/authRoute');
 const mahasiswaRoute = require('./routes/mahasiswa');
 
 const app = express();
-app.set('view engine', 'ejs');
 
 app.use(
    session({
@@ -28,10 +29,10 @@ app.use(
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 app.use(express.static(path.join(__dirname, 'public')));
-app.set('views', path.join(__dirname, 'views'));
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.set('layout', 'layouts/master');
 

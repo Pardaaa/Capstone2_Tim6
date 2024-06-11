@@ -1,16 +1,13 @@
-'use strict';
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/database.js');
+const sequelize = require('../config/database');
 
-class programStudi extends Model {
-  static associate(models) {
-  }
-}
+class ProgramStudi extends Model { }
 
-programStudi.init({
+ProgramStudi.init({
   programStudi_id: {
     type: DataTypes.STRING(20),
-    allowNull: false
+    allowNull: false,
+    primaryKey: true
   },
   namaProgramStudi: {
     type: DataTypes.STRING(30),
@@ -23,18 +20,18 @@ programStudi.init({
   namaFakultas: {
     type: DataTypes.STRING(30),
     allowNull: true
-  },
+  }
 }, {
   sequelize,
-  modelName: 'programStudi',
-  tableName: 'programStudis'
+  modelName: 'ProgramStudi',
+  tableName: 'programstudis'
 });
 
-programStudi.associate = function (models) {
-  programStudi.belongsTo(models.fakultas, {
+ProgramStudi.associate = function (models) {
+  ProgramStudi.belongsTo(models.Fakultas, {
     foreignKey: 'fakultas_id',
     targetKey: 'fakultas_id'
   });
 };
 
-module.exports = programStudi;
+module.exports = ProgramStudi;
