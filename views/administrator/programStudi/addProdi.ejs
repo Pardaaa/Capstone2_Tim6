@@ -1,15 +1,3 @@
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var fakultasSelect = document.getElementById('fakultas_id');
-        var namaFakultasInput = document.getElementById('namaFakultas');
-
-        fakultasSelect.addEventListener('change', function () {
-            var selectedOption = fakultasSelect.options[fakultasSelect.selectedIndex];
-            namaFakultasInput.value = selectedOption.text;
-        });
-    });
-</script>
-<!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -54,16 +42,11 @@
                                 <label for="fakultas_id">Nama Fakultas</label>
                                 <select class="form-control" id="fakultas_id" required name="fakultas_id">
                                     <% fakultasList.forEach(fakultas=> { %>
-                                        <option value="<%= fakultas.fakultas_id %>">
+                                        <option value="<%= fakultas.id %>">
                                             <%= fakultas.namaFakultas %>
                                         </option>
                                         <% }); %>
                                 </select>
-                            </div>
-                            <div class="form-group">
-                                <input type="hidden" class="form-control" id="namaFakultas"
-                                    placeholder="Teknik Informatika" name="namaFakultas" required autofocus
-                                    maxlength="30">
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary">Tambah Program Studi</button>

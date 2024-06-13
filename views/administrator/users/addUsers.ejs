@@ -76,7 +76,7 @@
                                 <label for="fakultas_id">Nama Fakultas</label>
                                 <select class="form-control" id="fakultas_id" required name="fakultas_id">
                                     <% fakultasList.forEach(fakultas=> { %>
-                                        <option value="<%= fakultas.fakultas_id %>">
+                                        <option value="<%= fakultas.id %>">
                                             <%= fakultas.namaFakultas %>
                                         </option>
                                         <% }); %>
@@ -86,7 +86,7 @@
                                 <label for="programStudi_id">Nama Program Studi</label>
                                 <select class="form-control" id="programStudi_id" name="programStudi_id">
                                     <% prodiList.forEach(prodi=> { %>
-                                        <option value="<%= prodi.programStudi_id %>">
+                                        <option value="<%= prodi.id %>">
                                             <%= prodi.namaProgramStudi %>
                                         </option>
                                         <% }); %>

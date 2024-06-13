@@ -2,13 +2,14 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database.js');
 
-class fakultas extends Model {
+class Fakultas extends Model {
   static associate(models) {
+    this.hasMany(models.ProgramStudi, { foreignKey: 'fakultas_id' });
+    this.hasMany(models.User, { foreignKey: 'fakultas_id' });
   }
 }
 
-
-fakultas.init({
+Fakultas.init({
   fakultas_id: {
     type: DataTypes.STRING(20),
     allowNull: false
@@ -19,8 +20,8 @@ fakultas.init({
   }
 }, {
   sequelize,
-  modelName: 'fakultas',
+  modelName: 'Fakultas',
   tableName: 'fakultas'
 });
 
-module.exports = fakultas;
+module.exports = Fakultas;

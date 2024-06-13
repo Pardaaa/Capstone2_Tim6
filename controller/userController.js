@@ -1,5 +1,5 @@
 const user = require('../models/user');
-const fakultas = require('../models/fakultas');
+const Fakultas = require('../models/fakultas');
 const prodi = require('../models/programstudi');
 const bcrypt = require('bcrypt');
 
@@ -23,7 +23,7 @@ exports.getUsersById = async (req, res) => {
                 id: req.params.id
             }
         });
-        const fakultasList = await fakultas.findAll();
+        const fakultasList = await Fakultas.findAll();
         const prodiList = await prodi.findAll();
         if (users) {
             res.render('administrator/users/updateUsers', { users: users, fakultasList: fakultasList, prodiList: prodiList, title: 'Update Users', message: req.query.message });
@@ -37,10 +37,11 @@ exports.getUsersById = async (req, res) => {
 
 exports.createUserPage = async (req, res) => {
     try {
-        const fakultasList = await fakultas.findAll();
+        const fakultasList = await Fakultas.findAll();
         const prodiList = await prodi.findAll();
         res.render('administrator/users/addUsers', { fakultasList: fakultasList, prodiList: prodiList, title: 'Tambah Users', message: req.query.message })
     } catch (error) {
+        console.error(error)
         res.status(500).send('Internal Server Error');
     }
 

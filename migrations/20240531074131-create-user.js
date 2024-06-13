@@ -31,19 +31,19 @@ module.exports = {
         type: Sequelize.ENUM('Aktif', 'Pasif')
       },
       fakultas_id: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.INTEGER,
         references: {
-          model: 'fakultas',
-          key: 'fakultas_id'
+          model: 'Fakultas',
+          key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
       },
       programStudi_id: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.INTEGER,
         references: {
           model: 'programStudis',
-          key: 'programStudi_id'
+          key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'

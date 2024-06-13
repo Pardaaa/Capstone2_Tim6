@@ -17,16 +17,13 @@ module.exports = {
         type: Sequelize.STRING(30)
       },
       fakultas_id: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.INTEGER,
         references: {
-          model: 'fakultas',
-          key: 'fakultas_id'
+          model: 'Fakultas',
+          key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
-      },
-      namaFakultas: {
-        type: Sequelize.STRING(30)
       },
       createdAt: {
         allowNull: false,

@@ -7,7 +7,7 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/prodi">Home</a></li>
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
                     <li class="breadcrumb-item active">Program Studi Data Page</li>
                 </ol>
             </div><!-- /.col -->
@@ -66,17 +66,17 @@
                                     <%= prodis.namaProgramStudi %>
                                 </td>
                                 <td>
-                                    <%= prodis.namaFakultas %>
+
                                 </td>
                                 <td>
                                     <div class="d-flex">
                                         <form action="/prodi/views/<%= prodis.fakultas_id %>" method="get">
                                             <button type="submit" class="btn btn-info mr-2">Views</button>
                                         </form>
-                                        <form action="" method="get">
+                                        <form action="/prodi/edit/<%= prodis.id %>" method="get">
                                             <button type="submit" class="btn btn-warning mr-2">Edit</button>
                                         </form>
-                                        <form action="" method="get"
+                                        <form action="/prodi/delete/<%= prodis.id %>" method="get"
                                             onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                             <button type="submit" class="btn btn-danger ">Hapus</button>
                                         </form>

@@ -1,37 +1,34 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const Fakultas = require('./fakultas')
 
-class ProgramStudi extends Model { }
+class ProgramStudi extends Model {
+  static associate(models) {
+    this.belongsTo(models.Fakultas, { foreignKey: 'fakultas_id' });
+  }
+};
 
 ProgramStudi.init({
   programStudi_id: {
     type: DataTypes.STRING(20),
-    allowNull: false,
-    primaryKey: true
+    allowNull: false
   },
   namaProgramStudi: {
     type: DataTypes.STRING(30),
     allowNull: false
   },
   fakultas_id: {
-    type: DataTypes.STRING(20),
-    allowNull: true
-  },
-  namaFakultas: {
-    type: DataTypes.STRING(30),
-    allowNull: true
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: Fakultas,
+      key: 'id'
+    }
   }
 }, {
   sequelize,
   modelName: 'ProgramStudi',
   tableName: 'programstudis'
 });
-
-ProgramStudi.associate = function (models) {
-  ProgramStudi.belongsTo(models.Fakultas, {
-    foreignKey: 'fakultas_id',
-    targetKey: 'fakultas_id'
-  });
-};
 
 module.exports = ProgramStudi;

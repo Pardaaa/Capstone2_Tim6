@@ -2,10 +2,11 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database.js');
 const Fakultas = require('./fakultas');
-const prodi = require('./programstudi');
+const Programstudi = require('./programstudi');
 
 class User extends Model {
   static associate(models) {
+
   }
 }
 
@@ -40,11 +41,11 @@ User.init({
     allowNull: true
   },
   fakultas_id: {
-    type: DataTypes.STRING(20),
+    type: DataTypes.INTEGER,
     allowNull: true
   },
   programStudi_id: {
-    type: DataTypes.STRING(20),
+    type: DataTypes.INTEGER,
     allowNull: true
   }
 }, {
@@ -52,16 +53,5 @@ User.init({
   modelName: 'User',
   tableName: 'users'
 });
-
-User.associate = function (models) {
-  User.belongsTo(models.Fakultas, {
-    foreignKey: 'fakultas_id',
-    targetKey: 'fakultas_id'
-  });
-  User.belongsTo(models.prodi, {
-    foreignKey: 'programStudi_id',
-    targetKey: 'programStudi_id'
-  });
-};
 
 module.exports = User;
