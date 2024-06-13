@@ -31,6 +31,64 @@ exports.login = async (req, res) => {
     }
 };
 
+exports.forgetPassPage = (req, res) => {
+    res.render('login/forgetPass', { layout: false, message: req.query.message });
+};
+
+exports.forgetPass = async (req, res) => {
+    const email = req.body.email;
+
+    try {
+        const foundUser = await user.findOne({
+            where: {
+                email: email
+            }
+        });
+
+        if (foundUser) {
+            res.redirect(`/recoPass?email=${email}`);
+        } else {
+            res.redirect(`/forgetPass?message=User tidak ditemukan`);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+exports.recoPassPage = (req, res) => {
+    const email = req.query.email;
+    res.render('login/recoverPass', { email, layout: false, message: req.query.message });
+};
+
+exports.recoPass = async (req, res) => {
+    const { email, password, confirmPassword } = req.body;
+
+    if (password !== confirmPassword) {
+        return res.redirect(`/recoPass?email=${email}&message=Passwords tidak cocok`);
+    }
+
+    try {
+        const foundUser = await user.findOne({
+            where: {
+                email: email
+            }
+        });
+
+        if (foundUser) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            foundUser.password = hashedPassword;
+            await foundUser.save();
+            res.redirect('/?message=Password Berhasil Diubah, Silahkan melakukan Log in');
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
 exports.logout = (req, res) => {
     req.session.destroy((err) => {
         if (err) return res.status(400).json("Tidak dapat logout");
