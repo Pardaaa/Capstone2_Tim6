@@ -32,7 +32,7 @@ exports.getProdiById = async (req, res) => {
             }
         });
 
-        const fakultasList = await Fakultas.findAll();
+        const fakultasList = await fakultas.findAll();
         res.render('administrator/programStudi/updateProdi', { prodi, fakultasList, title: 'Update Program Studi', message: req.query.message });
     } catch (error) {
         console.error(error);
@@ -42,9 +42,10 @@ exports.getProdiById = async (req, res) => {
 
 exports.createProdiPage = async (req, res) => {
     try {
-        const fakultasList = await Fakultas.findAll();
+        const fakultasList = await fakultas.findAll();
         res.render('administrator/programStudi/addProdi', { fakultasList: fakultasList, title: 'Tambah Program Studi', message: req.query.message })
     } catch (error) {
+        console.error(error)
         res.status(500).send('Internal Server Error');
     }
 }
@@ -72,12 +73,14 @@ exports.updateProdi = async (req, res) => {
             }
         });
 
-        const { programStudi_id, namaProgramStudi, fakultas_id } = req.body;
+
+        const { programStudi_id, namaProgramStudi, fakultas_id, namaFakultas } = req.body;
 
         await prodi.update({
             programStudi_id: programStudi_id,
             namaProgramStudi: namaProgramStudi,
-            fakultas_id: fakultas_id
+            fakultas_id: fakultas_id,
+            namaFakultas: namaFakultas
         });
 
         res.status(200).redirect('/prodi?message=Update Berhasil');

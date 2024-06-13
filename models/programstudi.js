@@ -20,6 +20,10 @@ ProgramStudi.init({
   fakultas_id: {
     type: DataTypes.INTEGER,
     allowNull: true
+  },
+  namaFakultas: {
+    type: DataTypes.STRING(30),
+    allowNull: false
   }
 }, {
   sequelize,
