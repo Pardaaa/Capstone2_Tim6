@@ -19,11 +19,7 @@ ProgramStudi.init({
   },
   fakultas_id: {
     type: DataTypes.INTEGER,
-    allowNull: true,
-    references: {
-      model: Fakultas,
-      key: 'id'
-    }
+    allowNull: true
   }
 }, {
   sequelize,
