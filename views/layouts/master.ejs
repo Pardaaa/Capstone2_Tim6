@@ -60,7 +60,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">
+                            <%= username ? username : 'Guest' %>
+                        </a>
                     </div>
                 </div>
 
@@ -68,30 +70,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <li class="nav-item">
-                            <a href="/users" class="nav-link">
-                                <i class="nav-icon fas fa-carrot"></i>
-                                <p>
-                                    Users
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/fakultas" class="nav-link">
-                                <i class="nav-icon fas fa-crown"></i>
-                                <p>
-                                    Fakultas
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/prodi" class="nav-link">
-                                <i class="nav-icon fas fa-carrot"></i>
-                                <p>
-                                    Program Studi
-                                </p>
-                            </a>
-                        </li>
+                        <% if (role==='Admin' ) { %>
+                            <li class="nav-item">
+                                <a href="/users" class="nav-link">
+                                    <i class="nav-icon fas fa-carrot"></i>
+                                    <p>
+                                        Users
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/fakultas" class="nav-link">
+                                    <i class="nav-icon fas fa-crown"></i>
+                                    <p>
+                                        Fakultas
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/prodi" class="nav-link">
+                                    <i class="nav-icon fas fa-carrot"></i>
+                                    <p>
+                                        Program Studi
+                                    </p>
+                                </a>
+                            </li>
+                            <% } %>
+                                <li class="nav-item">
+                                    <a href="/logout" class="nav-link accent-blue">
+                                        <i class="nav-icon fas fa-carrot"></i>
+                                        <p>
+                                            Logout
+                                        </p>
+                                    </a>
+                                </li>
             </div>
             <!-- /.sidebar -->
         </aside>

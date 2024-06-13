@@ -12,17 +12,19 @@ const userRoute = require('./routes/userRoute');
 const fakultasRoute = require('./routes/fakultasRoute');
 const prodiRoute = require('./routes/prodiRoute');
 const authRoute = require('./routes/authRoute');
-const mahasiswaRoute = require('./routes/mahasiswa');
+const userInfo = require('./middleware/userInfo');
+// const mahasiswaRoute = require('/routes/mahasiswaRoute');
 
 const app = express();
 
 app.use(
    session({
       secret: process.env.SESS_SECRET,
-      resave: true,
-      saveUninitialized: true,
+      resave: false,
+      saveUninitialized: false,
       cookie: {
-         secure: 'auto',
+         secure: false,
+         maxAge: 1000 * 60 * 60 * 24
       },
    })
 );
@@ -37,10 +39,12 @@ app.use(expressLayouts);
 app.set('layout', 'layouts/master');
 
 app.use(express.json());
-app.use(userRoute);
-app.use(fakultasRoute);
+app.use(userInfo);
 app.use(authRoute);
-app.use(mahasiswaRoute);
+app.use(userRoute);
+app.use(prodiRoute);
+app.use(fakultasRoute);
+// app.use(mahasiswaRoute);
 
 app.listen(process.env.APP_PORT, () => {
    console.log('Server Berjalan');

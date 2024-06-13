@@ -10,6 +10,6 @@ const router = express.Router();
 router.get('/dashboard', dashboard)
 router.get('/', loginPage);
 router.post('/', login);
-router.delete('/logout', logout);
+router.get('/logout', logout);
 
 module.exports = router;

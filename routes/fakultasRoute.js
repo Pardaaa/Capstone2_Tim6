@@ -8,16 +8,16 @@ const {
    updateFakultas,
    deleteFakultas,
 } = require('../controller/fakultasController.js');
+const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
-// Fakultas
-router.get('/fakultas', getFakultas);
-router.get('/fakultas/views/:id', viewFakultas);
-router.get('/fakultas/edit/:id', getFakultasById);
-router.post('/fakultas/edit/:id', updateFakultas);
-router.get('/fakultas/create', createFakultasPage);
-router.post('/fakultas/create', createFakultas);
-router.get('/fakultas/delete/:id', deleteFakultas);
+router.get('/fakultas', authMiddleware, getFakultas);
+router.get('/fakultas/views/:id', authMiddleware, viewFakultas);
+router.get('/fakultas/edit/:id', authMiddleware, getFakultasById);
+router.post('/fakultas/edit/:id', authMiddleware, updateFakultas);
+router.get('/fakultas/create', authMiddleware, createFakultasPage);
+router.post('/fakultas/create', authMiddleware, createFakultas);
+router.get('/fakultas/delete/:id', authMiddleware, deleteFakultas);
 
 module.exports = router;
