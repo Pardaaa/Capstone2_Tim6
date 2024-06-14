@@ -1,24 +1,22 @@
-<!-- Content Header (Page header) -->
+<!-- Nathan -->
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h2 class="text-bold">Informasi <%= prodis.namaProgramStudi %>
                 </h2>
-            </div><!-- /.col -->
+            </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/prodi">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
                     <li class="breadcrumb-item"><a href="/prodi">Program Studi</a></li>
                     <li class="breadcrumb-item active">Views Program Studi Page</li>
                 </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+            </div>
+        </div>
+    </div>
 </div>
-<!-- /.content-header -->
 
-<!-- Main content -->
 <div class="content">
     <div class="container-fluid">
         <div class="content">
@@ -72,7 +70,7 @@
                             <% if (user.role=='Mahasiswa' ) { %>
                                 <tr>
                                     <td>
-                                        <%= user.id %>
+                                        <%= user.userId %>
                                     </td>
                                     <td>
                                         <%= user.fullName %>
@@ -88,5 +86,5 @@
             </div>
         </div>
     </div>
-</div><!-- /.container-fluid -->
-<!-- /.content -->
+</div>
+<!-- Nathan -->

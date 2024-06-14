@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize');
 const config = require('./config.json'); // Ensure the path is correct
 
+// Nathan
 const sequelize = new Sequelize(
     config.development.database,
     config.development.username,
@@ -20,3 +21,4 @@ sequelize.authenticate()
     });
 
 module.exports = sequelize;
+// Nathan

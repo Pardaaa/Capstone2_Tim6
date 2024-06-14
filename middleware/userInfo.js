@@ -1,3 +1,4 @@
+// Nathan
 module.exports = (req, res, next) => {
     if (req.session && req.session.username && req.session.role) {
         res.locals.username = req.session.username;
@@ -8,3 +9,4 @@ module.exports = (req, res, next) => {
     }
     next();
 };
+// Nathan

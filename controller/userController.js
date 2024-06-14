@@ -3,10 +3,7 @@ const Fakultas = require('../models/fakultas');
 const prodi = require('../models/programstudi');
 const bcrypt = require('bcrypt');
 
-exports.dashboard = (req, res) => {
-    res.render('administrator/dashboard', { title: 'Admin' })
-}
-
+// Nathan
 exports.getUsers = async (req, res) => {
     try {
         const users = await user.findAll();
@@ -48,14 +45,31 @@ exports.createUserPage = async (req, res) => {
 }
 
 exports.createUser = async (req, res) => {
-    const { username, fullName, email, password, confPassword, role, jabatan, status, fakultas_id, programStudi_id } = req.body;
+    const { userId, username, fullName, email, password, confPassword, role, jabatan, status, fakultas_id, programStudi_id } = req.body;
     if (password !== confPassword) {
         return res.status(400).redirect(`/users/create?message=Password dan Confirm Password Tidak Cocok`);
     };
+    if (password.length < 8) {
+        return res.status(400).redirect('/users/create?message=Password minimal 8 karakter')
+    }
 
     try {
+        const exsistuserId = await user.findOne({ where: { userId: userId } });
+        if (exsistuserId) {
+            return res.status(400).redirect('/users/create?message=User ID sudah digunakan');
+        }
+        const exsistEmail = await user.findOne({ where: { email: email } });
+        if (exsistEmail) {
+            return res.status(400).redirect('/users/create?message=Email sudah digunakan');
+        }
+        const exsistUserName = await user.findOne({ where: { username: username } });
+        if (exsistUserName) {
+            return res.status(400).redirect('/users/create?message=Username sudah digunakan');
+        }
+
         const hashPassword = await bcrypt.hash(password, 10);
         await user.create({
+            userId: userId,
             username: username,
             fullName: fullName,
             email: email,
@@ -78,19 +92,38 @@ exports.updateUser = async (req, res) => {
             id: req.params.id
         }
     });
-    const { username, fullName, email, password, confPassword, role, jabatan, status, fakultas_id, programStudi_id } = req.body;
-    const userId = req.params.id;
+    const { userId, username, fullName, email, password, confPassword, role, jabatan, status, fakultas_id, programStudi_id } = req.body;
+    const usersId = req.params.id;
     if (password !== confPassword) {
-        return res.status(400).redirect(`/users/edit/${userId}?message=Password dan Confirm Password Tidak Cocok`);
+        return res.status(400).redirect(`/users/edit/${usersId}?message=Password dan Confirm Password Tidak Cocok`);
     };
+
     try {
+        if (email !== users.email) {
+            const existingEmail = await user.findOne({ where: { email: email } });
+            if (existingEmail) {
+                return res.status(400).redirect(`/users/edit/${usersId}?message=Email sudah digunakan`);
+            }
+        }
+
+        if (username !== users.username) {
+            const exsistUserName = await user.findOne({ where: { username: username } });
+            if (exsistUserName) {
+                return res.status(400).redirect(`/users/edit/${usersId}?message=Username sudah digunakan`);
+            }
+        }
+
         let hashPassword;
         if (password === "" || password === null) {
             hashPassword = users.password
+        } else if (password.length < 8) {
+            return res.status(400).redirect(`/users/edit/${usersId}?message=Password minimal 8 karakter`)
         } else {
             hashPassword = await bcrypt.hash(password, 10);
         }
+
         await user.update({
+            userId: userId,
             username: username,
             fullName: fullName,
             email: email,
@@ -129,3 +162,4 @@ exports.deleteUser = async (req, res) => {
         res.status(400);
     }
 }
+// Nathan

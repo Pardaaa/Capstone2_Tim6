@@ -4,6 +4,7 @@ const sequelize = require('../config/database.js');
 const Fakultas = require('./fakultas');
 const Programstudi = require('./programstudi');
 
+// Nathan
 class User extends Model {
   static associate(models) {
 
@@ -11,9 +12,15 @@ class User extends Model {
 }
 
 User.init({
+  userId: {
+    type: DataTypes.STRING(7),
+    allowNull: false,
+    unique: true
+  },
   username: {
     type: DataTypes.STRING(50),
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   fullName: {
     type: DataTypes.STRING(50),
@@ -55,3 +62,4 @@ User.init({
 });
 
 module.exports = User;
+// Nathan

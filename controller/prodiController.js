@@ -2,10 +2,12 @@ const programStudi = require('../models/programstudi');
 const fakultas = require('../models/fakultas');
 const user = require('../models/user');
 
+// Nathan
 exports.getProdi = async (req, res) => {
     try {
         const prodi = await programStudi.findAll();
-        res.render('administrator/programStudi/prodi', { prodi: prodi, title: 'Program Studi', message: req.query.message });
+        const uniqueFakultas = [...new Set(prodi.map(p => p.namaFakultas))];
+        res.render('administrator/programStudi/prodi', { prodi: prodi, uniqueFakultas: uniqueFakultas, title: 'Program Studi', message: req.query.message });
     } catch (error) {
         console.error(error)
         res.status(404).send('Program Studi not found');
@@ -53,6 +55,14 @@ exports.createProdiPage = async (req, res) => {
 exports.createProdi = async (req, res) => {
     const { programStudi_id, namaProgramStudi, fakultas_id, namaFakultas } = req.body;
     try {
+        const exsistProdiId = await programStudi.findOne({ where: { programStudi_id: programStudi_id } });
+        if (exsistProdiId) {
+            return res.status(400).redirect('/prodi/create?message=ID Program Studi sudah digunakan');
+        }
+        const exsistNamaProdi = await programStudi.findOne({ where: { namaProgramStudi: namaProgramStudi } });
+        if (exsistNamaProdi) {
+            return res.status(400).redirect('/prodi/create?message=Nama Program Studi sudah digunakan');
+        }
         await programStudi.create({
             programStudi_id: programStudi_id,
             namaProgramStudi: namaProgramStudi,
@@ -66,15 +76,22 @@ exports.createProdi = async (req, res) => {
 }
 
 exports.updateProdi = async (req, res) => {
+    const prodi = await programStudi.findOne({
+        where: {
+            id: req.params.id
+        }
+    });
+    const { programStudi_id, namaProgramStudi, fakultas_id, namaFakultas } = req.body;
+    const prodiId = req.params.id
     try {
-        const prodi = await programStudi.findOne({
-            where: {
-                id: req.params.id
+        if (namaProgramStudi !== prodi.namaProgramStudi) {
+            const exsistNamaProdi = await programStudi.findOne({ where: { namaProgramStudi: namaProgramStudi } });
+            if (exsistNamaProdi) {
+                return res.status(400).redirect(`/prodi/edit/${prodiId}?message=Nama Program Studi sudah digunakan`);
             }
-        });
+        }
 
 
-        const { programStudi_id, namaProgramStudi, fakultas_id, namaFakultas } = req.body;
 
         await prodi.update({
             programStudi_id: programStudi_id,
@@ -110,5 +127,4 @@ exports.deleteProdi = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
-
-// Fakultas End
+// Nathan

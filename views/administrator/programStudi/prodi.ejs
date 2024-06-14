@@ -1,22 +1,20 @@
-<!-- Content Header (Page header) -->
+<!-- Nathan -->
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1 class="m-0">Data Program Studi</h1>
-            </div><!-- /.col -->
+            </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
                     <li class="breadcrumb-item active">Program Studi Data Page</li>
                 </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+            </div>
+        </div>
+    </div>
 </div>
-<!-- /.content-header -->
 
-<!-- Main content -->
 <div class="content">
     <div class="container-fluid">
         <div class="content">
@@ -37,9 +35,9 @@
                     <label for="filterFakultas" class="mr-2">Filter by Fakultas:</label>
                     <select class="form-control d-inline-block w-auto" id="filterFakultas">
                         <option value="">All</option>
-                        <% prodi.forEach(prodis=> { %>
-                            <option value="<%= prodis.namaFakultas %>">
-                                <%= prodis.namaFakultas %>
+                        <% uniqueFakultas.forEach(fakultas=> { %>
+                            <option value="<%= fakultas %>">
+                                <%= fakultas %>
                             </option>
                             <% }) %>
                     </select>
@@ -89,8 +87,7 @@
             </div>
         </div>
     </div>
-</div><!-- /.container-fluid -->
-<!-- /.content -->
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -115,3 +112,4 @@
         });
     });
 </script>
+<!-- Nathan -->

@@ -2,6 +2,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database.js');
 
+// Nathan
 class Fakultas extends Model {
   static associate(models) {
     this.hasMany(models.ProgramStudi, { foreignKey: 'fakultas_id' });
@@ -12,9 +13,11 @@ class Fakultas extends Model {
 Fakultas.init({
   fakultas_id: {
     type: DataTypes.STRING(20),
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   namaFakultas: {
+    unique: true,
     type: DataTypes.STRING(30),
     allowNull: false
   }
@@ -25,3 +28,4 @@ Fakultas.init({
 });
 
 module.exports = Fakultas;
+// Nathan

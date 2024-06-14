@@ -2,6 +2,7 @@ const fakultas = require('../models/fakultas');
 const user = require('../models/user');
 const prodi = require('../models/programstudi')
 
+// Nathan 
 exports.getFakultas = async (req, res) => {
     try {
         const Fakultas = await fakultas.findAll();
@@ -46,6 +47,15 @@ exports.createFakultasPage = (req, res) => {
 exports.createFakultas = async (req, res) => {
     const { fakultas_id, namaFakultas } = req.body;
     try {
+        const exsistFakultasId = await fakultas.findOne({ where: { fakultas_id: fakultas_id } });
+        if (exsistFakultasId) {
+            return res.status(400).redirect('/fakultas/create?message=Fakultas ID sudah digunakan');
+        }
+        const exsistNamaFakultas = await fakultas.findOne({ where: { namaFakultas: namaFakultas } });
+        if (exsistNamaFakultas) {
+            return res.status(400).redirect('/fakultas/create?message=Nama Fakultas sudah digunakan');
+        }
+
         await fakultas.create({
             fakultas_id: fakultas_id,
             namaFakultas: namaFakultas
@@ -63,7 +73,14 @@ exports.updateFakultas = async (req, res) => {
         }
     });
     const { fakultas_id, namaFakultas } = req.body;
+    const fakultasID = req.params.id;
     try {
+        if (namaFakultas !== Fakultas.namaFakultas) {
+            const exsistNamaFakultas = await fakultas.findOne({ where: { namaFakultas: namaFakultas } });
+            if (exsistNamaFakultas) {
+                return res.status(400).redirect(`/fakultas/edit/${fakultasID}?message=Nama Fakultas sudah digunakan`);
+            }
+        }
         await fakultas.update({
             fakultas_id: fakultas_id,
             namaFakultas: namaFakultas
@@ -96,5 +113,4 @@ exports.deleteFakultas = async (req, res) => {
         res.status(400);
     }
 }
-
-// Fakultas End
+// Nathan

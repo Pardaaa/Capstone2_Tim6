@@ -1,4 +1,5 @@
 'use strict';
+// Nathan
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -11,10 +12,13 @@ module.exports = {
       },
       programStudi_id: {
         unique: true,
-        type: Sequelize.STRING(20)
+        type: Sequelize.STRING(20),
+        allowNull: false,
       },
       namaProgramStudi: {
-        type: Sequelize.STRING(30)
+        unique: true,
+        type: Sequelize.STRING(30),
+        allowNull: false,
       },
       fakultas_id: {
         type: Sequelize.INTEGER,
@@ -26,7 +30,8 @@ module.exports = {
         onDelete: 'SET NULL'
       },
       namaFakultas: {
-        type: Sequelize.STRING(30)
+        type: Sequelize.STRING(30),
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -42,3 +47,4 @@ module.exports = {
     await queryInterface.dropTable('programStudis');
   }
 };
+// Nathan

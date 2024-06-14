@@ -1,6 +1,7 @@
 const user = require('../models/user.js');
 const bcrypt = require('bcrypt');
 
+// Nathan
 exports.dashboard = async (req, res) => {
     const users = await user.findAll();
     res.render('dashboard', { users: users, title: 'Admin' });
@@ -67,6 +68,9 @@ exports.recoPass = async (req, res) => {
     if (password !== confirmPassword) {
         return res.redirect(`/recoPass?email=${email}&message=Passwords tidak cocok`);
     }
+    if (password.length < 8) {
+        return res.status(400).redirect('/recoPass?message=Password minimal 8 karakter')
+    }
 
     try {
         const foundUser = await user.findOne({
@@ -95,3 +99,4 @@ exports.logout = (req, res) => {
         res.status(200).redirect('/?message=Anda Telah Logout');
     });
 };
+// Nathan
