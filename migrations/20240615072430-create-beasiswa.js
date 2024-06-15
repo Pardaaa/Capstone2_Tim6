@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('beasiswas', {
+    await queryInterface.createTable('beasiswa', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,10 +10,24 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       namaBeasiswa: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(30),
+        allowNull: false
       },
       syarat: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
+      jenisBeasiswa: {
+        type: Sequelize.ENUM('Internal'),
+        allowNull: false,
+      },
+      start_date: {
+        type: Sequelize.DATE,
+        allowNull: true
+      },
+      end_date: {
+        type: Sequelize.DATE,
+        allowNull: true
       },
       createdAt: {
         allowNull: false,

@@ -1,9 +1,10 @@
-const { User: user, Fakultas: Fakultas, Programstudi: prodi } = require('../models');
+const { User: user, Fakultas: Fakultas, Programstudi: prodi, Beasiswa: beasiswa } = require('../models');
 const bcrypt = require('bcrypt');
 
 // Nathan
 exports.getUsers = async (req, res) => {
     try {
+        beasiswa
         const users = await user.findAll();
         res.render('administrator/users/users', { users: users, title: 'Users', message: req.query.message });
     } catch (error) {
@@ -165,4 +166,40 @@ exports.deleteUser = async (req, res) => {
         res.status(400);
     }
 }
+
+exports.getBeasiswa = async (req, res) => {
+    try {
+        const beasiswas = await beasiswa.findAll();
+        res.render('administrator/beasiswa/beasiswa', { beasiswas: beasiswas, title: 'Beasiswa', message: req.query.message });
+    } catch (error) {
+        res.status(404).send('Users not found');
+    }
+}
+
+exports.createBeasiswaPage = async (req, res) => {
+    try {
+        res.render('administrator/beasiswa/addBeasiswa', {
+            title: 'Tambah Beasiswa',
+            message: req.query.message
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+exports.createBeasiswa = async (req, res) => {
+    const { namaBeasiswa, syarat, jenisBeasiswa } = req.body;
+    try {
+        await beasiswa.create({
+            namaBeasiswa: namaBeasiswa,
+            syarat: syarat,
+            jenisBeasiswa: jenisBeasiswa
+        });
+        res.redirect('/beasiswa?message=Input Berhasil');
+    } catch (error) {
+        res.status(400);
+    }
+}
+
 // Nathan

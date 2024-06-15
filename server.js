@@ -8,7 +8,7 @@ const expressLayouts = require('express-ejs-layouts');
 
 dotenv.config();
 
-const userRoute = require('./routes/userRoute');
+const adminRoute = require('./routes/adminRoute');
 const fakultasRoute = require('./routes/fakultasRoute');
 const prodiRoute = require('./routes/prodiRoute');
 const authRoute = require('./routes/authRoute');
@@ -41,7 +41,7 @@ app.set('layout', 'layouts/master');
 app.use(express.json());
 app.use(userInfo);
 app.use(authRoute);
-app.use(userRoute);
+app.use(adminRoute);
 app.use(prodiRoute);
 app.use(fakultasRoute);
 // app.use(mahasiswaRoute);
