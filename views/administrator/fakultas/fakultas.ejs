@@ -54,14 +54,17 @@
                                 <td>
                                     <div class="d-flex">
                                         <form action="/fakultas/views/<%= fakultas.id %>" method="get">
-                                            <button type="submit" class="btn btn-info mr-2">Views</button>
+                                            <button type="submit" class="btn btn-info mr-2 "><i
+                                                    class="fas fa-eye"></i></button>
                                         </form>
                                         <form action="/fakultas/edit/<%= fakultas.id %>" method="get">
-                                            <button type="submit" class="btn btn-warning mr-2">Edit</button>
+                                            <button type="submit" class="btn btn-warning mr-2"><i
+                                                    class="fas fa-edit"></i></button>
                                         </form>
                                         <form action="/fakultas/delete/<%= fakultas.id %>" method="get"
                                             onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
-                                            <button type="submit" class="btn btn-danger ">Hapus</button>
+                                            <button type="submit" class="btn btn-danger"><i
+                                                    class="fas fa-trash"></i></button>
                                         </form>
                                     </div>
                                 </td>

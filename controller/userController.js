@@ -1,6 +1,4 @@
-const user = require('../models/user');
-const Fakultas = require('../models/fakultas');
-const prodi = require('../models/programstudi');
+const { User: user, Fakultas: Fakultas, Programstudi: prodi } = require('../models');
 const bcrypt = require('bcrypt');
 
 // Nathan

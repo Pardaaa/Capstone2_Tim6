@@ -1,6 +1,4 @@
-const fakultas = require('../models/fakultas');
-const user = require('../models/user');
-const prodi = require('../models/programstudi')
+const { User: user, Fakultas: fakultas, Programstudi: prodi } = require('../models');
 
 // Nathan 
 exports.getFakultas = async (req, res) => {
@@ -16,9 +14,10 @@ exports.viewFakultas = async (req, res) => {
     try {
         const users = await user.findAll({ where: { fakultas_id: req.params.id } });
         const prodis = await prodi.findAll({ where: { fakultas_id: req.params.id } });
-        const Fakultas = await fakultas.findAll({ where: { fakultas_id: req.params.id } });
-        res.render('administrator/fakultas/viewFakultas', { users, Fakultas, prodis, title: 'Views Fakultas' });
+        const Fakultas = await fakultas.findOne({ where: { id: req.params.id } });
+        res.render('administrator/fakultas/viewFakultas', { users, prodis, Fakultas, title: 'Views Fakultas' });
     } catch (error) {
+        console.error(error);
         res.status(500).send('Internal Server Error');
     }
 }

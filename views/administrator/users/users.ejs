@@ -72,11 +72,13 @@
                                     <td>
                                         <div class="d-flex">
                                             <form action="/users/edit/<%= user.id %>" method="get">
-                                                <button type="submit" class="btn btn-warning mr-2">Edit</button>
+                                                <button type="submit" class="btn btn-warning mr-2"><i
+                                                        class="fas fa-edit"></i></button>
                                             </form>
                                             <form action="/users/delete/<%= user.id %>" method="get"
                                                 onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
-                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                                <button type="submit" class="btn btn-danger"><i
+                                                        class="fas fa-trash"></i></button>
                                             </form>
                                         </div>
                                     </td>

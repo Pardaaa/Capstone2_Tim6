@@ -1,13 +1,20 @@
-const programStudi = require('../models/programstudi');
-const fakultas = require('../models/fakultas');
-const user = require('../models/user');
+const { User: user, Fakultas: fakultas, Programstudi: programStudi } = require('../models');
 
 // Nathan
 exports.getProdi = async (req, res) => {
     try {
-        const prodi = await programStudi.findAll();
-        const uniqueFakultas = [...new Set(prodi.map(p => p.namaFakultas))];
-        res.render('administrator/programStudi/prodi', { prodi: prodi, uniqueFakultas: uniqueFakultas, title: 'Program Studi', message: req.query.message });
+        const prodi = await programStudi.findAll({
+            include: fakultas,
+            raw: true
+        });
+
+        const uniqueFakultas = [...new Set(prodi.map(p => p['Fakulta.namaFakultas']))];
+        res.render('administrator/programStudi/prodi', {
+            prodi: prodi,
+            uniqueFakultas: uniqueFakultas,
+            title: 'Program Studi',
+            message: req.query.message
+        });
     } catch (error) {
         console.error(error)
         res.status(404).send('Program Studi not found');
@@ -18,7 +25,7 @@ exports.viewProdi = async (req, res) => {
     try {
         const users = await user.findAll({ where: { fakultas_id: req.params.id } });
         const Fakultas = await fakultas.findAll({ where: { fakultas_id: req.params.id } });
-        const prodis = await programStudi.findAll({ where: { fakultas_id: req.params.id } });
+        const prodis = await programStudi.findOne({ where: { fakultas_id: req.params.id } });
         res.render('administrator/programStudi/viewProdi', { users, Fakultas, prodis, title: 'Views Fakultas' });
     } catch (error) {
         console.error(error)
@@ -71,6 +78,7 @@ exports.createProdi = async (req, res) => {
         });
         res.redirect('/prodi?message=Input Berhasil');
     } catch (error) {
+        console.error(error)
         res.status(400);
     }
 }
