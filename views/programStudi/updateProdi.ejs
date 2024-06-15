@@ -44,8 +44,9 @@
                                 <label for="fakultas_id">Nama Fakultas</label>
                                 <select class="form-control" id="fakultas_id" required name="fakultas_id">
                                     <% fakultasList.forEach(fakultas=> { %>
-                                        <option value="<%= fakultas.id %>">
-                                            <%= fakultas.namaFakultas %>
+                                        <option value="<%= fakultas.id %>" <% if (prodi.fakultas_id===fakultas.id) { %>
+                                            selected <% } %> >
+                                                <%= fakultas.namaFakultas %>
                                         </option>
                                         <% }); %>
                                 </select>
