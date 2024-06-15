@@ -25,6 +25,8 @@ exports.login = async (req, res) => {
         req.session.userId = users.id;
         req.session.username = users.username;
         req.session.role = users.role;
+        req.session.fakultas = users.fakultas_id;
+        req.session.prodi = users.programStudi_id;
         res.redirect('/dashboard');
     } catch (error) {
         console.error(error);

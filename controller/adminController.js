@@ -18,10 +18,11 @@ exports.getUsersById = async (req, res) => {
                 id: req.params.id
             }
         });
-        const fakultasList = await Fakultas.findAll();
-        const prodiList = await prodi.findAll();
+        const fakultasList = await Fakultas.findAll({
+            include: [{ model: prodi, as: 'Programstudis' }]
+        });
         if (users) {
-            res.render('administrator/users/updateUsers', { users: users, fakultasList: fakultasList, prodiList: prodiList, title: 'Update Users', message: req.query.message });
+            res.render('administrator/users/updateUsers', { users, fakultasList, title: 'Update Users', message: req.query.message });
         } else {
             res.status(404).send('User not found');
         }
@@ -32,15 +33,19 @@ exports.getUsersById = async (req, res) => {
 
 exports.createUserPage = async (req, res) => {
     try {
-        const fakultasList = await Fakultas.findAll();
-        const prodiList = await prodi.findAll();
-        res.render('administrator/users/addUsers', { fakultasList: fakultasList, prodiList: prodiList, title: 'Tambah Users', message: req.query.message })
+        const fakultasList = await Fakultas.findAll({
+            include: [{ model: prodi, as: 'Programstudis' }]
+        });
+        res.render('administrator/users/addUsers', {
+            fakultasList,
+            title: 'Tambah Users',
+            message: req.query.message
+        });
     } catch (error) {
-        console.error(error)
+        console.error(error);
         res.status(500).send('Internal Server Error');
     }
-
-}
+};
 
 exports.createUser = async (req, res) => {
     const { userId, username, fullName, email, password, confPassword, role, jabatan, status, fakultas_id, programStudi_id } = req.body;

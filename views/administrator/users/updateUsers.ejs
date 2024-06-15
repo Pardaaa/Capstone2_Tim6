@@ -1,160 +1,207 @@
-<!-- Nathan -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Edit Users Form</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/users">Users</a></li>
-                    <li class="breadcrumb-item active">Edit Users Form</li>
-                </ol>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Users Form</title>
+</head>
+
+<body>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Tambah Users Form</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/users">Users</a></li>
+                        <li class="breadcrumb-item active">Edit Users Form</li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="content">
-    <div class="container-fluid">
-        <% if (typeof message !=='undefined' ) { %>
-            <div id="alertMessage" class="alert alert-danger">
-                <%= message %>
-            </div>
-            <% } %>
-                <div class="card p-4">
-                    <form method="post" action="/users/edit/<%= users.id %>">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="userId">User ID</label>
-                                <input type="hidden" name="userId" value="<%= users.userId %>">
-                                <input type="text" class="form-control" id="userId" placeholder="NathanRaphael"
-                                    value="<%= users.userId %>" autofocus maxlength="7" name="userId" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" id="username" placeholder="NathanRaphael"
-                                    value="<%= users.username %>" autofocus maxlength="50" name="username">
-                            </div>
-                            <div class="form-group">
-                                <label for="fullName">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="fullName"
-                                    placeholder="Nathan Raphael Pardamean Hutagalung" value="<%= users.fullName %>"
-                                    name="fullName" required autofocus maxlength="50">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" maxlength="30" class="form-control" id="email"
-                                    placeholder="example@example.com" value="<%= users.email %>" name="email">
-                            </div>
-                            <div class="form-group">
-                                <label for="Password">Password</label>
-                                <input type="password" maxlength="15" class="form-control" id="Password"
-                                    placeholder="Your Secret Code" name="password">
-                            </div>
-                            <div class="form-group">
-                                <label for="confPassword">Confirm Password</label>
-                                <input type="password" maxlength="15" class="form-control" id="confPassword"
-                                    placeholder="Your Secret Code" name="confPassword">
-                            </div>
-                            <div class="form-group">
-                                <label for="role">Role</label>
-                                <select class="form-control" id="role" name="role" onchange="jabatanList()">
-                                    <option value="Fakultas">Fakultas</option>
-                                    <option value="Program Studi">Program Studi</option>
-                                    <option value="Mahasiswa">Mahasiswa</option>
-                                </select>
-                            </div>
-                            <div class="form-group" id="status" style="display:none;">
-                                <label for="status">Status</label>
-                                <select class="form-control" id="statusSelect" name="status">
-                                </select>
-                            </div>
-                            <div class="form-group" id="jabatan" style="display:none;">
-                                <label for="jabatan">Jabatan</label>
-                                <select class="form-control" id="jabatanSelect" name="jabatan">
-                                </select>
-                            </div>
-                            <div class=" form-group">
-                                <label for="fakultas_id">Nama Fakultas</label>
-                                <select class="form-control" id="fakultas_id" required name="fakultas_id">
-                                    <% fakultasList.forEach(fakultas=> { %>
-                                        <option value="<%= fakultas.id %>">
-                                            <%= fakultas.namaFakultas %>
-                                        </option>
-                                        <% }); %>
-                                </select>
-                            </div>
-                            <div class="form-group" id="prodi" style="display:none;">
-                                <label for="programStudi_id">Nama Program Studi</label>
-                                <select class="form-control" id="programStudi_id" name="programStudi_id">
-                                    <% prodiList.forEach(prodi=> { %>
-                                        <option value="<%= prodi.id %>">
-                                            <%= prodi.namaProgramStudi %>
-                                        </option>
-                                        <% }); %>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Edit</button>
-                        </div>
-                    </form>
-
+    <div class="content">
+        <div class="container-fluid">
+            <% if (typeof message !=='undefined' ) { %>
+                <div id="alertMessage" class="alert alert-danger">
+                    <%= message %>
                 </div>
+                <% } %>
+                    <div class="card p-4">
+                        <form method="post" action="/users/edit/<%= users.id %>">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="userId">User ID</label>
+                                    <input type="text" class="form-control" id="userId" placeholder="2272039"
+                                        value="<%= users.userId %>" name="userId" required autofocus maxlength="7">
+                                </div>
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" placeholder="NathanRaphael"
+                                        value="<%= users.username %>" name="username" required autofocus maxlength="50">
+                                </div>
+                                <div class="form-group">
+                                    <label for="fullName">Nama Lengkap</label>
+                                    <input type="text" class="form-control" id="fullName"
+                                        placeholder="Nathan Raphael Pardamean Hutagalung" value="<%= users.fullName %>"
+                                        name="fullName" required autofocus maxlength="50">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" maxlength="30" class="form-control" id="email"
+                                        value="<%= users.email %>" placeholder="example@example.com" required
+                                        name="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Password">Password</label>
+                                    <input type="password" maxlength="15" class="form-control" id="Password"
+                                        placeholder="Your Secret Code" name="password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confPassword">Confirm Password</label>
+                                    <input type="password" maxlength="15" class="form-control" id="confPassword"
+                                        placeholder="Your Secret Code" name="confPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label for="role">Role</label>
+                                    <select class="form-control" id="role" name="role" required>
+                                        <option value="Fakultas" <% if (users.role==='Fakultas' ) { %> selected <% } %>
+                                                >Fakultas</option>
+                                        <option value="Program Studi" <% if (users.role==='Program Studi' ) { %>
+                                            selected
+                                            <% } %>>Program Studi
+                                        </option>
+                                        <option value="Mahasiswa" <% if (users.role==='Mahasiswa' ) { %> selected <% }
+                                                %>
+                                                >Mahasiswa</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="status" style="display:none;">
+                                    <label for="status">Status</label>
+                                    <select class="form-control" id="statusSelect" name="status">
+                                    </select>
+                                </div>
+                                <div class="form-group" id="jabatan" style="display:none;">
+                                    <label for="jabatan">Jabatan</label>
+                                    <select class="form-control" id="jabatanSelect" name="jabatan">
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fakultas_id">Nama Fakultas</label>
+                                    <select class="form-control" id="fakultas_id" required name="fakultas_id">
+                                        <% fakultasList.forEach(fakultas=> { %>
+                                            <option value="<%= fakultas.id %>" <% if (fakultas.id===users.fakultas_id) {
+                                                %> selected <% } %>>
+                                                    <%= fakultas.namaFakultas %>
+                                            </option>
+                                            <% }); %>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="prodi" style="display:none;">
+                                    <label for="programStudi_id">Nama Program Studi</label>
+                                    <select class="form-control" id="programStudi_id" name="programStudi_id">
+                                        <% fakultasList.forEach(fakultas=> { %>
+                                            <% fakultas.Programstudis.forEach(prodi=> { %>
+                                                <option value="<%= prodi.id %>" <% if (prodi.id===users.programStudi_id
+                                                    && fakultas.id===users.fakultas_id) { %> selected <% } %>>
+                                                        <%= prodi.namaProgramStudi %>
+                                                </option>
+                                                <% }); %>
+                                                    <% }); %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Tambah Users</button>
+                            </div>
+                        </form>
+                    </div>
+        </div>
     </div>
-</div>
 
-<script>
-    var alertElement = document.querySelector('.alert');
+    <script>
+        var alertElement = document.querySelector('.alert');
 
-    setTimeout(function () {
-        alertElement.style.display = 'none';
-    }, 2000);
-</script>
+        setTimeout(function () {
+            alertElement.style.display = 'none';
+        }, 2000);
+    </script>
 
-<script>
-    function jabatanList() {
-        const roleSelect = document.getElementById('role');
-        const jabatan = document.getElementById('jabatan');
-        const prodi = document.getElementById('prodi');
-        const status = document.getElementById('status');
-        const jabatanSelect = document.getElementById('jabatanSelect');
-        const programStudiSelect = document.getElementById('programStudi_id');
-        const statusSelect = document.getElementById('statusSelect');
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var fakultasList = JSON.parse('<%- JSON.stringify(fakultasList) %>');
 
-        roleSelect.value = "<%= users.role %>";
-        if (roleSelect.value === 'Fakultas') {
-            jabatan.style.display = 'block';
-            prodi.style.display = 'none';
-            status.style.display = 'none';
-            jabatanSelect.value = "<%= users.jabatan %>";
-            jabatanSelect.removeAttribute('disabled');
-            jabatanSelect.innerHTML = `
-                <option value="Dekan">Dekan</option>
-                <option value="Wakil Dekan">Wakil Dekan</option>
-            `;
-        } else if (roleSelect.value === 'Program Studi') {
-            jabatan.style.display = 'block';
-            prodi.style.display = 'block';
-            status.style.display = 'none';
-            jabatanSelect.removeAttribute('disabled');
-            jabatanSelect.innerHTML = `
-                <option value="Ketua Program Studi">Ketua Program Studi</option>
-            `;
-        } else if (roleSelect.value === 'Mahasiswa') {
-            status.style.display = 'block';
-            jabatan.style.display = 'none';
-            prodi.style.display = 'block';
-            jabatanSelect.innerHTML = '';
-            statusSelect.innerHTML = `
-                <option value="Aktif">Aktif</option>
-                <option value="Pasif">Pasif</option>
-            `;
-        }
-    }
-    window.onload = function () {
-        jabatanList();
-        document.getElementById('role').addEventListener('change', jabatanList);
-    };
-</script>
-<!-- Nathan -->
+            var fakultasSelect = document.getElementById('fakultas_id');
+            var prodiSelect = document.getElementById('programStudi_id');
+
+            function listProgramStudi() {
+                var fakultasValue = fakultasSelect.value;
+
+                prodiSelect.innerHTML = '';
+
+                fakultasList.forEach(function (fakultas) {
+                    if (fakultas.id == fakultasValue) {
+                        fakultas.Programstudis.forEach(function (prodi) {
+                            var option = document.createElement('option');
+                            option.value = prodi.id;
+                            option.text = prodi.namaProgramStudi;
+                            prodiSelect.appendChild(option);
+                        });
+                    }
+                });
+            }
+
+            listProgramStudi();
+            fakultasSelect.addEventListener('change', listProgramStudi);
+
+            function jabatanList() {
+                const roleSelect = document.getElementById('role');
+                const jabatan = document.getElementById('jabatan');
+                const prodi = document.getElementById('prodi');
+                const status = document.getElementById('status');
+                const jabatanSelect = document.getElementById('jabatanSelect');
+                const programStudiSelect = document.getElementById('programStudi_id');
+                const statusSelect = document.getElementById('statusSelect');
+
+                if (roleSelect.value === 'Fakultas') {
+                    jabatan.style.display = 'block';
+                    prodi.style.display = 'none';
+                    status.style.display = 'none';
+                    programStudiSelect.value = "";
+                    jabatanSelect.removeAttribute('disabled');
+                    jabatanSelect.innerHTML = `
+                        <option value="Dekan" <% if (users.jabatan === 'Dekan') { %> selected <% } %>>Dekan</option>
+                        <option value="Wakil Dekan" <% if (users.jabatan === 'Wakil Dekan') { %> selected <% } %>>Wakil Dekan</option>
+                    `;
+                } else if (roleSelect.value === 'Program Studi') {
+                    jabatan.style.display = 'block';
+                    prodi.style.display = 'block';
+                    status.style.display = 'none';
+                    jabatanSelect.removeAttribute('disabled');
+                    jabatanSelect.innerHTML = `
+                        <option value="Ketua Program Studi" <% if (users.jabatan === 'Ketua Program Studi') { %> selected <% } %>>Ketua Program Studi</option>
+                    `;
+                } else if (roleSelect.value === 'Mahasiswa') {
+                    status.style.display = 'block';
+                    jabatan.style.display = 'none';
+                    prodi.style.display = 'block';
+                    jabatanSelect.innerHTML = '';
+                    statusSelect.innerHTML = `
+                        <option value="Aktif" <% if (users.status === 'Aktif') { %> selected <% } %>>Aktif</option>
+                        <option value="Pasif" <% if (users.status === 'Pasif') { %> selected <% } %>>Aktif</option>>Pasif</option>
+                    `;
+                }
+            }
+
+            jabatanList();
+            document.getElementById('role').addEventListener('change', jabatanList);
+        });
+    </script>
+</body>
+
+</html>

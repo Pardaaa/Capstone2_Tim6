@@ -1,0 +1,64 @@
+<!-- Nathan -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-bold">Data Mahasiswa | Program Studi <%= prodis.namaProgramStudi %>
+                </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/prodi">Program Studi</a></li>
+                    <li class="breadcrumb-item active">Views Program Studi Page</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="content">
+            <div class="container-fluid">
+                <% if (typeof message !=='undefined' ) { %>
+                    <div id="alertMessage" class="alert alert-success">
+                        <%= message %>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+        <div class="card p-4">
+            <div class="card-body">
+                <table id="table-users" class="table table-bordered table-striped mb-5">
+                    <h3 class="text-bold">Daftar Mahasiswa</h3>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach(user=> { %>
+                            <% if (user.role=='Mahasiswa' ) { %>
+                                <tr>
+                                    <td>
+                                        <%= user.userId %>
+                                    </td>
+                                    <td>
+                                        <%= user.fullName %>
+                                    </td>
+                                    <td>
+                                        <%= user.status %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                                    <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Nathan -->

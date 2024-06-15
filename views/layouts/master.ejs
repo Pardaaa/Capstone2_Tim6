@@ -100,15 +100,33 @@
                                     </p>
                                 </a>
                             </li>
-                            <% } %>
+                            <% } else if (role==='Fakultas' ) { %>
                                 <li class="nav-item">
-                                    <a href="/logout" class="nav-link accent-blue">
-                                        <i class="nav-icon "></i>
+                                    <a href="/fakultas/listProdi" class="nav-link">
+                                        <i class="nav-icon fas fa-crown"></i>
                                         <p>
-                                            Logout
+                                            Daftar Program Studi
                                         </p>
                                     </a>
                                 </li>
+                                <% } else if (role==='Program Studi' ) { %>
+                                    <li class="nav-item">
+                                        <a href="/prodi/listMahasiswa" class="nav-link">
+                                            <i class="nav-icon fas fa-crown"></i>
+                                            <p>
+                                                Daftar Mahasiswa
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <% } %>
+                                        <li class="nav-item">
+                                            <a href="/logout" class="nav-link accent-blue">
+                                                <i class="nav-icon "></i>
+                                                <p>
+                                                    Logout
+                                                </p>
+                                            </a>
+                                        </li>
             </div>
             <!-- /.sidebar -->
         </aside>

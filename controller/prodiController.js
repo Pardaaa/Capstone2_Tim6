@@ -7,12 +7,11 @@ exports.getProdi = async (req, res) => {
             include: fakultas,
             raw: true
         });
-
         const uniqueFakultas = [...new Set(prodi.map(p => p['Fakulta.namaFakultas']))];
-        res.render('administrator/programStudi/prodi', {
+        res.render('programStudi/prodi', {
             prodi: prodi,
             uniqueFakultas: uniqueFakultas,
-            title: 'Program Studi',
+            title: 'Daftar Program Studi',
             message: req.query.message
         });
     } catch (error) {
@@ -21,12 +20,42 @@ exports.getProdi = async (req, res) => {
     }
 };
 
+exports.getMahasiswa = async (req, res) => {
+    try {
+        const users = await user.findAll({
+            where: {
+                programStudi_id: req.session.prodi,
+            }
+        });
+        const prodis = await programStudi.findOne({
+            where: {
+                id: req.session.prodi
+            }
+        })
+        res.render('programStudi/daftarMahasiswa', {
+            users: users,
+            prodis: prodis,
+            title: 'Daftar Mahasiswa',
+            message: req.query.message
+        })
+    } catch (error) {
+
+    }
+}
+
 exports.viewProdi = async (req, res) => {
     try {
-        const users = await user.findAll({ where: { fakultas_id: req.params.id } });
-        const Fakultas = await fakultas.findAll({ where: { fakultas_id: req.params.id } });
-        const prodis = await programStudi.findOne({ where: { fakultas_id: req.params.id } });
-        res.render('administrator/programStudi/viewProdi', { users, Fakultas, prodis, title: 'Views Fakultas' });
+        const users = await user.findAll({
+            where: {
+                programStudi_id: req.params.id,
+            }
+        });
+        const prodis = await programStudi.findOne({
+            where: {
+                id: req.params.id
+            }
+        });
+        res.render('programStudi/viewProdi', { users, prodis, title: 'Views Fakultas' });
     } catch (error) {
         console.error(error)
         res.status(500).send('Internal Server Error');
@@ -40,9 +69,8 @@ exports.getProdiById = async (req, res) => {
                 id: req.params.id
             }
         });
-
         const fakultasList = await fakultas.findAll();
-        res.render('administrator/programStudi/updateProdi', { prodi, fakultasList, title: 'Update Program Studi', message: req.query.message });
+        res.render('programStudi/updateProdi', { prodi, fakultasList, title: 'Update Program Studi', message: req.query.message });
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -52,7 +80,7 @@ exports.getProdiById = async (req, res) => {
 exports.createProdiPage = async (req, res) => {
     try {
         const fakultasList = await fakultas.findAll();
-        res.render('administrator/programStudi/addProdi', { fakultasList: fakultasList, title: 'Tambah Program Studi', message: req.query.message })
+        res.render('programStudi/addProdi', { fakultasList: fakultasList, title: 'Tambah Program Studi', message: req.query.message })
     } catch (error) {
         console.error(error)
         res.status(500).send('Internal Server Error');
@@ -98,16 +126,12 @@ exports.updateProdi = async (req, res) => {
                 return res.status(400).redirect(`/prodi/edit/${prodiId}?message=Nama Program Studi sudah digunakan`);
             }
         }
-
-
-
         await prodi.update({
             programStudi_id: programStudi_id,
             namaProgramStudi: namaProgramStudi,
             fakultas_id: fakultas_id,
             namaFakultas: namaFakultas
         });
-
         res.status(200).redirect('/prodi?message=Update Berhasil');
     } catch (error) {
         console.error(error);
@@ -122,13 +146,10 @@ exports.deleteProdi = async (req, res) => {
                 id: req.params.id
             }
         });
-
         if (!prodi) {
             return res.status(404).send('Program Studi not found');
         }
-
         await prodi.destroy();
-
         res.status(200).redirect('/prodi?message=Delete Berhasil');
     } catch (error) {
         console.error(error);

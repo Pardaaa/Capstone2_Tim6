@@ -4,18 +4,58 @@ const { User: user, Fakultas: fakultas, Programstudi: prodi } = require('../mode
 exports.getFakultas = async (req, res) => {
     try {
         const Fakultas = await fakultas.findAll();
-        res.render('administrator/fakultas/fakultas', { Fakultas: Fakultas, title: 'Fakultas', message: req.query.message });
+        res.render('fakultas/fakultas', {
+            Fakultas: Fakultas,
+            title: 'Fakultas',
+            message: req.query.message
+        });
     } catch (error) {
+        console.error(error);
         res.status(404).send('Fakultas not found');
     }
 };
 
+exports.getProdi = async (req, res) => {
+    try {
+        const prodis = await prodi.findAll({
+            where: {
+                fakultas_id: req.session.fakultas
+            }
+        });
+        const Fakultas = await fakultas.findOne({
+            where: {
+                id: req.session.fakultas
+            }
+        })
+        res.render('fakultas/daftarProdi', {
+            prodis: prodis,
+            Fakultas: Fakultas,
+            title: 'Daftar Program Studi',
+            message: req.query.message
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(404).send('Prodi not found');
+    }
+}
+
 exports.viewFakultas = async (req, res) => {
     try {
-        const users = await user.findAll({ where: { fakultas_id: req.params.id } });
-        const prodis = await prodi.findAll({ where: { fakultas_id: req.params.id } });
-        const Fakultas = await fakultas.findOne({ where: { id: req.params.id } });
-        res.render('administrator/fakultas/viewFakultas', { users, prodis, Fakultas, title: 'Views Fakultas' });
+        const users = await user.findAll({
+            where: { fakultas_id: req.params.id }
+        });
+        const prodis = await prodi.findAll({
+            where: { fakultas_id: req.params.id }
+        });
+        const Fakultas = await fakultas.findOne({
+            where: { id: req.params.id }
+        });
+        res.render('fakultas/viewFakultas', {
+            users,
+            prodis,
+            Fakultas,
+            title: 'Views Fakultas'
+        });
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -30,7 +70,11 @@ exports.getFakultasById = async (req, res) => {
             }
         });
         if (Fakultas) {
-            res.render('administrator/fakultas/updateFakultas', { fakultas: Fakultas, title: 'Update Fakultas', message: req.query.message });
+            res.render('fakultas/updateFakultas', {
+                fakultas: Fakultas,
+                title: 'Update Fakultas',
+                message: req.query.message
+            });
         } else {
             res.status(404).send('Fakultas not found');
         }
@@ -40,17 +84,24 @@ exports.getFakultasById = async (req, res) => {
 }
 
 exports.createFakultasPage = (req, res) => {
-    res.render('administrator/fakultas/addFakultas', { title: 'Tambah Fakultas', message: req.query.message })
+    res.render('fakultas/addFakultas', {
+        title: 'Tambah Fakultas',
+        message: req.query.message
+    })
 }
 
 exports.createFakultas = async (req, res) => {
     const { fakultas_id, namaFakultas } = req.body;
     try {
-        const exsistFakultasId = await fakultas.findOne({ where: { fakultas_id: fakultas_id } });
+        const exsistFakultasId = await fakultas.findOne({
+            where: { fakultas_id: fakultas_id }
+        });
         if (exsistFakultasId) {
             return res.status(400).redirect('/fakultas/create?message=Fakultas ID sudah digunakan');
         }
-        const exsistNamaFakultas = await fakultas.findOne({ where: { namaFakultas: namaFakultas } });
+        const exsistNamaFakultas = await fakultas.findOne({
+            where: { namaFakultas: namaFakultas }
+        });
         if (exsistNamaFakultas) {
             return res.status(400).redirect('/fakultas/create?message=Nama Fakultas sudah digunakan');
         }
@@ -75,7 +126,9 @@ exports.updateFakultas = async (req, res) => {
     const fakultasID = req.params.id;
     try {
         if (namaFakultas !== Fakultas.namaFakultas) {
-            const exsistNamaFakultas = await fakultas.findOne({ where: { namaFakultas: namaFakultas } });
+            const exsistNamaFakultas = await fakultas.findOne({
+                where: { namaFakultas: namaFakultas }
+            });
             if (exsistNamaFakultas) {
                 return res.status(400).redirect(`/fakultas/edit/${fakultasID}?message=Nama Fakultas sudah digunakan`);
             }
@@ -112,4 +165,5 @@ exports.deleteFakultas = async (req, res) => {
         res.status(400);
     }
 }
+
 // Nathan
