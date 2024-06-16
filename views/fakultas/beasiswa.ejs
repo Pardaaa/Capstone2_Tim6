@@ -1,0 +1,30 @@
+<!-- Main content -->
+<section class="content">
+   <div class="container-fluid">
+      <div class="card card-primary">
+         <div class="card-header">
+            <h3 class="card-title">Pengaturan Pengajuan Beasiswa</h3>
+         </div>
+         <!-- /.card-header -->
+         <!-- form start -->
+         <form action="/fakultas/beasiswa" method="post">
+            <div class="card-body">
+               <div class="form-group">
+                  <label for="waktu_mulai">Waktu Mulai</label>
+                  <input type="datetime-local" class="form-control" id="waktu_mulai" name="waktu_mulai" required>
+               </div>
+               <div class="form-group">
+                  <label for="waktu_berakhir">Waktu Berakhir</label>
+                  <input type="datetime-local" class="form-control" id="waktu_berakhir" name="waktu_berakhir" required>
+               </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+               <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+         </form>
+      </div>
+      <!-- /.card -->
+   </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->

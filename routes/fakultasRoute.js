@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 const {
    getFakultas,
    viewFakultas,
@@ -7,21 +8,67 @@ const {
    getFakultasById,
    updateFakultas,
    deleteFakultas,
-   getProdi
+   getProdi,
+   getBeasiswa, // Sesuaikan dengan controller Anda
+   updateBeasiswa, // Sesuaikan dengan controller Anda
 } = require('../controller/fakultasController.js');
 const authMiddleware = require('../middleware/auth');
-const requesrRole = require('../middleware/requestRole');
+const requestRole = require('../middleware/requestRole'); // Sesuaikan typo
 
-const router = express.Router();
-
-router.get('/fakultas', authMiddleware, requesrRole('Admin'), getFakultas);
-router.get('/fakultas/views/:id', authMiddleware, requesrRole('Admin'), viewFakultas);
-router.get('/fakultas/edit/:id', authMiddleware, requesrRole('Admin'), getFakultasById);
-router.post('/fakultas/edit/:id', authMiddleware, requesrRole('Admin'), updateFakultas);
-router.get('/fakultas/create', authMiddleware, requesrRole('Admin'), createFakultasPage);
-router.post('/fakultas/create', authMiddleware, requesrRole('Admin'), createFakultas);
-router.get('/fakultas/delete/:id', authMiddleware, requesrRole('Admin'), deleteFakultas);
-router.get('/fakultas/delete/:id', authMiddleware, requesrRole('Admin'), deleteFakultas);
-router.get('/fakultas/listProdi', authMiddleware, requesrRole('Fakultas'), getProdi);
+router.get('/fakultas', authMiddleware, requestRole('Admin'), getFakultas);
+router.get(
+   '/fakultas/views/:id',
+   authMiddleware,
+   requestRole('Admin'),
+   viewFakultas
+);
+router.get(
+   '/fakultas/edit/:id',
+   authMiddleware,
+   requestRole('Admin'),
+   getFakultasById
+);
+router.post(
+   '/fakultas/edit/:id',
+   authMiddleware,
+   requestRole('Admin'),
+   updateFakultas
+);
+router.get(
+   '/fakultas/create',
+   authMiddleware,
+   requestRole('Admin'),
+   createFakultasPage
+);
+router.post(
+   '/fakultas/create',
+   authMiddleware,
+   requestRole('Admin'),
+   createFakultas
+);
+router.get(
+   '/fakultas/delete/:id',
+   authMiddleware,
+   requestRole('Admin'),
+   deleteFakultas
+);
+router.get(
+   '/fakultas/listProdi',
+   authMiddleware,
+   requestRole('Fakultas'),
+   getProdi
+);
+router.get(
+   '/fakultas/beasiswa',
+   authMiddleware,
+   requestRole('Fakultas'),
+   getBeasiswa
+); // Sesuaikan dengan controller Anda
+router.post(
+   '/fakultas/beasiswa',
+   authMiddleware,
+   requestRole('Fakultas'),
+   updateBeasiswa
+); // Sesuaikan dengan controller Anda
 
 module.exports = router;
