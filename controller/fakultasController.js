@@ -186,7 +186,7 @@ exports.deleteFakultas = async (req, res) => {
 // Nabilla
 exports.getBeasiswa = async (req, res) => {
    try {
-      const beasiswaData = await Beasiswa.findOne(); // Menggunakan model Beasiswa
+      const beasiswaData = await beasiswa.findOne(); // Menggunakan model Beasiswa
       res.render('fakultas/beasiswa', {
          beasiswa: beasiswaData, // Menggunakan beasiswa agar sesuai dengan template
          title: 'Pengaturan Pengajuan Beasiswa',
