@@ -202,4 +202,57 @@ exports.createBeasiswa = async (req, res) => {
     }
 }
 
+exports.getBeasiswaById = async (req, res) => {
+    try {
+        const Beasiswa = await beasiswa.findOne({
+            where: {
+                id: req.params.id
+            }
+        });
+        res.render('administrator/beasiswa/updateBeasiswa', { Beasiswa, title: 'Update Beasiswa', message: req.query.message });
+    } catch (error) {
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+exports.updateBeasiswa = async (req, res) => {
+    const Beasiswa = await beasiswa.findOne({
+        where: {
+            id: req.params.id
+        }
+    });
+    const { namaBeasiswa, syarat, jenisBeasiswa } = req.body;
+    try {
+        await beasiswa.update({
+            namaBeasiswa: namaBeasiswa,
+            syarat: syarat,
+            jenisBeasiswa: jenisBeasiswa
+        }, {
+            where: {
+                id: Beasiswa.id
+            }
+        });
+        res.status(200).redirect('/beasiswa?message=Update Berhasil');
+    } catch (error) {
+        res.status(400);
+    }
+}
+
+exports.deleteBeasiswa = async (req, res) => {
+    const Beasiswa = await beasiswa.findOne({
+        where: {
+            id: req.params.id
+        }
+    });
+    try {
+        await beasiswa.destroy({
+            where: {
+                id: Beasiswa.id
+            }
+        });
+        res.status(200).redirect('/beasiswa?message=Delete Berhasil');
+    } catch (error) {
+        res.status(400);
+    }
+}
 // Nathan

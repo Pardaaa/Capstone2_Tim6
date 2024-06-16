@@ -24,22 +24,24 @@
             </div>
             <% } %>
                 <div class="card p-4">
-                    <form method="post" action="/beasiswa/create">
+                    <form method="post" action="/beasiswa/edit/<%= Beasiswa.id %>">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="namaBeasiswa">Id Fakultas</label>
+                                <label for="namaBeasiswa">Nama Beasiswa</label>
                                 <input type="text" class="form-control" id="namaBeasiswa" placeholder="Bantuan Ekonomi"
-                                    autofocus required maxlength="30" name="namaBeasiswa">
+                                    autofocus required maxlength="30" value="<%= Beasiswa.namaBeasiswa %>"
+                                    name="namaBeasiswa">
                             </div>
                             <div class="form-group">
                                 <label for="syarat">Syarat</label>
-                                <textarea class="form-control" id="syarat" placeholder="..." name="syarat" required
-                                    autofocus value></textarea>
+                                <textarea class="form-control" id="syarat" placeholder="..." name="syarat"
+                                    required><%= Beasiswa.syarat %></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="jenisBeasiswa">Jenis Beasiswa</label>
                                 <select class="form-control" id="jenisBeasiswa" name="jenisBeasiswa" required>
-                                    <option value="Internal">Internal</option>
+                                    <option <% if (Beasiswa.jenisBeasiswa==='Internal' ) { %> selected <% } %>>Internal
+                                    </option>
                                 </select>
                             </div>
                             <div>

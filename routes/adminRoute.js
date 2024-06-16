@@ -7,8 +7,11 @@ const {
     updateUser,
     deleteUser,
     getBeasiswa,
+    getBeasiswaById,
     createBeasiswaPage,
-    createBeasiswa } = require('../controller/adminController');
+    createBeasiswa,
+    updateBeasiswa,
+    deleteBeasiswa } = require('../controller/adminController');
 const authMiddleware = require('../middleware/auth');
 const requesrRole = require('../middleware/requestRole');
 
@@ -25,5 +28,8 @@ router.get('/users/delete/:id', authMiddleware, requesrRole('Admin'), deleteUser
 router.get('/beasiswa', authMiddleware, requesrRole('Admin'), getBeasiswa)
 router.get('/beasiswa/create', authMiddleware, requesrRole('Admin'), createBeasiswaPage);
 router.post('/beasiswa/create', authMiddleware, requesrRole('Admin'), createBeasiswa);
+router.get('/beasiswa/edit/:id', authMiddleware, requesrRole('Admin'), getBeasiswaById);
+router.post('/beasiswa/edit/:id', authMiddleware, requesrRole('Admin'), updateBeasiswa);
+router.get('/beasiswa/delete/:id', authMiddleware, requesrRole('Admin'), deleteBeasiswa);
 
 module.exports = router;
