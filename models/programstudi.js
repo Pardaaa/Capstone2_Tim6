@@ -27,10 +27,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       onUpdate: 'CASCADE',
       onDelete: 'SET NULL'
-    },
-    namaFakultas: {
-      type: DataTypes.STRING(30),
-      allowNull: false,
     }
   }, {
     sequelize,

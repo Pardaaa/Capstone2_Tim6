@@ -88,7 +88,7 @@ exports.createProdiPage = async (req, res) => {
 }
 
 exports.createProdi = async (req, res) => {
-    const { programStudi_id, namaProgramStudi, fakultas_id, namaFakultas } = req.body;
+    const { programStudi_id, namaProgramStudi, fakultas_id } = req.body;
     try {
         const exsistProdiId = await programStudi.findOne({ where: { programStudi_id: programStudi_id } });
         if (exsistProdiId) {
@@ -101,8 +101,7 @@ exports.createProdi = async (req, res) => {
         await programStudi.create({
             programStudi_id: programStudi_id,
             namaProgramStudi: namaProgramStudi,
-            fakultas_id: fakultas_id,
-            namaFakultas: namaFakultas
+            fakultas_id: fakultas_id
         });
         res.redirect('/prodi?message=Input Berhasil');
     } catch (error) {
@@ -117,7 +116,7 @@ exports.updateProdi = async (req, res) => {
             id: req.params.id
         }
     });
-    const { programStudi_id, namaProgramStudi, fakultas_id, namaFakultas } = req.body;
+    const { programStudi_id, namaProgramStudi, fakultas_id } = req.body;
     const prodiId = req.params.id
     try {
         if (namaProgramStudi !== prodi.namaProgramStudi) {
@@ -129,8 +128,7 @@ exports.updateProdi = async (req, res) => {
         await prodi.update({
             programStudi_id: programStudi_id,
             namaProgramStudi: namaProgramStudi,
-            fakultas_id: fakultas_id,
-            namaFakultas: namaFakultas
+            fakultas_id: fakultas_id
         });
         res.status(200).redirect('/prodi?message=Update Berhasil');
     } catch (error) {
