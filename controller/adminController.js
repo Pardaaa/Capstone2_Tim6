@@ -189,11 +189,11 @@ exports.createBeasiswaPage = async (req, res) => {
 };
 
 exports.createBeasiswa = async (req, res) => {
-    const { namaBeasiswa, syarat, jenisBeasiswa } = req.body;
+    const { namaBeasiswa, deskripsi, jenisBeasiswa } = req.body;
     try {
         await beasiswa.create({
             namaBeasiswa: namaBeasiswa,
-            syarat: syarat,
+            deskripsi: deskripsi,
             jenisBeasiswa: jenisBeasiswa
         });
         res.redirect('/beasiswa?message=Input Berhasil');
@@ -221,11 +221,11 @@ exports.updateBeasiswa = async (req, res) => {
             id: req.params.id
         }
     });
-    const { namaBeasiswa, syarat, jenisBeasiswa } = req.body;
+    const { namaBeasiswa, deskripsi, jenisBeasiswa } = req.body;
     try {
         await beasiswa.update({
             namaBeasiswa: namaBeasiswa,
-            syarat: syarat,
+            deskripsi: deskripsi,
             jenisBeasiswa: jenisBeasiswa
         }, {
             where: {

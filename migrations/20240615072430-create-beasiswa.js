@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING(30),
         allowNull: false
       },
-      syarat: {
+      deskripsi: {
         type: Sequelize.TEXT,
         allowNull: false
       },

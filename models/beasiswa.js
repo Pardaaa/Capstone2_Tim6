@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(30),
       allowNull: false,
     },
-    syarat: {
+    deskripsi: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
@@ -29,6 +29,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: true
     },
+    status: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        const now = new Date();
+        if (this.start_date > now) {
+          return 'Belum Berlangsung';
+        } else if (this.end_date < now) {
+          return 'Selesai';
+        } else {
+          return 'Berlangsung';
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Beasiswa',
