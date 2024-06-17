@@ -13,6 +13,7 @@ const {
    getBeasiswaById,
    updateBeasiswa,
    getDaftarMahasiswa,
+   viewBeasiswa
 } = require('../controller/fakultasController.js');
 const authMiddleware = require('../middleware/auth');
 const requestRole = require('../middleware/requestRole'); // Sesuaikan typo

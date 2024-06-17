@@ -234,6 +234,7 @@ exports.updateBeasiswa = async (req, res) => {
       res.status(400);
    }
 }
+
 // Nathan
 
 exports.getDaftarMahasiswa = async (req, res) => {
