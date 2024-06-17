@@ -3,6 +3,7 @@ const {
    Fakultas: fakultas,
    Programstudi: prodi,
    Beasiswa: beasiswa,
+   Mahasiswa: mahasiswa,
 } = require('../models');
 
 // Nathan
@@ -221,6 +222,34 @@ exports.updateBeasiswa = async (req, res) => {
       res.redirect('/fakultas/beasiswa?message=Update Berhasil');
    } catch (error) {
       console.error(error);
+      res.status(500).send('Internal Server Error');
+   }
+};
+exports.getDaftarMahasiswa = async (req, res) => {
+   try {
+      const fakultasId = req.session.fakultasId;
+      const mahasiswaBeasiswa = await mahasiswa.findAll({
+         where: { fakultasId },
+         include: [
+            { model: beasiswa, attributes: ['jenisBeasiswa'] },
+            { model: prodi, attributes: ['namaProgramStudi'] },
+         ],
+      });
+
+      const formattedData = mahasiswaBeasiswa.map(mb => ({
+         id: mb.id,
+         namaMahasiswa: mb.namaMahasiswa,
+         jenisBeasiswa: mb.Beasiswa.jenisBeasiswa,
+         programStudi: mb.Programstudi.namaProgramStudi,
+         statusAplikasi: mb.statusAplikasi,
+      }));
+
+      res.render('fakultas/daftarMahasiswa', {
+         mahasiswaBeasiswa: formattedData,
+         Fakultas: { namaFakultas: req.query.namaFakultas },
+      });
+   } catch (error) {
+      console.error('Error fetching mahasiswa beasiswa:', error);
       res.status(500).send('Internal Server Error');
    }
 };

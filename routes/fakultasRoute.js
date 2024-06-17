@@ -9,8 +9,9 @@ const {
    updateFakultas,
    deleteFakultas,
    getProdi,
-   getBeasiswa, // Sesuaikan dengan controller Anda
-   updateBeasiswa, // Sesuaikan dengan controller Anda
+   getBeasiswa,
+   updateBeasiswa,
+   getDaftarMahasiswa,
 } = require('../controller/fakultasController.js');
 const authMiddleware = require('../middleware/auth');
 const requestRole = require('../middleware/requestRole'); // Sesuaikan typo
@@ -74,6 +75,6 @@ router.get(
    '/fakultas/daftarMahasiswa',
    authMiddleware,
    requestRole('Fakultas'),
-   getProdi
+   getDaftarMahasiswa
 );
 module.exports = router;
