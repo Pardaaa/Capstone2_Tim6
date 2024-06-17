@@ -13,7 +13,7 @@ const fakultasRoute = require('./routes/fakultasRoute');
 const prodiRoute = require('./routes/prodiRoute');
 const authRoute = require('./routes/authRoute');
 const userInfo = require('./middleware/userInfo');
-// const mahasiswaRoute = require('/routes/mahasiswaRoute');
+const mahasiswaRoute = require('./routes/mahasiswaRoute');
 
 const app = express();
 
@@ -24,7 +24,7 @@ app.use(
       saveUninitialized: false,
       cookie: {
          secure: false,
-         maxAge: 1000 * 60 * 60 * 24
+         maxAge: 1000 * 60 * 60 * 24,
       },
    })
 );
@@ -44,7 +44,7 @@ app.use(authRoute);
 app.use(adminRoute);
 app.use(prodiRoute);
 app.use(fakultasRoute);
-// app.use(mahasiswaRoute);
+app.use(mahasiswaRoute);
 
 app.listen(process.env.APP_PORT, () => {
    console.log('Server Berjalan');

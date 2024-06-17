@@ -125,24 +125,41 @@
                                         </p>
                                     </a>
                                 </li>
-                                <% } else if (role==='Program Studi' ) { %>
+                                <% } else if (role==='Mahasiswa' ) { %>
                                     <li class="nav-item">
-                                        <a href="/prodi/listMahasiswa" class="nav-link">
-                                            <i class="nav-icon fas fa-crown"></i>
+                                        <a href="/mahasiswa/dokpengajuan" class="nav-link">
+                                            <i class="nav-icon fas fa-book"></i>
                                             <p>
-                                                Daftar Mahasiswa
+                                                Pendaftaran Beasiswa
                                             </p>
                                         </a>
                                     </li>
-                                    <% } %>
+                                    <li class="nav-item">
+                                        <a href="/mahasiswa/status" class="nav-link">
+                                            <i class="nav-icon fas fa-info-circle"></i>
+                                            <p>
+                                                Status Pendaftaran
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <% } else if (role==='Program Studi' ) { %>
                                         <li class="nav-item">
-                                            <a href="/logout" class="nav-link accent-blue">
-                                                <i class="nav-icon "></i>
+                                            <a href="/prodi/listMahasiswa" class="nav-link">
+                                                <i class="nav-icon fas fa-crown"></i>
                                                 <p>
-                                                    Logout
+                                                    Daftar Mahasiswa
                                                 </p>
                                             </a>
                                         </li>
+                                        <% } %>
+                                            <li class="nav-item">
+                                                <a href="/logout" class="nav-link accent-blue">
+                                                    <i class="nav-icon "></i>
+                                                    <p>
+                                                        Logout
+                                                    </p>
+                                                </a>
+                                            </li>
             </div>
             <!-- /.sidebar -->
         </aside>

@@ -1,234 +1,72 @@
-<div class="content">
-   <div class="container-fluid">
-      <div class="card p-4">
-         <div class="card-title text-center">
-            Admin
-         </div>
-         <div class="card-body">
-            <h1 class="text-center">Tambah Dokumen Pengajuan Beasiswa</h1>
+<!-- Nabilla -->
+<% if (!beasiswa.start_date || !beasiswa.end_date) { %>
+   <div class="content">
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-md-12">
+               <div class="alert alert-warning" role="alert">
+                  Maaf, belum ada pendaftaran beasiswa yang dibuka.
+               </div>
+            </div>
          </div>
       </div>
    </div>
-</div>
-
-<!-- Main content -->
-<section class="content">
-   <div class="container-fluid">
-      <div class="card card-primary">
-         <!-- form start -->
+   <% } else { %>
+      <div class="card-body">
+         <h1 class="text-center">Tambah Dokumen Pengajuan Beasiswa</h1>
          <form id="beasiswaForm" action="/mahasiswa/dokpengajuan" method="post" enctype="multipart/form-data">
-            <div class="card-body">
-               <div class="form-group">
-                  <label for="nama">Nama</label>
-                  <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama" required>
-               </div>
-               <div class="form-group">
-                  <label for="nomor_mahasiswa">NRP Mahasiswa</label>
-                  <input type="text" class="form-control" id="nomor_mahasiswa" name="nomor_mahasiswa"
-                     placeholder="Masukkan Nomor Mahasiswa" required>
-               </div>
-               <div class="form-group">
-                  <label for="ipk_terakhir">IPK Terakhir</label>
-                  <input type="number" step="0.01" class="form-control" id="ipk_terakhir" name="ipk_terakhir"
-                     placeholder="Masukkan IPK Terakhir" required>
-               </div>
-
-               <div class="form-group">
-                  <label for="agama">Agama</label>
-                  <select class="form-control" id="agama" name="agama" required>
-                     <option value="">Pilih Agama</option>
-                     <option value="Islam">Islam</option>
-                     <option value="Kristen">Kristen</option>
-                     <option value="Katolik">Katolik</option>
-                     <option value="Hindu">Hindu</option>
-                     <option value="Buddha">Buddha</option>
-                     <option value="Konghucu">Konghucu</option>
-                     <option value="Lainnya">Lainnya</option>
-                  </select>
-               </div>
-               <div class="form-group">
-                  <label for="jenis_beasiswa">Jenis Beasiswa:</label>
-                  <select class="form-control" id="jenis_beasiswa" name="jenis_beasiswa" required>
-                     <option value="beasiswa_akademik">Beasiswa Prestasi Akademik</option>
-                     <option value="beasiswa_ekonomi">Beasiswa Kurang Mampu</option>
-                     <option value="beasiswa_olahraga">Beasiswa Atlet Berprestasi</option>
-                  </select>
-               </div>
-               <div id="syarat_akademik" class="syarat">
-                  <h3>Beasiswa Prestasi Akademik</h3>
-                  <p>Syarat:</p>
-                  <ul>
-                     <li>IPK minimal 3.5 (skala 4.0) untuk mahasiswa atau nilai rata-rata raport minimal 85 untuk siswa
-                        SMA</li>
-                     <li>Surat rekomendasi dari dosen atau guru</li>
-                     <li>Esai motivasi 500 kata tentang tujuan akademik</li>
-                  </ul>
-                  <div class="form-group">
-                     <label for="dokumen_ipk">Transkrip Nilai/IPK</label>
-                     <div class="input-group">
-                        <div class="custom-file">
-                           <input type="file" class="custom-file-input" id="dokumen_ipk" name="dokumen_ipk" required>
-                           <label class="custom-file-label" for="dokumen_ipk">Pilih file</label>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label for="dokumen_rekomendasi">Surat Rekomendasi</label>
-                     <div class="input-group">
-                        <div class="custom-file">
-                           <input type="file" class="custom-file-input" id="dokumen_rekomendasi"
-                              name="dokumen_rekomendasi" required>
-                           <label class="custom-file-label" for="dokumen_rekomendasi">Pilih file</label>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label for="dokumen_esai">Esai Motivasi</label>
-                     <div class="input-group">
-                        <div class="custom-file">
-                           <input type="file" class="custom-file-input" id="dokumen_esai" name="dokumen_esai" required>
-                           <label class="custom-file-label" for="dokumen_esai">Pilih file</label>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div id="syarat_ekonomi" class="syarat">
-                  <h3>Beasiswa Kurang Mampu</h3>
-                  <p>Syarat:</p>
-                  <ul>
-                     <li>Surat keterangan tidak mampu dari kelurahan atau RT/RW</li>
-                     <li>IPK minimal 2.8 atau nilai rata-rata raport minimal 75</li>
-                     <li>Esai motivasi 300 kata tentang pentingnya pendidikan bagi masa depan</li>
-                  </ul>
-                  <div class="form-group">
-                     <label for="dokumen_sktm">Keterangan Tidak Mampu</label>
-                     <div class="input-group">
-                        <div class="custom-file">
-                           <input type="file" class="custom-file-input" id="dokumen_sktm" name="dokumen_sktm" required>
-                           <label class="custom-file-label" for="dokumen_sktm">Pilih file</label>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label for="dokumen_ipk_ekonomi">Transkrip Nilai/IPK</label>
-                     <div class="input-group">
-                        <div class="custom-file">
-                           <input type="file" class="custom-file-input" id="dokumen_ipk_ekonomi"
-                              name="dokumen_ipk_ekonomi" required>
-                           <label class="custom-file-label" for="dokumen_ipk_ekonomi">Pilih file</label>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label for="dokumen_esai_ekonomi">Esai Motivasi</label>
-                     <div class="input-group">
-                        <div class="custom-file">
-                           <input type="file" class="custom-file-input" id="dokumen_esai_ekonomi"
-                              name="dokumen_esai_ekonomi" required>
-                           <label class="custom-file-label" for="dokumen_esai_ekonomi">Pilih file</label>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div id="syarat_olahraga" class="syarat">
-                  <h3>Beasiswa Atlet Berprestasi</h3>
-                  <p>Syarat:</p>
-                  <ul>
-                     <li>Prestasi olahraga di tingkat daerah/nasional/internasional</li>
-                     <li>Sertifikat atau bukti penghargaan</li>
-                     <li>Surat rekomendasi dari pelatih olahraga</li>
-                     <li>IPK minimal 2.5 atau nilai rata-rata raport minimal 70</li>
-                  </ul>
-                  <div class="form-group">
-                     <label for="dokumen_prestasi">Bukti Prestasi</label>
-                     <div class="input-group">
-                        <div class="custom-file">
-                           <input type="file" class="custom-file-input" id="dokumen_prestasi" name="dokumen_prestasi"
-                              required>
-                           <label class="custom-file-label" for="dokumen_prestasi">Pilih file</label>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label for="dokumen_rekomendasi_olahraga">Surat Rekomendasi</label>
-                     <div class="input-group">
-                        <div class="custom-file">
-                           <input type="file" class="custom-file-input" id="dokumen_rekomendasi_olahraga"
-                              name="dokumen_rekomendasi_olahraga" required>
-                           <label class="custom-file-label" for="dokumen_rekomendasi_olahraga">Pilih file</label>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label for="dokumen_ipk_olahraga">Unggah Transkrip Nilai/IPK</label>
-                     <div class="input-group">
-                        <div class="custom-file">
-                           <input type="file" class="custom-file-input" id="dokumen_ipk_olahraga"
-                              name="dokumen_ipk_olahraga" required>
-                           <label class="custom-file-label" for="dokumen_ipk_olahraga">Pilih file</label>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+            <div class="form-group">
+               <label for="jenis_beasiswa">Jenis Beasiswa:</label>
+               <select class="form-control" id="jenis_beasiswa" name="jenis_beasiswa" required>
+                  <option value="">Pilih Jenis Beasiswa</option>
+                  <% beasiswas.forEach(beasiswa=> { %>
+                     <option value="<%= beasiswa.id %>">
+                        <%= beasiswa.namaBeasiswa %>
+                     </option>
+                     <% }); %>
+               </select>
             </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
+            <div id="deskripsi_beasiswa">
+
+            </div>
+            <div id="syarat_dokumen">
+
+            </div>
+            <div class="form-group">
                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
          </form>
       </div>
-      <!-- /.card -->
-   </div><!-- /.container-fluid -->
-</section>
-<!-- /.content -->
+      </div>
+      </div>
+      </div>
+      <% } %>
+         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+         <script>
+            $(document).ready(function () {
+               $('#jenis_beasiswa').on('change', function () {
+                  var selectedBeasiswaId = $(this).val();
+                  var selectedBeasiswa = beasiswas.find(beasiswa => beasiswa.id === selectedBeasiswaId);
+                  if (selectedBeasiswa) {
+                     $('#deskripsi_beasiswa').html('<p>' + selectedBeasiswa.deskripsi + '</p>');
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<script>
-   $(document).ready(function () {
-      $('#jenis_beasiswa').on('change', function () {
-         var selectedBeasiswa = $(this).val();
-         $('.syarat').hide();
-         $('#syarat_' + selectedBeasiswa.split('_')[1]).show();
-      });
-
-      $('.custom-file-input').on('change', function () {
-         var fileName = $(this).val().split('\\').pop();
-         $(this).next('.custom-file-label').addClass('selected').html(fileName);
-      });
-
-      $('#beasiswaForm').on('submit', function (event) {
-         event.preventDefault();
-         var form = $(this);
-         var isValid = true;
-         form.find('[required]').each(function () {
-            if (!$(this).val().trim()) {
-               isValid = false;
-               return false; // Keluar dari loop jika ada input kosong
-            }
-         });
-
-         if (isValid) {
-            Swal.fire({
-               icon: 'success',
-               title: 'Berhasil',
-               text: 'Dokumen telah berhasil dikirim!'
-            }).then(() => {
-               form.submit();
+                     var syaratDokumen = selectedBeasiswa.syaratDokumen; // Misalnya, asumsikan syarat dokumen adalah array
+                     if (syaratDokumen && syaratDokumen.length > 0) {
+                        var html = '';
+                        syaratDokumen.forEach(syarat => {
+                           html += '<div class="form-group">';
+                           html += '<label for="' + syarat.id + '">' + syarat.nama + '</label>';
+                           html += '<input type="file" class="form-control-file" id="' + syarat.id + '" name="' + syarat.id + '" required>';
+                           html += '</div>';
+                        });
+                        $('#syarat_dokumen').html(html);
+                     } else {
+                        $('#syarat_dokumen').html('');
+                     }
+                  } else {
+                     $('#deskripsi_beasiswa').html('');
+                     $('#syarat_dokumen').html('');
+                  }
+               });
             });
-         } else {
-            Swal.fire({
-               icon: 'error',
-               title: 'Oops...',
-               text: 'Pastikan semua kolom sudah terisi dengan benar.',
-               footer: '<a href="#">Ayo periksa kembali</a>'
-            });
-         }
-      });
-
-      $('#jenis_beasiswa').trigger('change'); // Jalankan perubahan jenis beasiswa saat halaman dimuat
-   });
-</script>
+         </script>
