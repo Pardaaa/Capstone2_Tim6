@@ -227,12 +227,10 @@ exports.updateBeasiswa = async (req, res) => {
 };
 exports.getDaftarMahasiswa = async (req, res) => {
    try {
-      const fakultasId = req.session.fakultasId;
       const mahasiswaBeasiswa = await mahasiswa.findAll({
-         where: { fakultasId },
          include: [
-            { model: beasiswa, attributes: ['jenisBeasiswa'] },
-            { model: prodi, attributes: ['namaProgramStudi'] },
+            { model: Beasiswa, attributes: ['jenisBeasiswa'] },
+            { model: Programstudi, attributes: ['namaProgramStudi'] },
          ],
       });
 
