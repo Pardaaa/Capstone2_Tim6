@@ -1,0 +1,78 @@
+<!-- Nabilla  -->
+<div class="content-header">
+   <div class="container-fluid">
+      <div class="row mb-2">
+         <div class="col-sm-6">
+            <h1 class="m-0 text-bold">Data Mahasiswa Beasiswa | Fakultas <%= Fakultas.namaFakultas %>
+            </h1>
+         </div>
+         <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+               <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+               <li class="breadcrumb-item active">Data Mahasiswa Beasiswa</li>
+            </ol>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- Main Content -->
+<div class="content">
+   <div class="container-fluid">
+      <div class="card p-4">
+         <div class="card-body">
+            <table id="table-mahasiswa" class="table table-bordered table-striped">
+               <caption>List of Mahasiswa</caption>
+               <thead>
+                  <tr>
+                     <th>Nama Mahasiswa</th>
+                     <th>Jenis Beasiswa</th>
+                     <th>Program Studi</th>
+                     <th>Status Aplikasi</th>
+                     <th>Aksi</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <% mahasiswaBeasiswa.forEach(mahasiswa=> { %>
+                     <tr>
+                        <td>
+                           <%= mahasiswa.namaMahasiswa %>
+                        </td>
+                        <td>
+                           <%= mahasiswa.jenisBeasiswa %>
+                        </td>
+                        <td>
+                           <%= mahasiswa.programStudi %>
+                        </td>
+                        <td>
+                           <%= mahasiswa.statusAplikasi %>
+                        </td>
+                        <td>
+                           <div class="d-flex">
+                              <form action="/mahasiswa/approve/<%= mahasiswa.id %>" method="post">
+                                 <button type="submit" class="btn btn-success mr-2">
+                                    <i class="fas fa-check"></i> Approve
+                                 </button>
+                              </form>
+                           </div>
+                        </td>
+                     </tr>
+                     <% }) %>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+      var alertElement = document.querySelector('.alert');
+      if (alertElement) {
+         setTimeout(function () {
+            alertElement.style.display = 'none';
+         }, 2000);
+      }
+   });
+</script>
+<!-- Nabilla -->

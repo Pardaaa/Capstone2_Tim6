@@ -186,9 +186,9 @@ exports.deleteFakultas = async (req, res) => {
 // Nabilla
 exports.getBeasiswa = async (req, res) => {
    try {
-      const beasiswaData = await beasiswa.findOne(); // Menggunakan model Beasiswa
+      const beasiswaData = await beasiswa.findOne();
       res.render('fakultas/beasiswa', {
-         beasiswa: beasiswaData, // Menggunakan beasiswa agar sesuai dengan template
+         beasiswa: beasiswaData,
          title: 'Pengaturan Pengajuan Beasiswa',
          message: req.query.message,
       });
@@ -199,15 +199,14 @@ exports.getBeasiswa = async (req, res) => {
 };
 
 exports.updateBeasiswa = async (req, res) => {
-   const { start_date, end_date, deskripsi } = req.body; // Menggunakan nama field sesuai dengan model Beasiswa
+   const { start_date, end_date, deskripsi } = req.body;
    try {
-      let beasiswaData = await Beasiswa.findOne(); // Menggunakan model Beasiswa
+      let beasiswaData = await Beasiswa.findOne();
       if (beasiswaData) {
          await Beasiswa.update(
             {
                start_date,
                end_date,
-               deskripsi,
             },
             {
                where: { id: beasiswaData.id },
@@ -215,10 +214,8 @@ exports.updateBeasiswa = async (req, res) => {
          );
       } else {
          beasiswaData = await Beasiswa.create({
-            // Menetapkan beasiswa jika tidak ditemukan
             start_date,
             end_date,
-            deskripsi,
          });
       }
       res.redirect('/fakultas/beasiswa?message=Update Berhasil');

@@ -70,5 +70,10 @@ router.post(
    requestRole('Fakultas'),
    updateBeasiswa
 ); // Sesuaikan dengan controller Anda
-
+router.get(
+   '/fakultas/daftarMahasiswa',
+   authMiddleware,
+   requestRole('Fakultas'),
+   getProdi
+);
 module.exports = router;
