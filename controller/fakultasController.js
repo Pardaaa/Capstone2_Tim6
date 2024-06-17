@@ -182,15 +182,13 @@ exports.deleteFakultas = async (req, res) => {
    }
 };
 
-// Nathan
-
 // Nabilla
 exports.getBeasiswa = async (req, res) => {
    try {
-      const beasiswaData = await beasiswa.findOne();
+      const Beasiswa = await beasiswa.findAll();
       res.render('fakultas/beasiswa', {
-         beasiswa: beasiswaData,
-         title: 'Pengaturan Pengajuan Beasiswa',
+         Beasiswa: Beasiswa,
+         title: 'Setting Periode Beasiswa',
          message: req.query.message,
       });
    } catch (error) {
@@ -199,38 +197,51 @@ exports.getBeasiswa = async (req, res) => {
    }
 };
 
-exports.updateBeasiswa = async (req, res) => {
-   const { start_date, end_date, deskripsi } = req.body;
+exports.getBeasiswaById = async (req, res) => {
    try {
-      let beasiswaData = await Beasiswa.findOne();
-      if (beasiswaData) {
-         await Beasiswa.update(
-            {
-               start_date,
-               end_date,
-            },
-            {
-               where: { id: beasiswaData.id },
-            }
-         );
-      } else {
-         beasiswaData = await Beasiswa.create({
-            start_date,
-            end_date,
-         });
-      }
-      res.redirect('/fakultas/beasiswa?message=Update Berhasil');
+      const Beasiswa = await beasiswa.findOne({
+         where: {
+            id: req.params.id
+         }
+      });
+      res.render('fakultas/updateBeasiswa', { beasiswa: Beasiswa, title: 'Update Beasiswa', message: req.query.message });
    } catch (error) {
-      console.error(error);
       res.status(500).send('Internal Server Error');
    }
-};
+}
+
+exports.updateBeasiswa = async (req, res) => {
+   const Beasiswa = await beasiswa.findOne({
+      where: {
+         id: req.params.id
+      }
+   });
+   const { namaBeasiswa, jenisBeasiswa, deskripsi, start_date, end_date } = req.body;
+   try {
+      await beasiswa.update({
+         namaBeasiswa: namaBeasiswa,
+         jenisBeasiswa: jenisBeasiswa,
+         deskripsi: deskripsi,
+         start_date: start_date,
+         end_date: end_date,
+      }, {
+         where: {
+            id: Beasiswa.id
+         }
+      });
+      res.status(200).redirect('/fakultas/beasiswa?message=Update Berhasil');
+   } catch (error) {
+      res.status(400);
+   }
+}
+// Nathan
+
 exports.getDaftarMahasiswa = async (req, res) => {
    try {
       const mahasiswaBeasiswa = await mahasiswa.findAll({
          include: [
-            { model: Beasiswa, attributes: ['jenisBeasiswa'] },
-            { model: Programstudi, attributes: ['namaProgramStudi'] },
+            { model: beasiswa, attributes: ['jenisBeasiswa'] },
+            { model: prodi, attributes: ['namaProgramStudi'] },
          ],
       });
 

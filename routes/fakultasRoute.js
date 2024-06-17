@@ -10,6 +10,7 @@ const {
    deleteFakultas,
    getProdi,
    getBeasiswa,
+   getBeasiswaById,
    updateBeasiswa,
    getDaftarMahasiswa,
 } = require('../controller/fakultasController.js');
@@ -64,13 +65,11 @@ router.get(
    authMiddleware,
    requestRole('Fakultas'),
    getBeasiswa
-); // Sesuaikan dengan controller Anda
-router.post(
-   '/fakultas/beasiswa',
-   authMiddleware,
-   requestRole('Fakultas'),
-   updateBeasiswa
-); // Sesuaikan dengan controller Anda
+);
+
+router.get('/fakultas/beasiswa/edit/:id', authMiddleware, requestRole('Fakultas'), getBeasiswaById);
+router.post('/fakultas/beasiswa/edit/:id', authMiddleware, requestRole('Fakultas'), updateBeasiswa);
+
 router.get(
    '/fakultas/daftarMahasiswa',
    authMiddleware,

@@ -32,8 +32,11 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.VIRTUAL,
       get() {
+        console.log(this.start_date, this.end_date);
         const now = new Date();
-        if (this.start_date > now) {
+        if (!this.start_date || !this.end_date) {
+          return 'Belum Berlangsung';
+        } else if (this.start_date > now) {
           return 'Belum Berlangsung';
         } else if (this.end_date < now) {
           return 'Selesai';
@@ -41,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
           return 'Berlangsung';
         }
       }
-    }
+    },
   }, {
     sequelize,
     modelName: 'Beasiswa',

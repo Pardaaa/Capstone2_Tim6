@@ -55,7 +55,7 @@ exports.viewProdi = async (req, res) => {
                 id: req.params.id
             }
         });
-        res.render('programStudi/viewProdi', { users, prodis, title: 'Views Fakultas' });
+        res.render('programStudi/viewProdi', { users, prodis, title: 'Views Program Studi' });
     } catch (error) {
         console.error(error)
         res.status(500).send('Internal Server Error');
