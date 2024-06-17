@@ -201,41 +201,47 @@ exports.getBeasiswaById = async (req, res) => {
    try {
       const Beasiswa = await beasiswa.findOne({
          where: {
-            id: req.params.id
-         }
+            id: req.params.id,
+         },
       });
-      res.render('fakultas/updateBeasiswa', { beasiswa: Beasiswa, title: 'Update Beasiswa', message: req.query.message });
+      res.render('fakultas/updateBeasiswa', {
+         beasiswa: Beasiswa,
+         title: 'Update Beasiswa',
+         message: req.query.message,
+      });
    } catch (error) {
       res.status(500).send('Internal Server Error');
    }
-}
+};
 
 exports.updateBeasiswa = async (req, res) => {
    const Beasiswa = await beasiswa.findOne({
       where: {
-         id: req.params.id
-      }
+         id: req.params.id,
+      },
    });
-   const { namaBeasiswa, jenisBeasiswa, deskripsi, start_date, end_date } = req.body;
+   const { namaBeasiswa, jenisBeasiswa, deskripsi, start_date, end_date } =
+      req.body;
    try {
-      await beasiswa.update({
-         namaBeasiswa: namaBeasiswa,
-         jenisBeasiswa: jenisBeasiswa,
-         deskripsi: deskripsi,
-         start_date: start_date,
-         end_date: end_date,
-      }, {
-         where: {
-            id: Beasiswa.id
+      await beasiswa.update(
+         {
+            namaBeasiswa: namaBeasiswa,
+            jenisBeasiswa: jenisBeasiswa,
+            deskripsi: deskripsi,
+            start_date: start_date,
+            end_date: end_date,
+         },
+         {
+            where: {
+               id: Beasiswa.id,
+            },
          }
-      });
+      );
       res.status(200).redirect('/fakultas/beasiswa?message=Update Berhasil');
    } catch (error) {
       res.status(400);
    }
-}
-
-// Nathan
+};
 
 exports.getDaftarMahasiswa = async (req, res) => {
    try {
@@ -253,9 +259,14 @@ exports.getDaftarMahasiswa = async (req, res) => {
          programStudi: mb.Programstudi.namaProgramStudi,
          statusAplikasi: mb.statusAplikasi,
       }));
+      const uniqueBeasiswa = [
+         ...new Set(formattedData.map(m => m.jenisBeasiswa)),
+      ];
 
       res.render('fakultas/daftarMahasiswa', {
          mahasiswaBeasiswa: formattedData,
+         uniqueBeasiswa,
+         title: 'Data Pengaju Mahasiswa Beasiswa',
          Fakultas: { namaFakultas: req.query.namaFakultas },
       });
    } catch (error) {
@@ -263,3 +274,16 @@ exports.getDaftarMahasiswa = async (req, res) => {
       res.status(500).send('Internal Server Error');
    }
 };
+
+exports.viewBeasiswa = async (req, res) => {
+   const Beasiswa = await beasiswa.findOne({
+      where: {
+         id: req.params.id,
+      },
+   });
+   res.render('fakultas/viewBeasiswa', {
+      Beasiswa,
+      title: 'Views Beasiswa',
+   });
+};
+// Nabilla

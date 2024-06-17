@@ -3,8 +3,7 @@
    <div class="container-fluid">
       <div class="row mb-2">
          <div class="col-sm-6">
-            <h1 class="m-0 text-bold">Data Mahasiswa Beasiswa | Fakultas <%= Fakultas.namaFakultas %>
-            </h1>
+            <h1 class="m-0 text-bold">Data Mahasiswa Beasiswa</h1>
          </div>
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -19,6 +18,17 @@
 <div class="content">
    <div class="container-fluid">
       <div class="card p-4">
+         <div class="form-group mb-0 ml-auto">
+            <label for="filterBeasiswa" class="mr-2">Filter by Beasiswa:</label>
+            <select class="form-control d-inline-block w-auto" id="filterBeasiswa">
+               <option value="">All</option>
+               <% uniqueBeasiswa.forEach(beasiswa=> { %>
+                  <option value="<%= beasiswa %>">
+                     <%= beasiswa %>
+                  </option>
+                  <% }) %>
+            </select>
+         </div>
          <div class="card-body">
             <table id="table-mahasiswa" class="table table-bordered table-striped">
                <caption>List of Mahasiswa</caption>
@@ -63,4 +73,19 @@
       </div>
    </div>
 </div>
+
+<script>
+   document.getElementById('filterBeasiswa').addEventListener('change', function () {
+      var filterValue = this.value.toLowerCase();
+      var rows = document.querySelectorAll('#table-mahasiswa tbody tr');
+      rows.forEach(function (row) {
+         var beasiswa = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+         if (filterValue === "" || beasiswa.includes(filterValue)) {
+            row.style.display = '';
+         } else {
+            row.style.display = 'none';
+         }
+      });
+   });
+</script>
 <!-- Nabilla -->

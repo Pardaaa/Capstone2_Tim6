@@ -13,10 +13,10 @@ const {
    getBeasiswaById,
    updateBeasiswa,
    getDaftarMahasiswa,
-   viewBeasiswa
+   viewBeasiswa,
 } = require('../controller/fakultasController.js');
 const authMiddleware = require('../middleware/auth');
-const requestRole = require('../middleware/requestRole'); // Sesuaikan typo
+const requestRole = require('../middleware/requestRole');
 
 router.get('/fakultas', authMiddleware, requestRole('Admin'), getFakultas);
 router.get(
@@ -68,13 +68,30 @@ router.get(
    getBeasiswa
 );
 
-router.get('/fakultas/beasiswa/edit/:id', authMiddleware, requestRole('Fakultas'), getBeasiswaById);
-router.post('/fakultas/beasiswa/edit/:id', authMiddleware, requestRole('Fakultas'), updateBeasiswa);
+router.get(
+   '/fakultas/beasiswa/edit/:id',
+   authMiddleware,
+   requestRole('Fakultas'),
+   getBeasiswaById
+);
+router.post(
+   '/fakultas/beasiswa/edit/:id',
+   authMiddleware,
+   requestRole('Fakultas'),
+   updateBeasiswa
+);
 
 router.get(
    '/fakultas/daftarMahasiswa',
    authMiddleware,
    requestRole('Fakultas'),
    getDaftarMahasiswa
+);
+
+router.get(
+   '/fakultas/beasiswa/views/:id',
+   authMiddleware,
+   requestRole('Fakultas'),
+   viewBeasiswa
 );
 module.exports = router;
