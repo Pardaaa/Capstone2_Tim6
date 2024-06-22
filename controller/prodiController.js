@@ -1,4 +1,4 @@
-const { User: user, Fakultas: fakultas, Programstudi: programStudi } = require('../models');
+const { User: User, Fakultas: fakultas, Programstudi: programStudi, PengajuanBeasiswa: ajuanBeasiswa, Beasiswa: beasiswa } = require('../models');
 
 // Nathan
 exports.getProdi = async (req, res) => {
@@ -22,7 +22,7 @@ exports.getProdi = async (req, res) => {
 
 exports.getMahasiswa = async (req, res) => {
     try {
-        const users = await user.findAll({
+        const users = await User.findAll({
             where: {
                 programStudi_id: req.session.prodi,
             }
@@ -45,7 +45,7 @@ exports.getMahasiswa = async (req, res) => {
 
 exports.viewProdi = async (req, res) => {
     try {
-        const users = await user.findAll({
+        const users = await User.findAll({
             where: {
                 programStudi_id: req.params.id,
             }
@@ -154,4 +154,65 @@ exports.deleteProdi = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+exports.listPengaju = async (req, res) => {
+    try {
+        const ajuan = await ajuanBeasiswa.findAll({
+            include: [
+                { model: beasiswa },
+                {
+                    model: User,
+                    where: {
+                        programstudi_id: req.session.prodi
+                    }
+                }
+            ],
+            raw: true
+        });
+        res.render('programStudi/listPengaju', { pengajuan: ajuan, title: "List Pengaju Beasiswa" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("An error occurred while fetching the data.");
+    }
+}
+
+exports.getAjuanById = async (req, res) => {
+    try {
+        const ajuan = await ajuanBeasiswa.findOne({
+            where: {
+                id: req.params.id
+            },
+            include: {
+                model: User,
+                raw: true
+            }
+        });
+        res.render('programStudi/dataPengaju', { pengajuan: ajuan, title: 'Update Program Studi', message: req.query.message });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+exports.viewFile = async (req, res) => {
+    const { id, type } = req.params;
+    try {
+        const ajuan = await ajuanBeasiswa.findByPk(id);
+        if (ajuan) {
+            const fileData = ajuan[type];
+            if (fileData) {
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-Disposition', 'inline; filename="file.pdf"');
+                res.send(fileData);
+            } else {
+                res.status(404).send('File not found');
+            }
+        } else {
+            res.status(404).send('Application not found');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+}
 // Nathan

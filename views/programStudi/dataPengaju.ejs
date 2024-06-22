@@ -1,0 +1,91 @@
+<!-- Nathan -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-bold">Detail Pengajuan Beasiswa | <%= pengajuan.User.fullName %>
+                </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Mahasiswa Data Page</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container-fluid">
+        <% if (typeof message !=='undefined' ) { %>
+            <div id="alertMessage" class="alert alert-success">
+                <%= message %>
+            </div>
+            <% } %>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Detail Pengajuan Beasiswa</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="/mahasiswa/daftarBeasiswa/ajukanBeasiswa/<%= pengajuan.id %>"
+                            enctype="multipart/form-data">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Jenis Data</th>
+                                        <th>Data</th>
+                                        <th>Approve</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>IPK</td>
+                                        <td>
+                                            <h4>
+                                                <%= pengajuan.ipk %>
+                                            </h4>
+                                        </td>
+                                        <td><input type="checkbox" name="suratPelengkapSelected" value="true"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Transkrip Akademik</td>
+                                        <td><a href="/prodi/viewFile/<%= pengajuan.id %>/transkripAkademik"
+                                                target="_blank" class="btn btn-primary">Lihat Data</a></td>
+                                        <td><input type="checkbox" name="suratPelengkapSelected" value="true"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Surat Rekomendasi Dosen</td>
+                                        <td>
+                                            <a href="/prodi/viewFile/<%= pengajuan.id %>/suratRekomendasiDosen"
+                                                target="_blank" class="btn btn-primary">Lihat Data</a>
+                                        </td>
+                                        <td><input type="checkbox" name="suratPelengkapSelected" value="true"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Surat Pernyataan Beasiswa</td>
+                                        <td>
+                                            <a href="/prodi/viewFile/<%= pengajuan.id %>/suratPernyataanBeasiswa"
+                                                target="_blank" class="btn btn-primary">Lihat Data</a>
+                                        </td>
+                                        <td><input type="checkbox" name="suratPelengkapSelected" value="true"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Surat Pelengkap</td>
+                                        <td>
+                                            <a href="/prodi/viewFile/<%= pengajuan.id %>/suratPelengkap" target="_blank"
+                                                class="btn btn-primary">Lihat Data</a>
+                                        </td>
+                                        <td><input type="checkbox" name="suratPelengkapSelected" value="true"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+    </div>
+</div>
+<!-- Nathan -->

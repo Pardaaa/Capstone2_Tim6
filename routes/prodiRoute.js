@@ -7,7 +7,10 @@ const {
     createProdiPage,
     updateProdi,
     deleteProdi,
-    getMahasiswa
+    getMahasiswa,
+    listPengaju,
+    getAjuanById,
+    viewFile
 } = require('../controller/prodiController');
 const authMiddleware = require('../middleware/auth');
 const requesrRole = require('../middleware/requestRole');
@@ -23,5 +26,8 @@ router.post('/prodi/create', authMiddleware, requesrRole('Admin'), createProdi);
 router.get('/prodi/delete/:id', authMiddleware, requesrRole('Admin'), deleteProdi);
 
 router.get('/prodi/listMahasiswa', authMiddleware, requesrRole('Program Studi'), getMahasiswa)
+router.get('/prodi/listPengajuBeasiswa', authMiddleware, requesrRole('Program Studi'), listPengaju)
+router.get('/prodi/dataPengajuBeasiswa/:id', authMiddleware, requesrRole('Program Studi'), getAjuanById)
+router.get('/prodi/viewFile/:id/:type', authMiddleware, requesrRole('Program Studi'), viewFile)
 
 module.exports = router;
