@@ -33,24 +33,38 @@
                            autofocus maxlength="4">
                      </div>
                      <div class="form-group">
-                        <label for="transkripAkademik">Transkrip Akademik</label>
-                        <input type="file" class="form-control-file" id="transkripAkademik" name="transkripAkademik"
-                           required accept=".pdf">
+                        <label for="transkripAkademik" class="col-sm-3 col-form-label">Transkrip Akademik</label>
+                        <div class="custom-file">
+                           <input type="file" class="custom-file-input" id="transkripAkademik" name="transkripAkademik"
+                              required accept=".pdf">
+                           <label class="custom-file-label" for="transkripAkademik">No file chosen</label>
+                        </div>
                      </div>
                      <div class="form-group">
-                        <label for="suratRekomendasiDosen">Surat Rekomendasi Dosen</label>
-                        <input type="file" class="form-control-file" id="suratRekomendasiDosen"
-                           name="suratRekomendasiDosen" required accept=".pdf">
+                        <label for="suratRekomendasiDosen" class="col-sm-3 col-form-label">Surat Rekomendasi
+                           Dosen</label>
+                        <div class="custom-file">
+                           <input type="file" class="custom-file-input" id="suratRekomendasiDosen"
+                              name="suratRekomendasiDosen" required accept=".pdf">
+                           <label class="custom-file-label" for="suratRekomendasiDosen">No file chosen</label>
+                        </div>
                      </div>
                      <div class="form-group">
-                        <label for="suratPernyataanBeasiswa">Surat Pernyataan Beasiswa</label>
-                        <input type="file" class="form-control-file" id="suratPernyataanBeasiswa"
-                           name="suratPernyataanBeasiswa" required accept=".pdf">
+                        <label for="suratPernyataanBeasiswa" class="col-sm-3 col-form-label">Surat Pernyataan
+                           Beasiswa</label>
+                        <div class="custom-file">
+                           <input type="file" class="custom-file-input" id="suratPernyataanBeasiswa"
+                              name="suratPernyataanBeasiswa" required accept=".pdf">
+                           <label class="custom-file-label" for="suratPernyataanBeasiswa">No file chosen</label>
+                        </div>
                      </div>
                      <div class="form-group">
-                        <label for="suratPelengkap">Surat Pelengkap</label>
-                        <input type="file" class="form-control-file" id="suratPelengkap" name="suratPelengkap" required
-                           accept=".pdf">
+                        <label for="suratPelengkap" class="col-sm-3 col-form-label">Surat Pelengkap</label>
+                        <div class="custom-file">
+                           <input type="file" class="custom-file-input" id="suratPelengkap" name="suratPelengkap"
+                              required accept=".pdf">
+                           <label class="custom-file-label" for="suratPelengkap">No file chosen</label>
+                        </div>
                      </div>
                   </div>
                   <div>
@@ -60,7 +74,15 @@
             </div>
    </div>
 </div>
-
+<script>
+   document.querySelectorAll('.custom-file-input').forEach(input => {
+      input.addEventListener('change', function () {
+         let fileName = this.files[0].name;
+         let nextSibling = this.nextElementSibling;
+         nextSibling.innerText = fileName;
+      });
+   });
+</script>
 <script>
    var alertElement = document.querySelector('.alert');
 
