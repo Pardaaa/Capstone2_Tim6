@@ -1,45 +1,55 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
-module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('beasiswa', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      namaBeasiswa: {
-        type: Sequelize.STRING(30),
-        allowNull: false
-      },
-      deskripsi: {
-        type: Sequelize.TEXT,
-        allowNull: false
-      },
-      jenisBeasiswa: {
-        type: Sequelize.ENUM('Internal'),
-        allowNull: false,
-      },
-      start_date: {
-        type: Sequelize.DATE,
-        allowNull: true
-      },
-      end_date: {
-        type: Sequelize.DATE,
-        allowNull: true
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+const { Model } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+   class Beasiswa extends Model {
+      static associate(models) {
+         this.hasMany(models.PengajuanBeasiswa, { foreignKey: 'beasiswaId' });
       }
-    });
-  },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('beasiswa');
-  }
+   }
+   Beasiswa.init(
+      {
+         namaBeasiswa: {
+            type: DataTypes.STRING(30),
+            allowNull: false,
+         },
+         deskripsi: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+         },
+         jenisBeasiswa: {
+            type: DataTypes.ENUM('Internal'),
+            allowNull: false,
+         },
+         start_date: {
+            type: DataTypes.DATE,
+            allowNull: true,
+         },
+         end_date: {
+            type: DataTypes.DATE,
+            allowNull: true,
+         },
+         status: {
+            type: DataTypes.VIRTUAL,
+            get() {
+               console.log(this.start_date, this.end_date);
+               const now = new Date();
+               if (!this.start_date || !this.end_date) {
+                  return 'Belum Berlangsung';
+               } else if (this.start_date > now) {
+                  return 'Belum Berlangsung';
+               } else if (this.end_date < now) {
+                  return 'Selesai';
+               } else {
+                  return 'Berlangsung';
+               }
+            },
+         },
+      },
+      {
+         sequelize,
+         modelName: 'Beasiswa',
+         tableName: 'beasiswa',
+      }
+   );
+   return Beasiswa;
 };

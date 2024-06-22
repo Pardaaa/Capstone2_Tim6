@@ -1,72 +1,71 @@
 <!-- Nabilla -->
-<% if (!beasiswa.start_date || !beasiswa.end_date) { %>
-   <div class="content">
-      <div class="container-fluid">
-         <div class="row">
-            <div class="col-md-12">
-               <div class="alert alert-warning" role="alert">
-                  Maaf, belum ada pendaftaran beasiswa yang dibuka.
-               </div>
-            </div>
+<div class="content-header">
+   <div class="container-fluid">
+      <div class="row mb-2">
+         <div class="col-sm-6">
+            <h1 class="m-0">Tambah Users Form</h1>
+         </div>
+         <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+               <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+               <li class="breadcrumb-item"><a href="/users">Users</a></li>
+               <li class="breadcrumb-item active">Edit Users Form</li>
+            </ol>
          </div>
       </div>
    </div>
-   <% } else { %>
-      <div class="card-body">
-         <h1 class="text-center">Tambah Dokumen Pengajuan Beasiswa</h1>
-         <form id="beasiswaForm" action="/mahasiswa/dokpengajuan" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-               <label for="jenis_beasiswa">Jenis Beasiswa:</label>
-               <select class="form-control" id="jenis_beasiswa" name="jenis_beasiswa" required>
-                  <option value="">Pilih Jenis Beasiswa</option>
-                  <% beasiswas.forEach(beasiswa=> { %>
-                     <option value="<%= beasiswa.id %>">
-                        <%= beasiswa.namaBeasiswa %>
-                     </option>
-                     <% }); %>
-               </select>
-            </div>
-            <div id="deskripsi_beasiswa">
+</div>
 
+<div class="content">
+   <div class="container-fluid">
+      <% if (typeof message !=='undefined' ) { %>
+         <div id="alertMessage" class="alert alert-danger">
+            <%= message %>
+         </div>
+         <% } %>
+            <div class="card p-4">
+               <form method="post" action="/mahasiswa/daftarBeasiswa/ajukanBeasiswa/<%= beasiswa.id %>"
+                  enctype="multipart/form-data">
+                  <div class="card-body">
+                     <div class="form-group">
+                        <label for="ipk">IPK</label>
+                        <input type="text" class="form-control" id="ipk" placeholder="3.75" name="ipk" required
+                           autofocus maxlength="4">
+                     </div>
+                     <div class="form-group">
+                        <label for="transkripAkademik">Transkrip Akademik</label>
+                        <input type="file" class="form-control-file" id="transkripAkademik" name="transkripAkademik"
+                           required accept=".pdf">
+                     </div>
+                     <div class="form-group">
+                        <label for="suratRekomendasiDosen">Surat Rekomendasi Dosen</label>
+                        <input type="file" class="form-control-file" id="suratRekomendasiDosen"
+                           name="suratRekomendasiDosen" required accept=".pdf">
+                     </div>
+                     <div class="form-group">
+                        <label for="suratPernyataanBeasiswa">Surat Pernyataan Beasiswa</label>
+                        <input type="file" class="form-control-file" id="suratPernyataanBeasiswa"
+                           name="suratPernyataanBeasiswa" required accept=".pdf">
+                     </div>
+                     <div class="form-group">
+                        <label for="suratPelengkap">Surat Pelengkap</label>
+                        <input type="file" class="form-control-file" id="suratPelengkap" name="suratPelengkap" required
+                           accept=".pdf">
+                     </div>
+                  </div>
+                  <div>
+                     <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+               </form>
             </div>
-            <div id="syarat_dokumen">
+   </div>
+</div>
 
-            </div>
-            <div class="form-group">
-               <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-         </form>
-      </div>
-      </div>
-      </div>
-      </div>
-      <% } %>
-         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-         <script>
-            $(document).ready(function () {
-               $('#jenis_beasiswa').on('change', function () {
-                  var selectedBeasiswaId = $(this).val();
-                  var selectedBeasiswa = beasiswas.find(beasiswa => beasiswa.id === selectedBeasiswaId);
-                  if (selectedBeasiswa) {
-                     $('#deskripsi_beasiswa').html('<p>' + selectedBeasiswa.deskripsi + '</p>');
+<script>
+   var alertElement = document.querySelector('.alert');
 
-                     var syaratDokumen = selectedBeasiswa.syaratDokumen; // Misalnya, asumsikan syarat dokumen adalah array
-                     if (syaratDokumen && syaratDokumen.length > 0) {
-                        var html = '';
-                        syaratDokumen.forEach(syarat => {
-                           html += '<div class="form-group">';
-                           html += '<label for="' + syarat.id + '">' + syarat.nama + '</label>';
-                           html += '<input type="file" class="form-control-file" id="' + syarat.id + '" name="' + syarat.id + '" required>';
-                           html += '</div>';
-                        });
-                        $('#syarat_dokumen').html(html);
-                     } else {
-                        $('#syarat_dokumen').html('');
-                     }
-                  } else {
-                     $('#deskripsi_beasiswa').html('');
-                     $('#syarat_dokumen').html('');
-                  }
-               });
-            });
-         </script>
+   setTimeout(function () {
+      alertElement.style.display = 'none';
+   }, 2000);
+</script>
+<!-- Nabilla -->
