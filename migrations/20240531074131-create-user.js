@@ -1,59 +1,54 @@
 'use strict';
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-   class User extends Model {
-      static associate(models) {
-         User.belongsTo(models.Fakultas, { foreignKey: 'fakultas_id' });
-         User.belongsTo(models.Programstudi, { foreignKey: 'programStudi_id' });
-         this.hasMany(models.PengajuanBeasiswa, { foreignKey: 'userId' });
-      }
-   }
-
-   User.init(
-      {
+// Nathan
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+   async up(queryInterface, Sequelize) {
+      await queryInterface.createTable('users', {
+         id: {
+            allowNull: false,
+            autoIncrement: true,
+            primaryKey: true,
+            type: Sequelize.INTEGER,
+         },
          userId: {
-            type: DataTypes.STRING(7),
+            type: Sequelize.STRING(7),
             allowNull: false,
             unique: true,
          },
          username: {
-            type: DataTypes.STRING(50),
+            type: Sequelize.STRING(50),
             allowNull: false,
             unique: true,
          },
          fullName: {
-            type: DataTypes.STRING(50),
-            allowNull: false,
+            type: Sequelize.STRING(50),
          },
          email: {
-            type: DataTypes.STRING(30),
+            type: Sequelize.STRING(30),
             allowNull: false,
             unique: true,
          },
          password: {
-            type: DataTypes.STRING(100),
+            type: Sequelize.STRING(100),
             allowNull: false,
          },
          role: {
-            type: DataTypes.ENUM(
-               'admin',
-               'mahasiswa',
-               'fakultas',
-               'program_studi'
+            type: Sequelize.ENUM(
+               'Admin',
+               'Mahasiswa',
+               'Fakultas',
+               'Program Studi'
             ),
             allowNull: false,
          },
          jabatan: {
-            type: DataTypes.ENUM('Dekan', 'Wakil Dekan', 'Ketua Program Studi'),
-            allowNull: true,
+            type: Sequelize.ENUM('Dekan', 'Wakil Dekan', 'Ketua Program Studi'),
          },
          status: {
-            type: DataTypes.ENUM('Aktif', 'Pasif'),
-            allowNull: true,
+            type: Sequelize.ENUM('Aktif', 'Pasif'),
          },
          fakultas_id: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
+            type: Sequelize.INTEGER,
             references: {
                model: 'Fakultas',
                key: 'id',
@@ -62,22 +57,26 @@ module.exports = (sequelize, DataTypes) => {
             onDelete: 'SET NULL',
          },
          programStudi_id: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
+            type: Sequelize.INTEGER,
             references: {
-               model: 'Programstudi',
+               model: 'programStudis',
                key: 'id',
             },
             onUpdate: 'CASCADE',
             onDelete: 'SET NULL',
          },
-      },
-      {
-         sequelize,
-         modelName: 'User',
-         tableName: 'users',
-      }
-   );
-   return User;
+         createdAt: {
+            allowNull: false,
+            type: Sequelize.DATE,
+         },
+         updatedAt: {
+            allowNull: false,
+            type: Sequelize.DATE,
+         },
+      });
+   },
+   async down(queryInterface, Sequelize) {
+      await queryInterface.dropTable('users');
+   },
 };
 // Nathan

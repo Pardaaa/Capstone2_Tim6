@@ -1,45 +1,55 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
-module.exports = {
-   up: async (queryInterface, Sequelize) => {
-      await queryInterface.createTable('beasiswas', {
-         id: {
-            allowNull: false,
-            autoIncrement: true,
-            primaryKey: true,
-            type: Sequelize.INTEGER,
-         },
+const { Model } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+   class Beasiswa extends Model {
+      static associate(models) {
+         this.hasMany(models.PengajuanBeasiswa, { foreignKey: 'beasiswaId' });
+      }
+   }
+   Beasiswa.init(
+      {
          namaBeasiswa: {
-            type: Sequelize.STRING(30),
+            type: DataTypes.STRING(30),
             allowNull: false,
          },
          deskripsi: {
-            type: Sequelize.TEXT,
+            type: DataTypes.TEXT,
             allowNull: false,
          },
          jenisBeasiswa: {
-            type: Sequelize.ENUM('Internal'),
+            type: DataTypes.ENUM('Internal'),
             allowNull: false,
          },
          start_date: {
-            type: Sequelize.DATE,
+            type: DataTypes.DATE,
             allowNull: true,
          },
          end_date: {
-            type: Sequelize.DATE,
+            type: DataTypes.DATE,
             allowNull: true,
          },
-         createdAt: {
-            allowNull: false,
-            type: Sequelize.DATE,
+         status: {
+            type: DataTypes.VIRTUAL,
+            get() {
+               console.log(this.start_date, this.end_date);
+               const now = new Date();
+               if (!this.start_date || !this.end_date) {
+                  return 'Belum Berlangsung';
+               } else if (this.start_date > now) {
+                  return 'Belum Berlangsung';
+               } else if (this.end_date < now) {
+                  return 'Selesai';
+               } else {
+                  return 'Berlangsung';
+               }
+            },
          },
-         updatedAt: {
-            allowNull: false,
-            type: Sequelize.DATE,
-         },
-      });
-   },
-   down: async (queryInterface, Sequelize) => {
-      await queryInterface.dropTable('beasiswas');
-   },
+      },
+      {
+         sequelize,
+         modelName: 'Beasiswa',
+         tableName: 'beasiswa',
+      }
+   );
+   return Beasiswa;
 };
