@@ -35,6 +35,30 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true,
          },
+         statusFakultas: {
+            type: DataTypes.STRING,
+            allowNull: true,
+         },
+         ipkDesc: {
+            type: DataTypes.STRING,
+            allowNull: true,
+         },
+         transkripAkademikDesc : {
+            type: DataTypes.STRING,
+            allowNull: true,
+         },
+         suratRekomendasiDosenDesc  : {
+            type: DataTypes.STRING,
+            allowNull: true,
+         },
+         suratPernyataanBeasiswaDesc  : {
+            type: DataTypes.STRING,
+            allowNull: true,
+         },
+         suratPelengkapDesc  : {
+            type: DataTypes.STRING,
+            allowNull: true,
+         },
          beasiswaId: {
             type: DataTypes.INTEGER,
             references: {

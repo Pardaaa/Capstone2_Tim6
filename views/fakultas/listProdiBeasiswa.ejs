@@ -1,0 +1,70 @@
+<!-- Nathan -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-bold">Data Program Studi | Fakultas <%= Fakultas.namaFakultas %>
+                </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Fakultas Data Page</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="content">
+        </div>
+        <div class="card p-4">
+            <div class="card-body">
+                <table id="table-users" class="table table-bordered table-striped">
+                    <caption>List of Fakultas</caption>
+                    <thead>
+                        <tr class="text-center">
+                            <th>Id Fakultas</th>
+                            <th>Nama Fakultas</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% prodis.forEach(prodi=> { %>
+                            <tr>
+                                <td>
+                                    <%= prodi.programStudi_id %>
+                                </td>
+                                <td>
+                                    <%= prodi.namaProgramStudi %>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <form action="/fakultas/ProgramStudi/ApprovalBeasiswa/<%= prodi.id %>" method="get">
+                                            <button type="submit" class="btn btn-info mr-2 "><i
+                                                    class="fas fa-eye"></i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var alertElement = document.querySelector('.alert');
+        if (alertElement) {
+            setTimeout(function () {
+                alertElement.style.display = 'none';
+            }, 2000);
+        }
+    });
+</script>
+<!-- Nathan -->

@@ -13,7 +13,8 @@ const {
     viewFile,
     updateAjuanStatus,
     saveCheckboxStatus,
-    getCheckboxStatus
+    getCheckboxStatus,
+    saveDescription
 } = require('../controller/prodiController');
 const authMiddleware = require('../middleware/auth');
 const requestRole = require('../middleware/requestRole');

@@ -4,6 +4,7 @@ const {
    Programstudi: prodi,
    Beasiswa: beasiswa,
    Mahasiswa: mahasiswa,
+   PengajuanBeasiswa: ajuan
 } = require('../models');
 
 // Nathan
@@ -287,3 +288,47 @@ exports.viewBeasiswa = async (req, res) => {
    });
 };
 // Nabilla
+
+exports.approvalBeasiswa = async (req, res) => {
+   try {
+      const Pengajuan = await ajuan.findAll({
+         include: [
+             { model: beasiswa },
+             {
+                 model: user,
+                 where: {
+                     programstudi_id: req.params.id
+                 }
+             }
+         ],
+         raw: true
+     });
+     res.render('fakultas/approvalBeasiswa', { pengajuan: Pengajuan, title: "List Pengaju Beasiswa" });
+   } catch (error) {
+      console.error(error)
+   }
+}
+
+exports.getProdiBeasiswa = async (req, res) => {
+   try {
+      const prodis = await prodi.findAll({
+         where: {
+            fakultas_id: req.session.fakultas,
+         },
+      });
+      const Fakultas = await fakultas.findOne({
+         where: {
+            id: req.session.fakultas,
+         },
+      });
+      res.render('fakultas/listProdiBeasiswa', {
+         prodis: prodis,
+         Fakultas: Fakultas,
+         title: 'Daftar Program Studi',
+         message: req.query.message,
+      });
+   } catch (error) {
+      console.error(error);
+      res.status(404).send('Prodi not found');
+   }
+};

@@ -33,6 +33,30 @@ module.exports = {
             type: Sequelize.STRING,
             allowNull: true,
          },
+         statusFakultas: {
+            type: Sequelize.STRING,
+            allowNull: true,
+         },
+         ipkDesc : {
+            type: Sequelize.STRING,
+            allowNull: true,
+         },
+         transkripAkademikDesc : {
+            type: Sequelize.STRING,
+            allowNull: true,
+         },
+         suratRekomendasiDosenDesc : {
+            type: Sequelize.STRING,
+            allowNull: true,
+         },
+         suratPernyataanBeasiswaDesc : {
+            type: Sequelize.STRING,
+            allowNull: true,
+         },
+         suratPelengkapDesc : {
+            type: Sequelize.STRING,
+            allowNull: true,
+         },
          beasiswaId: {
             type: Sequelize.INTEGER,
             references: {
