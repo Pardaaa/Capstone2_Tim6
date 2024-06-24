@@ -5,6 +5,8 @@ const {
    viewBeasiswa,
    getBeasiswaById,
    createPengajuanBeasiswa,
+   approvalBeasiswa,
+   getDaftarMahasiswa,
 } = require('../controller/mahasiswaController.js');
 const authMiddleware = require('../middleware/auth');
 const requestRole = require('../middleware/requestRole');
@@ -35,6 +37,13 @@ router.post(
    requestRole('Mahasiswa'),
    uploadFiles,
    createPengajuanBeasiswa
+);
+
+router.get(
+   '/mahasiswa/statusPengajuan/:id',
+   authMiddleware,
+   requestRole('Mahasiswa'),
+   approvalBeasiswa
 );
 
 // router.post(

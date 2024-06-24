@@ -6,7 +6,7 @@ const {
    Beasiswa: beasiswa,
    Mahasiswa: mahasiswa,
    PengajuanBeasiswa: ajuan,
-   Periode: periode
+   Periode: periode,
 } = require('../models');
 
 // Nathan
@@ -188,9 +188,7 @@ exports.deleteFakultas = async (req, res) => {
 exports.getBeasiswa = async (req, res) => {
    try {
       const Beasiswa = await beasiswa.findAll({
-         include: [
-            { model: periode }
-         ]
+         include: [{ model: periode }],
       });
       res.render('fakultas/beasiswa', {
          Beasiswa: Beasiswa,
@@ -289,7 +287,7 @@ exports.viewBeasiswa = async (req, res) => {
          id: req.params.id,
       },
       include: periode,
-      raw: true
+      raw: true,
    });
    res.render('fakultas/viewBeasiswa', {
       Beasiswa,
@@ -306,17 +304,20 @@ exports.approvalBeasiswa = async (req, res) => {
             {
                model: user,
                where: {
-                  programstudi_id: req.params.id
-               }
-            }
+                  programstudi_id: req.params.id,
+               },
+            },
          ],
-         raw: true
+         raw: true,
       });
-      res.render('fakultas/approvalBeasiswa', { pengajuan: Pengajuan, title: "List Pengaju Beasiswa" });
+      res.render('fakultas/approvalBeasiswa', {
+         pengajuan: Pengajuan,
+         title: 'List Pengaju Beasiswa',
+      });
    } catch (error) {
-      console.error(error)
+      console.error(error);
    }
-}
+};
 
 exports.getProdiBeasiswa = async (req, res) => {
    try {
