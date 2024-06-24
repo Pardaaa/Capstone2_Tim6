@@ -1,10 +1,10 @@
-const { User: user, Fakultas: Fakultas, Programstudi: prodi, Beasiswa: beasiswa } = require('../models');
+const { User: user, Fakultas: Fakultas, Programstudi: prodi, Beasiswa: beasiswa, Periode: periode } = require('../models');
 const bcrypt = require('bcrypt');
+const { raw } = require('mysql2');
 
 // Nathan
 exports.getUsers = async (req, res) => {
     try {
-        beasiswa
         const users = await user.findAll();
         res.render('administrator/users/users', { users: users, title: 'Users', message: req.query.message });
     } catch (error) {
@@ -169,7 +169,12 @@ exports.deleteUser = async (req, res) => {
 
 exports.getBeasiswa = async (req, res) => {
     try {
-        const beasiswas = await beasiswa.findAll();
+        const beasiswas = await beasiswa.findAll({
+            include: [
+                { model: periode },
+            ],
+            raw: true
+        });
         res.render('administrator/beasiswa/beasiswa', { beasiswas: beasiswas, title: 'Beasiswa', message: req.query.message });
     } catch (error) {
         res.status(404).send('Users not found');
@@ -178,7 +183,9 @@ exports.getBeasiswa = async (req, res) => {
 
 exports.createBeasiswaPage = async (req, res) => {
     try {
+        const Periode = await periode.findAll();
         res.render('administrator/beasiswa/addBeasiswa', {
+            periode: Periode,
             title: 'Tambah Beasiswa',
             message: req.query.message
         });
@@ -189,12 +196,13 @@ exports.createBeasiswaPage = async (req, res) => {
 };
 
 exports.createBeasiswa = async (req, res) => {
-    const { namaBeasiswa, deskripsi, jenisBeasiswa } = req.body;
+    const { namaBeasiswa, deskripsi, jenisBeasiswa, periodeId } = req.body;
     try {
         await beasiswa.create({
             namaBeasiswa: namaBeasiswa,
             deskripsi: deskripsi,
-            jenisBeasiswa: jenisBeasiswa
+            jenisBeasiswa: jenisBeasiswa,
+            periodeId: periodeId
         });
         res.redirect('/beasiswa?message=Input Berhasil');
     } catch (error) {
@@ -209,7 +217,8 @@ exports.getBeasiswaById = async (req, res) => {
                 id: req.params.id
             }
         });
-        res.render('administrator/beasiswa/updateBeasiswa', { Beasiswa, title: 'Update Beasiswa', message: req.query.message });
+        const Periode = await periode.findAll();
+        res.render('administrator/beasiswa/updateBeasiswa', { Beasiswa, periode: Periode, title: 'Update Beasiswa', message: req.query.message });
     } catch (error) {
         res.status(500).send('Internal Server Error');
     }
@@ -221,12 +230,13 @@ exports.updateBeasiswa = async (req, res) => {
             id: req.params.id
         }
     });
-    const { namaBeasiswa, deskripsi, jenisBeasiswa } = req.body;
+    const { namaBeasiswa, deskripsi, jenisBeasiswa, periodeId } = req.body;
     try {
         await beasiswa.update({
             namaBeasiswa: namaBeasiswa,
             deskripsi: deskripsi,
-            jenisBeasiswa: jenisBeasiswa
+            jenisBeasiswa: jenisBeasiswa,
+            periodeId: periodeId
         }, {
             where: {
                 id: Beasiswa.id
@@ -253,6 +263,92 @@ exports.deleteBeasiswa = async (req, res) => {
         res.status(200).redirect('/beasiswa?message=Delete Berhasil');
     } catch (error) {
         res.status(400);
+    }
+}
+
+exports.getPeriode = async (req, res) => {
+    try {
+        const Periode = await periode.findAll();
+        res.render('administrator/periode/periode', { periode: Periode, title: 'Periode', message: req.query.message });
+    } catch (error) {
+        res.status(404).send('Periode not found');
+    }
+}
+
+exports.createPeriodePage = async (req, res) => {
+    try {
+        res.render('administrator/periode/addPeriode', {
+            title: 'Tambah Periode',
+            message: req.query.message
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+exports.createPeriode = async (req, res) => {
+    const { Periode } = req.body;
+    try {
+        await periode.create({
+            periode: Periode,
+        });
+        res.redirect('/periode?message=Input Berhasil');
+    } catch (error) {
+        console.error(error)
+        res.status(404).send('Periode not found');
+    }
+}
+
+exports.getPeriodeById = async (req, res) => {
+    try {
+        const Periode = await periode.findOne({
+            where: {
+                id: req.params.id
+            }
+        });
+        res.render('administrator/periode/updatePeriode', { periode: Periode, title: 'Update Beasiswa', message: req.query.message });
+    } catch (error) {
+        res.status(404).send('Periode not found');
+    }
+}
+
+exports.updatePeriode = async (req, res) => {
+    const Periode = await periode.findOne({
+        where: {
+            id: req.params.id
+        }
+    });
+    const { periodes } = req.body;
+    try {
+        await periode.update({
+            periode: periodes,
+        }, {
+            where: {
+                id: Periode.id
+            }
+        });
+        res.status(200).redirect('/periode?message=Update Berhasil');
+    } catch (error) {
+        res.status(404).send('Periode not found');
+    }
+}
+
+exports.deletePeriode = async (req, res) => {
+    const Periode = await periode.findOne({
+        where: {
+            id: req.params.id
+        }
+    });
+    try {
+        await periode.destroy({
+            where: {
+                id: Periode.id
+            }
+        });
+        res.status(200).redirect('/periode?message=Delete Berhasil');
+    } catch (error) {
+        res.status(404).send('Periode not found');
     }
 }
 // Nathan

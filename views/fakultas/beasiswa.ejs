@@ -33,6 +33,7 @@
                <thead>
                   <tr class="text-center">
                      <th>Nama Beasiswa</th>
+                     <th>Periode</th>
                      <th>Jenis Beasiswa</th>
                      <th>Waktu Dimulai</th>
                      <th>Waktu Berakhir</th>
@@ -45,6 +46,9 @@
                      <tr>
                         <td>
                            <%= beasiswa.namaBeasiswa %>
+                        </td>
+                        <td>
+                           <%= beasiswa.Periode ? beasiswa.Periode.periode : '-' %>
                         </td>
                         <td>
                            <%= beasiswa.jenisBeasiswa %>

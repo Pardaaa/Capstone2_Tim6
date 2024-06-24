@@ -1,0 +1,49 @@
+<!-- Nathan -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Update Periode Form</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/periode">Periode</a></li>
+                    <li class="breadcrumb-item active">Update Periode Form</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container-fluid">
+        <% if (typeof message !=='undefined' ) { %>
+            <div id="alertMessage" class="alert alert-danger">
+                <%= message %>
+            </div>
+            <% } %>
+                <div class="card p-4">
+                    <form method="post" action="/periode/edit/<%= periode.id %>">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="periodes">Nama Periode</label>
+                                <input type="text" class="form-control" id="periodes" autofocus required
+                                    value="<%= periode.periode %>" name="periodes">
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Update Periode</button>
+                            </div>
+                    </form>
+                </div>
+    </div>
+</div>
+</div>
+
+<script>
+    var alertElement = document.querySelector('.alert');
+    setTimeout(function () {
+        alertElement.style.display = 'none';
+    }, 2000);
+</script>
+<!-- Nathan -->

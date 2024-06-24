@@ -3,13 +3,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Tambah Fakultas Form</h1>
+                <h1 class="m-0">Update Fakultas Form</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
                     <li class="breadcrumb-item"><a href="/beasiswa">Beasiswa</a></li>
-                    <li class="breadcrumb-item active">Tambah Beasiswa Form</li>
+                    <li class="breadcrumb-item active">Update Beasiswa Form</li>
                 </ol>
             </div>
         </div>
@@ -38,6 +38,17 @@
                                     required><%= Beasiswa.deskripsi %></textarea>
                             </div>
                             <div class="form-group">
+                                <label for="periodeId">Nama Periode</label>
+                                <select class="form-control" id="periodeId" required name="periodeId">
+                                    <% periode.forEach(periode=> { %>
+                                        <option value="<%= periode.id %>" <% if (periode.id===Beasiswa.periodeId) { %>
+                                            selected <% } %>>
+                                                <%= periode.periode %>
+                                        </option>
+                                        <% }); %>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="jenisBeasiswa">Jenis Beasiswa</label>
                                 <select class="form-control" id="jenisBeasiswa" name="jenisBeasiswa" required>
                                     <option <% if (Beasiswa.jenisBeasiswa==='Internal' ) { %> selected <% } %>>Internal
@@ -45,7 +56,7 @@
                                 </select>
                             </div>
                             <div>
-                                <button type="submit" class="btn btn-primary">Tambah Beasiswa</button>
+                                <button type="submit" class="btn btn-primary">Update Beasiswa</button>
                             </div>
                     </form>
                 </div>

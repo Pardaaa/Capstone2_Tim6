@@ -3,12 +3,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Data Beasiswa</h1>
+                <h1 class="m-0">Data Periode</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-                    <li class="breadcrumb-item active">Beasiswa Data Page</li>
+                    <li class="breadcrumb-item active">Periode Data Page</li>
                 </ol>
             </div>
         </div>
@@ -28,8 +28,8 @@
         </div>
         <div class="card p-4">
             <div class="card-title d-flex justify-content-between align-items-center">
-                <form action="/beasiswa/create" method="get">
-                    <button type="submit" class="h2 btn btn-success text-bold">Tambah Beasiswa</button>
+                <form action="/periode/create" method="get">
+                    <button type="submit" class="h2 btn btn-success text-bold">Tambah Periode</button>
                 </form>
             </div>
             <div class="card-body">
@@ -37,35 +37,23 @@
                     <caption>List of Beasiswa</caption>
                     <thead>
                         <tr class="text-center">
-                            <th>Nama Beasiswa</th>
-                            <th class="w-50">Deskripsi Beasiswa</th>
                             <th>Periode</th>
-                            <th>Jenis Beasiswa</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% beasiswas.forEach(beasiswa=> { %>
+                        <% periode.forEach(periode=> { %>
                             <tr>
                                 <td>
-                                    <%= beasiswa.namaBeasiswa %>
-                                </td>
-                                <td>
-                                    <textarea class="form-control" rows="15"><%= beasiswa.deskripsi %></textarea>
-                                </td>
-                                <td>
-                                    <%= beasiswa['Periode.periode'] %>
-                                </td>
-                                <td>
-                                    <%= beasiswa.jenisBeasiswa %>
+                                    <%= periode.periode %>
                                 </td>
                                 <td>
                                     <div class=" d-flex">
-                                        <form action="/beasiswa/edit/<%= beasiswa.id %>" method="get">
+                                        <form action="/periode/edit/<%= periode.id %>" method="get">
                                             <button type="submit" class="btn btn-warning mr-2"><i
                                                     class="fas fa-edit"></i></button>
                                         </form>
-                                        <form action="/beasiswa/delete/<%= beasiswa.id %>" method="get"
+                                        <form action="/periode/delete/<%= periode.id %>" method="get"
                                             onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                             <button type="submit" class="btn btn-danger"><i
                                                     class="fas fa-trash"></i></button>

@@ -1,8 +1,12 @@
-const { Mahasiswa: Mahasiswa, Beasiswa: beasiswa, PengajuanBeasiswa: ajuanBeasiswa } = require('../models');
+const { raw } = require('express');
+const { Mahasiswa: Mahasiswa, Beasiswa: beasiswa, PengajuanBeasiswa: ajuanBeasiswa, Periode: periode } = require('../models');
+const { Model, where } = require('sequelize');
 
 exports.getBeasiswa = async (req, res) => {
    try {
-      const Beasiswa = await beasiswa.findAll();
+      const Beasiswa = await beasiswa.findAll({
+         include: periode
+      });
       res.render('mahasiswa/daftarBeasiswa', {
          Beasiswa: Beasiswa,
          title: 'List Beasiswa Beasiswa',
@@ -19,6 +23,8 @@ exports.viewBeasiswa = async (req, res) => {
       where: {
          id: req.params.id,
       },
+      include: periode,
+      raw: true
    });
    res.render('fakultas/viewBeasiswa', {
       Beasiswa,
@@ -45,16 +51,28 @@ exports.getBeasiswaById = async (req, res) => {
          where: {
             id: req.params.id,
          },
+         include: [{
+            model: periode
+         }]
       });
-      const userId = req.session.userId;
+
       const existingSubmission = await ajuanBeasiswa.findOne({
          where: {
-            userId: userId
-         }
+            userId: req.session.userId,
+         },
+         include: [{
+            model: beasiswa,
+            where: {
+               periodeId: Beasiswa.periodeId
+            },
+            include: [{
+               model: periode,
+            }]
+         }]
       });
 
       if (existingSubmission) {
-         res.redirect('/mahasiswa/daftarBeasiswa?message=Anda hanya dapat mengajukan beasiswa Satu Kali per Periode');
+         res.redirect('/mahasiswa/daftarBeasiswa?message=Anda hanya dapat mengajukan beasiswa satu kali per periode');
       } else {
          res.render('mahasiswa/dokpengajuan', {
             beasiswa: Beasiswa,
@@ -63,7 +81,7 @@ exports.getBeasiswaById = async (req, res) => {
          });
       }
    } catch (error) {
-      console.error(error)
+      console.error(error);
       res.status(500).send('Internal Server Error');
    }
 };

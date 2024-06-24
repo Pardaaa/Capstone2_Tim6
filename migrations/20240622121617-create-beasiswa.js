@@ -29,6 +29,15 @@ module.exports = {
             type: Sequelize.DATE,
             allowNull: true
          },
+         periodeId: {
+            type: Sequelize.INTEGER,
+            references: {
+               model: 'Periode',
+               key: 'id',
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL',
+         },
          createdAt: {
             allowNull: false,
             type: Sequelize.DATE

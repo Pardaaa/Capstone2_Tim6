@@ -37,6 +37,16 @@
                                     required></textarea>
                             </div>
                             <div class="form-group">
+                                <label for="periodeId">Periode</label>
+                                <select class="form-control" id="periodeId" required name="periodeId">
+                                    <% periode.forEach(periode=> { %>
+                                        <option value="<%= periode.id %>">
+                                            <%= periode.periode %>
+                                        </option>
+                                        <% }); %>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="jenisBeasiswa">Jenis Beasiswa</label>
                                 <select class="form-control" id="jenisBeasiswa" name="jenisBeasiswa" required>
                                     <option value="Internal">Internal</option>

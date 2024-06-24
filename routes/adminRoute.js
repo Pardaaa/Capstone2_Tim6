@@ -11,7 +11,13 @@ const {
     createBeasiswaPage,
     createBeasiswa,
     updateBeasiswa,
-    deleteBeasiswa } = require('../controller/adminController');
+    deleteBeasiswa,
+    getPeriode,
+    createPeriodePage,
+    createPeriode,
+    getPeriodeById,
+    updatePeriode,
+    deletePeriode } = require('../controller/adminController');
 const authMiddleware = require('../middleware/auth');
 const requesrRole = require('../middleware/requestRole');
 
@@ -31,5 +37,12 @@ router.post('/beasiswa/create', authMiddleware, requesrRole('Admin'), createBeas
 router.get('/beasiswa/edit/:id', authMiddleware, requesrRole('Admin'), getBeasiswaById);
 router.post('/beasiswa/edit/:id', authMiddleware, requesrRole('Admin'), updateBeasiswa);
 router.get('/beasiswa/delete/:id', authMiddleware, requesrRole('Admin'), deleteBeasiswa);
+
+router.get('/periode', authMiddleware, requesrRole('Admin'), getPeriode)
+router.get('/periode/create', authMiddleware, requesrRole('Admin'), createPeriodePage);
+router.post('/periode/create', authMiddleware, requesrRole('Admin'), createPeriode);
+router.get('/periode/edit/:id', authMiddleware, requesrRole('Admin'), getPeriodeById);
+router.post('/periode/edit/:id', authMiddleware, requesrRole('Admin'), updatePeriode);
+router.get('/periode/delete/:id', authMiddleware, requesrRole('Admin'), deletePeriode);
 
 module.exports = router;

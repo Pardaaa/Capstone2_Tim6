@@ -37,23 +37,23 @@ module.exports = {
             type: Sequelize.STRING,
             allowNull: true,
          },
-         ipkDesc : {
+         ipkDesc: {
             type: Sequelize.STRING,
             allowNull: true,
          },
-         transkripAkademikDesc : {
+         transkripAkademikDesc: {
             type: Sequelize.STRING,
             allowNull: true,
          },
-         suratRekomendasiDosenDesc : {
+         suratRekomendasiDosenDesc: {
             type: Sequelize.STRING,
             allowNull: true,
          },
-         suratPernyataanBeasiswaDesc : {
+         suratPernyataanBeasiswaDesc: {
             type: Sequelize.STRING,
             allowNull: true,
          },
-         suratPelengkapDesc : {
+         suratPelengkapDesc: {
             type: Sequelize.STRING,
             allowNull: true,
          },

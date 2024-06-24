@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
    class Beasiswa extends Model {
       static associate(models) {
          this.hasMany(models.PengajuanBeasiswa, { foreignKey: 'beasiswaId' });
+         this.belongsTo(models.Periode, { foreignKey: 'periodeId' });
       }
    }
    Beasiswa.init(
@@ -28,10 +29,18 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DATE,
             allowNull: true,
          },
+         periodeId: {
+            type: DataTypes.INTEGER,
+            references: {
+               model: 'Periode',
+               key: 'id',
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL',
+         },
          status: {
             type: DataTypes.VIRTUAL,
             get() {
-               console.log(this.start_date, this.end_date);
                const now = new Date();
                if (!this.start_date || !this.end_date) {
                   return 'Belum Berlangsung';

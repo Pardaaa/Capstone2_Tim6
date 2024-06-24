@@ -1,10 +1,12 @@
+const { raw } = require('mysql2');
 const {
    User: user,
    Fakultas: fakultas,
    Programstudi: prodi,
    Beasiswa: beasiswa,
    Mahasiswa: mahasiswa,
-   PengajuanBeasiswa: ajuan
+   PengajuanBeasiswa: ajuan,
+   Periode: periode
 } = require('../models');
 
 // Nathan
@@ -183,10 +185,13 @@ exports.deleteFakultas = async (req, res) => {
    }
 };
 
-// Nabilla
 exports.getBeasiswa = async (req, res) => {
    try {
-      const Beasiswa = await beasiswa.findAll();
+      const Beasiswa = await beasiswa.findAll({
+         include: [
+            { model: periode }
+         ]
+      });
       res.render('fakultas/beasiswa', {
          Beasiswa: Beasiswa,
          title: 'Setting Periode Beasiswa',
@@ -205,8 +210,10 @@ exports.getBeasiswaById = async (req, res) => {
             id: req.params.id,
          },
       });
+      const Periode = await periode.findAll();
       res.render('fakultas/updateBeasiswa', {
          beasiswa: Beasiswa,
+         periode: Periode,
          title: 'Update Beasiswa',
          message: req.query.message,
       });
@@ -281,29 +288,31 @@ exports.viewBeasiswa = async (req, res) => {
       where: {
          id: req.params.id,
       },
+      include: periode,
+      raw: true
    });
    res.render('fakultas/viewBeasiswa', {
       Beasiswa,
       title: 'Views Beasiswa',
    });
 };
-// Nabilla
+// Nathan
 
 exports.approvalBeasiswa = async (req, res) => {
    try {
       const Pengajuan = await ajuan.findAll({
          include: [
-             { model: beasiswa },
-             {
-                 model: user,
-                 where: {
-                     programstudi_id: req.params.id
-                 }
-             }
+            { model: beasiswa },
+            {
+               model: user,
+               where: {
+                  programstudi_id: req.params.id
+               }
+            }
          ],
          raw: true
-     });
-     res.render('fakultas/approvalBeasiswa', { pengajuan: Pengajuan, title: "List Pengaju Beasiswa" });
+      });
+      res.render('fakultas/approvalBeasiswa', { pengajuan: Pengajuan, title: "List Pengaju Beasiswa" });
    } catch (error) {
       console.error(error)
    }

@@ -4,7 +4,24 @@ const bcrypt = require('bcrypt');
 // Nathan
 exports.dashboard = async (req, res) => {
     const users = await user.findAll();
-    res.render('dashboard', { users: users, title: 'Admin' });
+    let title = '';
+    switch (req.session.role) {
+        case 'Admin':
+            title = 'Admin';
+            break;
+        case 'Fakultas':
+            title = 'Fakultas';
+            break;
+        case 'Program Studi':
+            title = 'Program Studi';
+            break;
+        case 'Mahasiswa':
+            title = 'Mahasiswa';
+            break;
+        default:
+            title = 'Guest';
+    }
+    res.render('dashboard', { users: users, title: `${title}` });
 };
 
 exports.loginPage = (req, res) => {
@@ -27,6 +44,7 @@ exports.login = async (req, res) => {
         req.session.role = users.role;
         req.session.fakultas = users.fakultas_id;
         req.session.prodi = users.programStudi_id;
+
         res.redirect('/dashboard');
     } catch (error) {
         console.error(error);
