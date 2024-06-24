@@ -179,17 +179,45 @@ exports.listPengaju = async (req, res) => {
 exports.getAjuanById = async (req, res) => {
     try {
         const ajuan = await ajuanBeasiswa.findOne({
-            where: {
-                id: req.params.id
-            },
-            include: {
-                model: User,
-                raw: true
-            }
+            where: { id: req.params.id },
+            include: { model: User }
         });
-        res.render('programStudi/dataPengaju', { pengajuan: ajuan, title: 'Update Program Studi', message: req.query.message });
+
+        if (!ajuan) {
+            console.log(`Ajuan with id ${req.params.id} not found`);
+            return res.status(404).send('Ajuan not found');
+        }
+
+        res.render('programStudi/dataPengaju', {
+            pengajuan: ajuan,
+            title: 'Update Program Studi',
+            message: req.query.message
+        });
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching ajuan:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+exports.updateAjuanStatus = async (req, res) => {
+    try {
+        console.log('Received data:', req.body); // Log received data
+        const { statusAplikasi } = req.body;
+        const ajuan = await ajuanBeasiswa.findOne({ where: { id: req.params.id } });
+
+        if (!ajuan) {
+            console.log(`Ajuan with id ${req.params.id} not found`);
+            return res.status(404).send('Ajuan not found');
+        }
+
+        console.log('Updating statusAplikasi to:', statusAplikasi);
+        ajuan.statusAplikasi = statusAplikasi;
+        await ajuan.save();
+
+        console.log(`Ajuan status updated successfully for id ${req.params.id}`);
+        res.redirect(`/prodi/dataPengajuBeasiswa/${req.params.id}?message=Status updated successfully`);
+    } catch (error) {
+        console.error('Error updating ajuan status:', error);
         res.status(500).send('Internal Server Error');
     }
 };
@@ -215,4 +243,19 @@ exports.viewFile = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 }
-// Nathan
+
+const checkboxStatus = {};
+
+exports.saveCheckboxStatus = (req, res) => {
+    const { id, checked, pengajuanId } = req.body;
+    if (!checkboxStatus[pengajuanId]) {
+        checkboxStatus[pengajuanId] = {};
+    }
+    checkboxStatus[pengajuanId][id] = checked;
+    res.json({ message: 'Status checkbox tersimpan' });
+};
+
+exports.getCheckboxStatus = (req, res) => {
+    const { pengajuanId } = req.query;
+    res.json(checkboxStatus[pengajuanId] || {});
+};

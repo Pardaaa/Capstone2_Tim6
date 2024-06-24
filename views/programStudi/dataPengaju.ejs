@@ -1,10 +1,8 @@
-<!-- Nathan -->
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-bold">Detail Pengajuan Beasiswa | <%= pengajuan.User.fullName %>
-                </h1>
+                <h1 class="m-0 text-bold">Detail Pengajuan Beasiswa | <%= pengajuan.User.fullName %></h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -18,74 +16,107 @@
 
 <div class="content">
     <div class="container-fluid">
-        <% if (typeof message !=='undefined' ) { %>
-            <div id="alertMessage" class="alert alert-success">
+        <% if (message) { %>
+            <div class="alert alert-success" role="alert">
                 <%= message %>
             </div>
-            <% } %>
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Detail Pengajuan Beasiswa</h3>
+        <% } %>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Detail Pengajuan Beasiswa</h3>
+            </div>
+            <div class="card-body">
+                <form method="post" action="/prodi/dataPengajuBeasiswa/<%= pengajuan.id %>" onsubmit="setStatusAplikasi()">
+                    <input type="hidden" name="statusAplikasi" id="statusAplikasi" value="pending">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Jenis Data</th>
+                                <th>Data</th>
+                                <th>Approve</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>IPK</td>
+                                <td><h4><%= pengajuan.ipk %></h4></td>
+                                <td><input type="checkbox" class="approval-checkbox" data-id="ipk" name="ipkSelected" value="true"></td>
+                            </tr>
+                            <tr>
+                                <td>Transkrip Akademik</td>
+                                <td><a href="/prodi/viewFile/<%= pengajuan.id %>/transkripAkademik" target="_blank" class="btn btn-primary">Lihat Data</a></td>
+                                <td><input type="checkbox" class="approval-checkbox" data-id="transkripAkademik" name="transkripAkademikSelected" value="true"></td>
+                            </tr>
+                            <tr>
+                                <td>Surat Rekomendasi Dosen</td>
+                                <td><a href="/prodi/viewFile/<%= pengajuan.id %>/suratRekomendasiDosen" target="_blank" class="btn btn-primary">Lihat Data</a></td>
+                                <td><input type="checkbox" class="approval-checkbox" data-id="suratRekomendasiDosen" name="suratRekomendasiDosenSelected" value="true"></td>
+                            </tr>
+                            <tr>
+                                <td>Surat Pernyataan Beasiswa</td>
+                                <td><a href="/prodi/viewFile/<%= pengajuan.id %>/suratPernyataanBeasiswa" target="_blank" class="btn btn-primary">Lihat Data</a></td>
+                                <td><input type="checkbox" class="approval-checkbox" data-id="suratPernyataanBeasiswa" name="suratPernyataanBeasiswaSelected" value="true"></td>
+                            </tr>
+                            <tr>
+                                <td>Surat Pelengkap</td>
+                                <td><a href="/prodi/viewFile/<%= pengajuan.id %>/suratPelengkap" target="_blank" class="btn btn-primary">Lihat Data</a></td>
+                                <td><input type="checkbox" class="approval-checkbox" data-id="suratPelengkap" name="suratPelengkapSelected" value="true"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success">Submit</button>
                     </div>
-                    <div class="card-body">
-                        <form method="post" action="/mahasiswa/daftarBeasiswa/ajukanBeasiswa/<%= pengajuan.id %>"
-                            enctype="multipart/form-data">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Jenis Data</th>
-                                        <th>Data</th>
-                                        <th>Approve</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>IPK</td>
-                                        <td>
-                                            <h4>
-                                                <%= pengajuan.ipk %>
-                                            </h4>
-                                        </td>
-                                        <td><input type="checkbox" name="suratPelengkapSelected" value="true"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Transkrip Akademik</td>
-                                        <td><a href="/prodi/viewFile/<%= pengajuan.id %>/transkripAkademik"
-                                                target="_blank" class="btn btn-primary">Lihat Data</a></td>
-                                        <td><input type="checkbox" name="suratPelengkapSelected" value="true"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Surat Rekomendasi Dosen</td>
-                                        <td>
-                                            <a href="/prodi/viewFile/<%= pengajuan.id %>/suratRekomendasiDosen"
-                                                target="_blank" class="btn btn-primary">Lihat Data</a>
-                                        </td>
-                                        <td><input type="checkbox" name="suratPelengkapSelected" value="true"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Surat Pernyataan Beasiswa</td>
-                                        <td>
-                                            <a href="/prodi/viewFile/<%= pengajuan.id %>/suratPernyataanBeasiswa"
-                                                target="_blank" class="btn btn-primary">Lihat Data</a>
-                                        </td>
-                                        <td><input type="checkbox" name="suratPelengkapSelected" value="true"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Surat Pelengkap</td>
-                                        <td>
-                                            <a href="/prodi/viewFile/<%= pengajuan.id %>/suratPelengkap" target="_blank"
-                                                class="btn btn-primary">Lihat Data</a>
-                                        </td>
-                                        <td><input type="checkbox" name="suratPelengkapSelected" value="true"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="text-right">
-                                <button type="submit" class="btn btn-success">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                </form>
+                
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const checkboxes = document.querySelectorAll('.approval-checkbox');
+                        
+                        // Fetch status from server and set checkbox state
+                        fetch(`/get-checkbox-status?pengajuanId=<%= pengajuan.id %>`)
+                            .then(response => response.json())
+                            .then(data => {
+                                checkboxes.forEach(checkbox => {
+                                    checkbox.checked = data[checkbox.dataset.id] || false;
+                                });
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                            });
+
+                        checkboxes.forEach(checkbox => {
+                            checkbox.addEventListener("change", function () {
+                                const data = {
+                                    id: checkbox.dataset.id,
+                                    checked: checkbox.checked,
+                                    pengajuanId: "<%= pengajuan.id %>" // tambahkan ID pengajuan untuk identifikasi
+                                };
+
+                                fetch('/save-checkbox-status', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(data)
+                                }).then(response => {
+                                    return response.json();
+                                }).then(data => {
+                                    console.log('Success:', data);
+                                }).catch((error) => {
+                                    console.error('Error:', error);
+                                });
+                            });
+                        });
+                    });
+
+                    function setStatusAplikasi() {
+                        const checkboxes = document.querySelectorAll('.approval-checkbox');
+                        const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+                        document.getElementById('statusAplikasi').value = allChecked ? 'approve' : 'pending';
+                    }
+                </script>                
+            </div>
+        </div>
     </div>
 </div>
-<!-- Nathan -->
