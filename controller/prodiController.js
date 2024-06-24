@@ -170,7 +170,7 @@ exports.listPengaju = async (req, res) => {
             ],
             raw: true
         });
-        res.render('programStudi/listPengaju', { pengajuan: ajuan, title: "List Pengaju Beasiswa" });
+        res.render('programStudi/listPengaju', { pengajuan: ajuan, title: "List Pengaju Beasiswa", message: req.query.message });
     } catch (error) {
         console.error(error);
         res.status(500).send("An error occurred while fetching the data.");
@@ -223,7 +223,7 @@ exports.updateAjuanStatus = async (req, res) => {
         await ajuan.save();
 
         console.log(`Ajuan status updated successfully for id ${req.params.id}`);
-        res.redirect(`/prodi/dataPengajuBeasiswa/${req.params.id}?message=Status updated successfully`);
+        res.redirect(`/prodi/listPengajuBeasiswa?message=Status updated successfully`);
     } catch (error) {
         console.error('Error updating ajuan status:', error);
         res.status(500).send('Internal Server Error');

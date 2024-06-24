@@ -31,6 +31,17 @@
                 <form action="/beasiswa/create" method="get">
                     <button type="submit" class="h2 btn btn-success text-bold">Tambah Beasiswa</button>
                 </form>
+                <div class="form-group mb-0 ml-auto">
+                    <label for="filterPeriode" class="mr-2">Filter by Periode:</label>
+                    <select class="form-control d-inline-block w-auto" id="filterPeriode">
+                        <option value="">All</option>
+                        <% sortPeriode.forEach(periode=> { %>
+                            <option value="<%= periode %>">
+                                <%= periode %>
+                            </option>
+                            <% }) %>
+                    </select>
+                </div>
             </div>
             <div class="card-body">
                 <table id="table-users" class="table table-bordered table-striped">
@@ -46,7 +57,7 @@
                     </thead>
                     <tbody>
                         <% beasiswas.forEach(beasiswa=> { %>
-                            <tr>
+                            <tr data-periode="<%= beasiswa.Periode ? beasiswa.Periode.periode : '-' %>">
                                 <td>
                                     <%= beasiswa.namaBeasiswa %>
                                 </td>
@@ -54,7 +65,7 @@
                                     <textarea class="form-control" rows="15"><%= beasiswa.deskripsi %></textarea>
                                 </td>
                                 <td>
-                                    <%= beasiswa['Periode.periode'] %>
+                                    <%= beasiswa.Periode ? beasiswa.Periode.periode : '-' %>
                                 </td>
                                 <td>
                                     <%= beasiswa.jenisBeasiswa %>
@@ -89,6 +100,19 @@
                 alertElement.style.display = 'none';
             }, 2000);
         }
+
+        document.getElementById('filterPeriode').addEventListener('change', function () {
+            var selectedPeriode = this.value;
+            var rows = document.querySelectorAll('#table-users tbody tr');
+
+            rows.forEach(function (row) {
+                if (selectedPeriode === "" || row.getAttribute('data-periode') === selectedPeriode) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
     });
 </script>
 <!-- Nathan -->

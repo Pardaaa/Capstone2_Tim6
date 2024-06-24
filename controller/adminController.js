@@ -172,10 +172,10 @@ exports.getBeasiswa = async (req, res) => {
         const beasiswas = await beasiswa.findAll({
             include: [
                 { model: periode },
-            ],
-            raw: true
+            ]
         });
-        res.render('administrator/beasiswa/beasiswa', { beasiswas: beasiswas, title: 'Beasiswa', message: req.query.message });
+        const sortPeriode = [...new Set(beasiswas.map(p => p.Periode ? p.Periode.periode : '-'))];
+        res.render('administrator/beasiswa/beasiswa', { beasiswas: beasiswas, sortPeriode: sortPeriode, title: 'Beasiswa', message: req.query.message });
     } catch (error) {
         res.status(404).send('Users not found');
     }

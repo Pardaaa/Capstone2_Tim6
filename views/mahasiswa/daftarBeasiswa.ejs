@@ -48,71 +48,65 @@
                            </thead>
                            <tbody>
                               <% Beasiswa.forEach(beasiswa=> { %>
-                                 <% if (beasiswa.status==='Belum Berlangsung' || beasiswa.status==='Selesai' ) { %>
+                                 <% if (beasiswa.status !=='Belum Berlangsung' && beasiswa.status !=='Selesai' ) { %>
                                     <tr>
-                                       <td colspan="7" class="text-center">Maaf, belum ada pendaftaran beasiswa yang
-                                          dibuka.</td>
+                                       <td>
+                                          <%= beasiswa.namaBeasiswa %>
+                                       </td>
+                                       <td>
+                                          <%= beasiswa.Periode ? beasiswa.Periode.periode : '-' %>
+                                       </td>
+                                       <td>
+                                          <%= beasiswa.jenisBeasiswa %>
+                                       </td>
+                                       <td class="text-center">
+                                          <% if (!beasiswa.start_date) { %>
+                                             <p>-</p>
+                                             <% } else { %>
+                                                <% const start_date=new Date(beasiswa.start_date); %>
+                                                   <%= start_date.toLocaleDateString('id-ID', { day: 'numeric' ,
+                                                      month: 'long' , year: 'numeric' }) %> Pukul <%=
+                                                         start_date.toLocaleTimeString('id-ID', { hour: '2-digit' ,
+                                                         minute: '2-digit' , second: '2-digit' , hour12: false }) %>
+                                                         <% } %>
+                                       </td>
+                                       <td class="text-center">
+                                          <% if (!beasiswa.end_date) { %>
+                                             <p>-</p>
+                                             <% } else { %>
+                                                <% const end_date=new Date(beasiswa.end_date); %>
+                                                   <%= end_date.toLocaleDateString('id-ID', { day: 'numeric' ,
+                                                      month: 'long' , year: 'numeric' }) %> Pukul <%=
+                                                         end_date.toLocaleTimeString('id-ID', { hour: '2-digit' ,
+                                                         minute: '2-digit' , second: '2-digit' , hour12: false }) %>
+                                                         <% } %>
+                                       </td>
+                                       <td class="text-center">
+                                          <% if (beasiswa.status==='Belum Berlangsung' ) { %>
+                                             <span class="badge badge-warning">Belum Berlangsung</span>
+                                             <% } else if (beasiswa.status==='Selesai' ) { %>
+                                                <span class="badge badge-danger">Selesai</span>
+                                                <% } else if (beasiswa.status==='Berlangsung' ) { %>
+                                                   <span class="badge badge-success">Berlangsung</span>
+                                                   <% } %>
+                                       </td>
+                                       <td>
+                                          <div class="d-flex">
+                                             <form action="/mahasiswa/daftarBeasiswa/views/<%= beasiswa.id %>"
+                                                method="get">
+                                                <button type="submit" class="btn btn-info mr-2"><i
+                                                      class="fas fa-eye"></i></button>
+                                             </form>
+                                             <form action="/mahasiswa/daftarBeasiswa/ajukanBeasiswa/<%= beasiswa.id %>"
+                                                method="get">
+                                                <button type="submit" class="btn btn-warning mr-2 text-bold">Ajukan
+                                                   Beasiswa</button>
+                                             </form>
+                                          </div>
+                                       </td>
                                     </tr>
-                                    <% } else { %>
-                                       <tr>
-                                          <td>
-                                             <%= beasiswa.namaBeasiswa %>
-                                          </td>
-                                          <td>
-                                             <%= beasiswa.Periode ? beasiswa.Periode.periode : '-' %>
-                                          </td>
-                                          <td>
-                                             <%= beasiswa.jenisBeasiswa %>
-                                          </td>
-                                          <td class="text-center">
-                                             <% if (!beasiswa.start_date) { %>
-                                                <p>-</p>
-                                                <% } else { %>
-                                                   <% const start_date=new Date(beasiswa.start_date); %>
-                                                      <%= start_date.toLocaleDateString('id-ID', { day: 'numeric' ,
-                                                         month: 'long' , year: 'numeric' }) %> Pukul <%=
-                                                            start_date.toLocaleTimeString('id-ID', { hour: '2-digit' ,
-                                                            minute: '2-digit' , second: '2-digit' , hour12: false }) %>
-                                                            <% } %>
-                                          </td>
-                                          <td class="text-center">
-                                             <% if (!beasiswa.end_date) { %>
-                                                <p>-</p>
-                                                <% } else { %>
-                                                   <% const end_date=new Date(beasiswa.end_date); %>
-                                                      <%= end_date.toLocaleDateString('id-ID', { day: 'numeric' ,
-                                                         month: 'long' , year: 'numeric' }) %> Pukul <%=
-                                                            end_date.toLocaleTimeString('id-ID', { hour: '2-digit' ,
-                                                            minute: '2-digit' , second: '2-digit' , hour12: false }) %>
-                                                            <% } %>
-                                          </td>
-                                          <td class="text-center">
-                                             <% if (beasiswa.status==='Belum Berlangsung' ) { %>
-                                                <span class="badge badge-warning">Belum Berlangsung</span>
-                                                <% } else if (beasiswa.status==='Selesai' ) { %>
-                                                   <span class="badge badge-danger">Selesai</span>
-                                                   <% } else if (beasiswa.status==='Berlangsung' ) { %>
-                                                      <span class="badge badge-success">Berlangsung</span>
-                                                      <% } %>
-                                          </td>
-                                          <td>
-                                             <div class="d-flex">
-                                                <form action="/mahasiswa/daftarBeasiswa/views/<%= beasiswa.id %>"
-                                                   method="get">
-                                                   <button type="submit" class="btn btn-info mr-2 "><i
-                                                         class="fas fa-eye"></i></button>
-                                                </form>
-                                                <form
-                                                   action="/mahasiswa/daftarBeasiswa/ajukanBeasiswa/<%= beasiswa.id %>"
-                                                   method="get">
-                                                   <button type="submit" class="btn btn-warning mr-2 text-bold">Ajukan
-                                                      Beasiswa</button>
-                                                </form>
-                                             </div>
-                                          </td>
-                                       </tr>
-                                       <% } %>
-                                          <% }) %>
+                                    <% } %>
+                                       <% }); %>
                            </tbody>
                         </table>
                      </div>

@@ -190,8 +190,10 @@ exports.getBeasiswa = async (req, res) => {
       const Beasiswa = await beasiswa.findAll({
          include: [{ model: periode }],
       });
+      const sortPeriode = [...new Set(Beasiswa.map(p => p.Periode ? p.Periode.periode : '-'))];
       res.render('fakultas/beasiswa', {
          Beasiswa: Beasiswa,
+         sortPeriode: sortPeriode,
          title: 'Setting Periode Beasiswa',
          message: req.query.message,
       });
@@ -249,6 +251,25 @@ exports.updateBeasiswa = async (req, res) => {
    }
 };
 
+exports.deletePeriode = async (req, res) => {
+   try {
+      await beasiswa.update(
+         {
+            start_date: null,
+            end_date: null,
+         },
+         {
+            where: {
+               id: req.params.id,
+            },
+         }
+      );
+      res.status(200).redirect('/fakultas/beasiswa?message=Penghapusan Periode berhasil Dilakukan');
+   } catch (error) {
+      res.status(400).send('Gagal menghapus periode');
+   }
+};
+
 exports.getDaftarMahasiswa = async (req, res) => {
    try {
       const mahasiswaBeasiswa = await mahasiswa.findAll({
@@ -300,16 +321,25 @@ exports.approvalBeasiswa = async (req, res) => {
    try {
       const Pengajuan = await ajuan.findAll({
          include: [
-            { model: beasiswa },
+            {
+               model: beasiswa,
+               include: [
+                  {
+                     model: periode,
+                     attributes: ['periode'],
+                  },
+               ],
+            },
             {
                model: user,
                where: {
                   programstudi_id: req.params.id,
                },
-            },
+            }
          ],
-         raw: true,
+         raw: true
       });
+
       res.render('fakultas/approvalBeasiswa', {
          pengajuan: Pengajuan,
          title: 'List Pengaju Beasiswa',

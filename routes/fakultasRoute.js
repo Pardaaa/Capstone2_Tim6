@@ -16,6 +16,7 @@ const {
    viewBeasiswa,
    getProdiBeasiswa,
    approvalBeasiswa,
+   deletePeriode,
 } = require('../controller/fakultasController.js');
 const authMiddleware = require('../middleware/auth');
 const requestRole = require('../middleware/requestRole');
@@ -88,7 +89,12 @@ router.post(
    requestRole('Fakultas'),
    updateBeasiswa
 );
-
+router.get(
+   '/fakultas/beasiswa/delete/:id',
+   authMiddleware,
+   requestRole('Fakultas'),
+   deletePeriode
+);
 router.get(
    '/fakultas/daftarMahasiswa',
    authMiddleware,

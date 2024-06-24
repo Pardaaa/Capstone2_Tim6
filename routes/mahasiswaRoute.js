@@ -40,24 +40,11 @@ router.post(
 );
 
 router.get(
-   '/mahasiswa/statusPengajuan/:id',
+   '/mahasiswa/statusPengajuan',
    authMiddleware,
    requestRole('Mahasiswa'),
    approvalBeasiswa
 );
 
-// router.post(
-//    '/mahasiswa/dokpengajuan',
-//    authMiddleware,
-//    requestRole('Mahasiswa'),
-//    mahasiswaController.createMahasiswa
-// );
-
-// router.get(
-//    '/mahasiswa/dokpengajuan',
-//    authMiddleware,
-//    requestRole('Mahasiswa'),
-//    mahasiswaController.createMahasiswa
-// );
 
 module.exports = router;

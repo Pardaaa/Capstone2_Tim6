@@ -1,6 +1,7 @@
 const { raw } = require('express');
 const {
    Mahasiswa: Mahasiswa,
+   User: users,
    Beasiswa: beasiswa,
    PengajuanBeasiswa: ajuanBeasiswa,
    Periode: periode,
@@ -62,6 +63,16 @@ exports.getBeasiswaById = async (req, res) => {
             },
          ],
       });
+
+      const validasiStatus = await users.findOne({
+         where: {
+            id: req.session.userId,
+         },
+      });
+
+      if (validasiStatus.status !== 'Aktif') {
+         return res.redirect('/mahasiswa/daftarBeasiswa?message=Pengajuan Beasiswa hanya dapat dilakukan oleh Mahasiwa Aktif!');
+      }
 
       const existingSubmission = await ajuanBeasiswa.findOne({
          where: {
@@ -142,12 +153,22 @@ exports.createPengajuanBeasiswa = async (req, res) => {
 
 exports.approvalBeasiswa = async (req, res) => {
    try {
-      const Pengajuan = await PengajuanBeasiswa.findAll({
+      const Pengajuan = await ajuanBeasiswa.findOne({
          include: [
-            { model: Beasiswa },
             {
-               model: User,
-               where: { programstudi_id: req.params.id },
+               model: beasiswa,
+               include: [
+                  {
+                     model: periode,
+                     attributes: ['periode'],
+                  },
+               ],
+            },
+            {
+               model: users,
+               where: {
+                  id: req.session.userId
+               }
             },
          ],
          raw: true,

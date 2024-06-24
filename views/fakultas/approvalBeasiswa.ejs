@@ -3,7 +3,7 @@
    <div class="container-fluid">
       <div class="row mb-2">
          <div class="col-sm-6">
-            <h1 class="m-0 text-bold">Data Beasiswa</h1>
+            <h1 class="m-0 text-bold">Data Pengaju Beasiswa</h1>
          </div>
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -17,92 +17,99 @@
 
 <div class="content">
    <div class="container-fluid">
-      <div class="content">
-         <div class="container-fluid">
-            <% if (typeof message !=='undefined' ) { %>
-               <div id="alertMessage" class="alert alert-success">
-                  <%= message %>
-               </div>
-               <% } %>
+      <% if (typeof message !=='undefined' ) { %>
+         <div id="alertMessage" class="alert alert-success">
+            <%= message %>
          </div>
-      </div>
-      <div class="card p-4">
-         <div class="card-body">
-            <table id="table-users" class="table table-bordered table-striped">
-               <caption>List of Beasiswa</caption>
-               <thead>
-                  <tr class="text-center">
-                     <th>NRP</th>
-                     <th>Nama Mahasiswa</th>
-                     <th>Nama Beasiswa</th>
-                     <th>Jenis Beasiswa</th>
-                     <th>Deskipsi</th>
-                     <th>Periode</th>
-                     <th>Status</th>
-                     <th>Action</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <% pengajuan.forEach(ajuan=> { %>
-                     <tr>
-                        <td>
-                           <%= ajuan['User.userId'] %>
-                        </td>
-                        <td>
-                           <%= ajuan['User.fullName'] %>
-                        </td>
-                        <td>
-                           <%= ajuan['Beasiswa.namaBeasiswa'] %>
-                        </td>
-                        <td>
-                           <%= ajuan['Beasiswa.jenisBeasiswa'] %>
-                        </td>
-                        <% if (ajuan.statusFakultas && ajuan.statusFakultas.trim()) { %>
-                           <td>
-                              <%= ajuan.statusFakultas%>
-                           </td>
-                           <% } else { %>
+         <% } %>
+            <div class="card p-4">
+               <div class="card-body">
+                  <table id="table-users" class="table table-bordered table-striped">
+                     <caption>List of Beasiswa</caption>
+                     <thead>
+                        <tr class="text-center">
+                           <th>NRP</th>
+                           <th>Nama Mahasiswa</th>
+                           <th>Nama Beasiswa</th>
+                           <th>Periode</th>
+                           <th>Jenis Beasiswa</th>
+                           <th>Deskripsi</th>
+                           <th>Status</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <% pengajuan.forEach(ajuan=> { %>
+                           <tr>
                               <td>
-                                 <%= ajuan.transkripAkademikDesc %><br>
-                                    <%= ajuan.suratPernyataanBeasiswaDesc %><br>
-                                       <%= ajuan.suratPelengkapDesc %><br>
-                                          <%= ajuan.suratRekomendasiDosenDesc %>
+                                 <%= ajuan['User.userId'] %>
                               </td>
-                              <% } %>
-                                 <td>
-                                    <!-- <%= ajuan.statusAplikasi %> -->
-                                 </td>
-                                 <td>
-                                    <%= ajuan.statusAplikasi %>
-                                 </td>
-                                 <td>
-                                    <% if (ajuan.statusAplikasi==='approve' ) { %>
-                                       <form action="/mahasiswa/status/<%= ajuan.id %>" method="post">
-                                          <button type="submit" class="btn btn-success">Approve</button>
-                                       </form>
-                                       <% } else { %>
-                                          <form action="/mahasiswa/status/<%= ajuan.id %>" method="post">
-                                             <button type="submit" class="btn btn-danger">Not Approve</button>
-                                          </form>
+                              <td>
+                                 <%= ajuan['User.fullName'] %>
+                              </td>
+                              <td>
+                                 <%= ajuan['Beasiswa.namaBeasiswa'] %>
+                              </td>
+                              <td>
+                                 <%= ajuan['Beasiswa.Periode.periode'] %>
+                              </td>
+                              <td>
+                                 <%= ajuan['Beasiswa.jenisBeasiswa'] %>
+                              </td>
+                              <td>
+                                 <% if (ajuan.ipkDesc && ajuan.ipkDesc.trim()) { %>
+                                    <input type="radio" disabled>
+                                    <label>
+                                       <%= ajuan.ipkDesc %>
+                                    </label><br>
+                                    <% } %>
+                                       <% if (ajuan.transkripAkademikDesc && ajuan.transkripAkademikDesc.trim()) { %>
+                                          <input type="radio" disabled>
+                                          <label>
+                                             <%= ajuan.transkripAkademikDesc %>
+                                          </label><br>
                                           <% } %>
-                                 </td>
-                                 <div class="d-flex">
-                                    <form action="/fakultas/beasiswa/views/<%= ajuan.id %>" method="get">
-                                       <button type="submit" class="btn btn-info mr-2 "><i
-                                             class="fas fa-eye"></i></button>
-                                    </form>
-                                    <form action="/fakultas/beasiswa/edit/<%= ajuan.id %>" method="get">
-                                       <button type="submit" class="btn btn-warning mr-2"><i
-                                             class="fas fa-edit"></i></button>
-                                    </form>
-                                 </div>
-                                 </td>
-                     </tr>
-                     <% }) %>
-               </tbody>
-            </table>
-         </div>
-      </div>
+                                             <% if (ajuan.suratPernyataanBeasiswaDesc &&
+                                                ajuan.suratPernyataanBeasiswaDesc.trim()) { %>
+                                                <input type="radio" disabled>
+                                                <label>
+                                                   <%= ajuan.suratPernyataanBeasiswaDesc %>
+                                                </label><br>
+                                                <% } %>
+                                                   <% if (ajuan.suratPelengkapDesc && ajuan.suratPelengkapDesc.trim()) {
+                                                      %>
+                                                      <input type="radio" disabled>
+                                                      <label>
+                                                         <%= ajuan.suratPelengkapDesc %>
+                                                      </label><br>
+                                                      <% } %>
+                                                         <% if (ajuan.suratRekomendasiDosenDesc &&
+                                                            ajuan.suratRekomendasiDosenDesc.trim()) { %>
+                                                            <input type="radio" disabled>
+                                                            <label>
+                                                               <%= ajuan.suratRekomendasiDosenDesc %>
+                                                            </label>
+                                                            <% } %>
+                              </td>
+                              <td>
+                                 <%= ajuan.statusAplikasi %>
+                              </td>
+                              <td>
+                                 <form action="/mahasiswa/status/<%= ajuan.id %>" method="post">
+                                    <% if (ajuan.statusAplikasi && ajuan.statusAplikasi.trim()==="Approve" ) { %>
+                                       <button type="submit" class="btn btn-success">Approve</button>
+                                       <% } else { %>
+                                          <button type="submit" class="btn btn-danger">Not
+                                             Approve</button>
+                                          <% } %>
+                                 </form>
+                              </td>
+                           </tr>
+                           <% }) %>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
    </div>
 </div>
 
