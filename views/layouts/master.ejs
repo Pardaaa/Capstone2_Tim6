@@ -70,7 +70,7 @@
                         <% if (role==='Admin' ) { %>
                             <li class="nav-item">
                                 <a href="/users" class="nav-link">
-                                    <i class="nav-icon fas fa-carrot"></i>
+                                    <i class="nav-icon fas fa-users"></i>
                                     <p>
                                         Users
                                     </p>
@@ -94,7 +94,7 @@
                             </li>
                             <li class="nav-item">
                                 <a href="/periode" class="nav-link">
-                                    <i class="nav-icon fas fa-carrot"></i>
+                                    <i class="nav-icon fas fa-calendar"></i>
                                     <p>
                                         Periode
                                     </p>
@@ -111,7 +111,7 @@
                             <% } else if (role==='Fakultas' ) { %>
                                 <li class="nav-item">
                                     <a href="/fakultas/listProdi" class="nav-link">
-                                        <i class="nav-icon fas fa-crown"></i>
+                                        <i class="nav-icon fas fa-list"></i>
                                         <p>
                                             Daftar Program Studi
                                         </p>
@@ -119,7 +119,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="/fakultas/beasiswa" class="nav-link">
-                                        <i class="nav-icon fas fa-calendar-alt"></i>
+                                        <i class="nav-icon fas fa-calendar"></i>
                                         <p>
                                             Periode Beasiswa
                                         </p>
@@ -150,10 +150,19 @@
                                             </p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="/mahasiswa/history" class="nav-link">
+                                            <i class="nav-icon fas fa-info-circle"></i>
+                                            <p>
+                                                History Pengajuan Beasiswa
+                                            </p>
+                                        </a>
+                                    </li>
+
                                     <% } else if (role==='Program Studi' ) { %>
                                         <li class="nav-item">
                                             <a href="/prodi/listMahasiswa" class="nav-link">
-                                                <i class="nav-icon fas fa-crown"></i>
+                                                <i class="nav-icon fas fa-users"></i>
                                                 <p>
                                                     Daftar Mahasiswa
                                                 </p>
@@ -161,9 +170,17 @@
                                         </li>
                                         <li class="nav-item">
                                             <a href="/prodi/listPengajuBeasiswa" class="nav-link">
-                                                <i class="nav-icon fas fa-crown"></i>
+                                                <i class="nav-icon fas fa-list"></i>
                                                 <p>
                                                     Daftar Pengajuan Beasiswa
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/prodi/beasiswa" class="nav-link">
+                                                <i class="nav-icon fas fa-calendar-alt"></i>
+                                                <p>
+                                                    Periode Beasiswa
                                                 </p>
                                             </a>
                                         </li>

@@ -1,0 +1,88 @@
+<!-- Nathan -->
+<div class="content-header">
+   <div class="container-fluid">
+      <div class="row mb-2">
+         <div class="col-sm-6">
+            <h1 class="m-0">Setting Periode Form</h1>
+         </div>
+         <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+               <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+               <li class="breadcrumb-item"><a href="/prodi/beasiswa">Beasiswa</a></li>
+               <li class="breadcrumb-item active">Setting Periode Form</li>
+            </ol>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="content">
+   <div class="container-fluid">
+      <% if (typeof message !=='undefined' ) { %>
+         <div id="alertMessage" class="alert alert-danger">
+            <%= message %>
+         </div>
+         <% } %>
+            <div class="card p-4">
+               <form method="post" action="/prodi/beasiswa/edit/<%= beasiswa.id %>">
+                  <div class="card-body">
+                     <div class="form-group">
+                        <label for="namaBeasiswa">Nama Beasiswa</label>
+                        <input type="text" class="form-control" id="namaBeasiswa" placeholder="72" maxlength="30"
+                           value="<%= beasiswa.namaBeasiswa %>" name="namaBeasiswa" disabled>
+                     </div>
+                     <div class="form-group">
+                        <label for="deskripsi">Deskripsi</label>
+                        <textarea class="form-control" id="deskripsi" placeholder="..." name="deskripsi" required
+                           disabled><%= beasiswa.deskripsi %></textarea>
+                     </div>
+                     <div class="form-group">
+                        <label for="periode">Periode</label>
+                        <select class="form-control" id="periode" name="periodeId" disabled>
+                           <% periode.forEach(periodeItem=> { %>
+                              <option value="<%= periodeItem.id %>" <%=beasiswa.periodeId===periodeItem.id ? 'selected'
+                                 : '' %>>
+                                 <%= periodeItem.periode %>
+                              </option>
+                              <% }) %>
+                        </select>
+                     </div>
+                     <div class="form-group">
+                        <label for="jenisBeasiswa">Jenis Beasiswa</label>
+                        <input type="text" class="form-control" id="jenisBeasiswa" placeholder="72" autofocus
+                           maxlength="30" value="<%= beasiswa.jenisBeasiswa %>" name="jenisBeasiswa" disabled>
+                     </div>
+                     <div class="form-group">
+                        <% if (!beasiswa.start_date) { %>
+                           <input type="datetime-local" class="form-control" id="start_date" name="start_date"
+                              autofocus>
+                           <% } else { %>
+                              <input type="datetime-local" class="form-control" id="start_date" name="start_date"
+                                 value="<%= beasiswa.start_date.toISOString().slice(0, 16) %>" autofocus>
+                              <% } %>
+                     </div>
+                     <div class="form-group">
+                        <label for="end_date">Waktu Berakhir</label>
+                        <% if (!beasiswa.end_date) { %>
+                           <input type="datetime-local" class="form-control" id="end_date" name="end_date" autofocus>
+                           <% } else { %>
+                              <input type="datetime-local" class="form-control" id="end_date"
+                                 value="<%= beasiswa.end_date.toISOString().slice(0, 16) %>" name="end_date" autofocus>
+                              <% } %>
+                     </div>
+                     <div>
+                        <button type="submit" class="btn btn-primary">Tambah Fakultas</button>
+                     </div>
+               </form>
+            </div>
+   </div>
+</div>
+</div>
+
+<script>
+   var alertElement = document.querySelector('.alert');
+   setTimeout(function () {
+      alertElement.style.display = 'none';
+   }, 2000);
+</script>
+<!-- Nathan -->

@@ -1,0 +1,75 @@
+<!-- Nabilla -->
+<div class="content-header">
+   <div class="container-fluid">
+      <div class="row mb-2">
+         <div class="col-sm-6">
+            <h1 class="m-0">Detail Beasiswa <%= Beasiswa.namaBeasiswa %>
+            </h1>
+         </div>
+         <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+               <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+               <li class="breadcrumb-item"><a href="/prodi/beasiswa">Beasiswa </a></li>
+               <li class="breadcrumb-item active">View Beasiswa</li>
+            </ol>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="content">
+   <div class="container-fluid">
+      <div class="content">
+         <div class="container-fluid">
+            <% if (typeof message !=='undefined' ) { %>
+               <div id="alertMessage" class="alert alert-success">
+                  <%= message %>
+               </div>
+               <% } %>
+         </div>
+      </div>
+      <div class="card p-4">
+         <div class="card-body">
+            <h4>Nama Beasiswa : <%= Beasiswa.namaBeasiswa %>
+            </h4>
+            <h4>Periode : <%= Beasiswa['Periode.periode'] %>
+            </h4>
+            <h4>Jenis Beasiswa : <%= Beasiswa.jenisBeasiswa %>
+            </h4>
+            <h4>
+               Waktu Dimulai
+               <% if (Beasiswa.start_date) { %>
+                  <% const start_date=new Date(Beasiswa.start_date); %>
+                     <%= start_date.toLocaleDateString('id-ID', { day: 'numeric' , month: 'long' , year: 'numeric' }) %>
+                        Pukul
+                        <%= start_date.toLocaleTimeString('id-ID', { hour: '2-digit' , minute: '2-digit' ,
+                           second: '2-digit' , hour12: false }) %>
+                           <% } %>
+                              Sampai Dengan
+                              <% if (Beasiswa.end_date) { %>
+                                 <% const end_date=new Date(Beasiswa.end_date); %>
+                                    <%= end_date.toLocaleDateString('id-ID', { day: 'numeric' , month: 'long' ,
+                                       year: 'numeric' }) %>
+                                       Pukul
+                                       <%= end_date.toLocaleTimeString('id-ID', { hour: '2-digit' , minute: '2-digit' ,
+                                          second: '2-digit' , hour12: false }) %>
+                                          <% } %>
+            </h4>
+            <h4>Syarat dan Deskripsi Beasiswa : </h4>
+            <h5><textarea class="w-100 border-0" rows="20" readonly> <%= Beasiswa.deskripsi %> </textarea></h5>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+      var alertElement = document.querySelector('.alert');
+      if (alertElement) {
+         setTimeout(function () {
+            alertElement.style.display = 'none';
+         }, 2000);
+      }
+   });
+</script>
+<!-- Nabilla -->
