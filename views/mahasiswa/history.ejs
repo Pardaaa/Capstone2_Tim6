@@ -3,9 +3,7 @@
    <div class="container-fluid">
       <div class="row mb-2">
          <div class="col-sm-6">
-            <h1 class="m-0 text-bold">
-               Status Pengajuan
-            </h1>
+            <h1 class="m-0 text-bold">History Pengajuan Beasiswa</h1>
          </div>
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -20,96 +18,60 @@
 
 <div class="content">
    <div class="container-fluid">
-      <div class="content">
-         <div class="container-fluid">
-            <% if (typeof message !=='undefined' ) { %>
-               <div id="alertMessage" class="alert alert-success">
-                  <%= message %>
-               </div>
-               <% } %>
+      <% if (typeof message !=='undefined' ) { %>
+         <div id="alertMessage" class="alert alert-success">
+            <%= message %>
          </div>
-      </div>
-      <div class="card p-4">
-         <div class="card-body">
-            <table id="table-users" class="table table-bordered table-striped">
-               <thead>
-                  <tr class="text-center">
-                     <th>Nama Beasiswa</th>
-                     <th>Periode</th>
-                     <th>Deskipsi</th>
-                     <th>Jenis Beasiswa</th>
-                     <th class="w-25">Status</th>
-                     <th>Action</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr>
-                     <td>
-                        <%= pengajuan['Beasiswa.namaBeasiswa'] %>
-                     </td>
-                     <td>
-                        <%= pengajuan['Beasiswa.Periode.periode'] %>
-                     </td>
-                     <td>
-                        <textarea class="form-control" rows="15"><%= pengajuan['Beasiswa.deskripsi'] %></textarea>
-                     </td>
-                     <td>
-                        <%= pengajuan['Beasiswa.jenisBeasiswa'] %>
-                     </td>
-                     <% if (pengajuan.statusFakultas && pengajuan.statusFakultas.trim()) { %>
-                        <td>
-                           <%= pengajuan.statusFakultas %>
-                        </td>
-                        <% } else { %>
-                           <td>
-                              <% if (pengajuan.transkripAkademikDesc && pengajuan.transkripAkademikDesc.trim()) { %>
-                                 <input type="radio" disabled>
-                                 <label>
-                                    <%= pengajuan.transkripAkademikDesc %>
-                                 </label><br>
-                                 <% } %>
-                                    <% if (pengajuan.suratPernyataanBeasiswaDesc &&
-                                       pengajuan.suratPernyataanBeasiswaDesc.trim()) { %>
-                                       <input type="radio" disabled>
-                                       <label>
-                                          <%= pengajuan.suratPernyataanBeasiswaDesc %>
-                                       </label><br>
-                                       <% } %>
-                                          <% if (pengajuan.ipkDesc && pengajuan.ipkDesc.trim()) { %>
-                                             <input type="radio" disabled>
-                                             <label>
-                                                <%= pengajuan.ipkDesc %>
-                                             </label><br>
-                                             <% } %>
-                                                <% if (pengajuan.suratPelengkapDesc &&
-                                                   pengajuan.suratPelengkapDesc.trim()) { %>
-                                                   <input type="radio" disabled>
-                                                   <label>
-                                                      <%= pengajuan.suratPelengkapDesc %>
-                                                   </label><br>
-                                                   <% } %>
-                                                      <% if (pengajuan.suratRekomendasiDosenDesc &&
-                                                         pengajuan.suratRekomendasiDosenDesc.trim()) { %>
-                                                         <input type="radio" disabled>
-                                                         <label>
-                                                            <%= pengajuan.suratRekomendasiDosenDesc %>
-                                                         </label>
-                                                         <% } %>
-                           </td>
-                           <% } %>
+         <% } %>
+            <div class="card p-4">
+               <div class="card-body">
+                  <table id="table-users" class="table table-bordered table-striped">
+                     <thead>
+                        <tr class="text-center">
+                           <th>Nama Beasiswa</th>
+                           <th>Periode</th>
+                           <th>Deskripsi</th>
+                           <th>Jenis Beasiswa</th>
+                           <th class="w-25">Status</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <% pengajuanHistory.forEach(pengajuan=> { %>
+                           <tr>
                               <td>
-                                 <% if (pengajuan.statusAplikasi && pengajuan.statusAplikasi.trim()==="Pending" ) { %>
-                                    <form action="" method="get">
-                                       <button type="submit" class="btn btn-warning mr-2"><i
-                                             class="fas fa-edit"></i></button>
-                                    </form>
+                                 <%= pengajuan.Beasiswa.namaBeasiswa %>
+                              </td>
+                              <td>
+                                 <%= pengajuan.Beasiswa.Periode.periode %>
+                              </td>
+                              <td>
+                                 <% if (pengajuan.Beasiswa.deskripsi) { %>
+                                    <textarea class="form-control" rows="5"
+                                       readonly><%= pengajuan.Beasiswa.deskripsi %></textarea>
                                     <% } %>
                               </td>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
-      </div>
+                              <td>
+                                 <%= pengajuan.Beasiswa.jenisBeasiswa %>
+                              </td>
+                              <td>
+                                 <%= pengajuan.statusAplikasi %>
+                              </td>
+                              <td class="text-center">
+                                 <div class="d-flex">
+                                    <form action="/mahasiswa/daftarBeasiswa/views/<%= pengajuan.Beasiswa.id %>"
+                                       method="get">
+                                       <button type="submit" class="btn btn-info mr-2"><i
+                                             class="fas fa-eye"></i></button>
+                                    </form>
+                                 </div>
+                              </td>
+                           </tr>
+                           <% }) %>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
    </div>
 </div>
 

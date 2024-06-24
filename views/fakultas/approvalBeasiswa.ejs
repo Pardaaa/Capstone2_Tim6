@@ -95,14 +95,16 @@
                                  <%= ajuan.statusAplikasi %>
                               </td>
                               <td>
-                                 <form action="/mahasiswa/status/<%= ajuan.id %>" method="post">
-                                    <% if (ajuan.statusAplikasi && ajuan.statusAplikasi.trim()==="Approve" ) { %>
-                                       <button type="submit" class="btn btn-success">Approve</button>
+                                 <form
+                                    action="<%= ajuan.statusAplikasi === 'Approve' ? '/mahasiswa/status/not-approve/' + ajuan.id : '/mahasiswa/status/approve/' + ajuan.id %>"
+                                    method="post">
+                                    <% if (ajuan.statusAplikasi==='Approve' ) { %>
+                                       <button type="submit" class="btn btn-danger">Not Approve</button>
                                        <% } else { %>
-                                          <button type="submit" class="btn btn-danger">Not
-                                             Approve</button>
+                                          <button type="submit" class="btn btn-success">Approve</button>
                                           <% } %>
                                  </form>
+
                               </td>
                            </tr>
                            <% }) %>

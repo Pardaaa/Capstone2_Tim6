@@ -190,7 +190,9 @@ exports.getBeasiswa = async (req, res) => {
       const Beasiswa = await beasiswa.findAll({
          include: [{ model: periode }],
       });
-      const sortPeriode = [...new Set(Beasiswa.map(p => p.Periode ? p.Periode.periode : '-'))];
+      const sortPeriode = [
+         ...new Set(Beasiswa.map(p => (p.Periode ? p.Periode.periode : '-'))),
+      ];
       res.render('fakultas/beasiswa', {
          Beasiswa: Beasiswa,
          sortPeriode: sortPeriode,
@@ -264,7 +266,9 @@ exports.deletePeriode = async (req, res) => {
             },
          }
       );
-      res.status(200).redirect('/fakultas/beasiswa?message=Penghapusan Periode berhasil Dilakukan');
+      res.status(200).redirect(
+         '/fakultas/beasiswa?message=Penghapusan Periode berhasil Dilakukan'
+      );
    } catch (error) {
       res.status(400).send('Gagal menghapus periode');
    }
@@ -335,9 +339,9 @@ exports.approvalBeasiswa = async (req, res) => {
                where: {
                   programstudi_id: req.params.id,
                },
-            }
+            },
          ],
-         raw: true
+         raw: true,
       });
 
       res.render('fakultas/approvalBeasiswa', {

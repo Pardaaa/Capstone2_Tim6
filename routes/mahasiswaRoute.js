@@ -6,7 +6,7 @@ const {
    getBeasiswaById,
    createPengajuanBeasiswa,
    approvalBeasiswa,
-   getDaftarMahasiswa,
+   getHistoryPengajuan,
 } = require('../controller/mahasiswaController.js');
 const authMiddleware = require('../middleware/auth');
 const requestRole = require('../middleware/requestRole');
@@ -46,5 +46,11 @@ router.get(
    approvalBeasiswa
 );
 
+router.get(
+   '/mahasiswa/history',
+   authMiddleware,
+   requestRole('Mahasiswa'),
+   getHistoryPengajuan
+);
 
 module.exports = router;

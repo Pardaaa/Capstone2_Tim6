@@ -71,7 +71,9 @@ exports.getBeasiswaById = async (req, res) => {
       });
 
       if (validasiStatus.status !== 'Aktif') {
-         return res.redirect('/mahasiswa/daftarBeasiswa?message=Pengajuan Beasiswa hanya dapat dilakukan oleh Mahasiwa Aktif!');
+         return res.redirect(
+            '/mahasiswa/daftarBeasiswa?message=Pengajuan Beasiswa hanya dapat dilakukan oleh Mahasiwa Aktif!'
+         );
       }
 
       const existingSubmission = await ajuanBeasiswa.findOne({
@@ -160,25 +162,60 @@ exports.approvalBeasiswa = async (req, res) => {
                include: [
                   {
                      model: periode,
-                     attributes: ['periode'],
+                     attributes: ['startDate', 'endDate'],
                   },
                ],
             },
             {
                model: users,
                where: {
-                  id: req.session.userId
-               }
+                  id: req.session.userId,
+               },
             },
          ],
          raw: true,
       });
+
+      const currentDate = new Date();
+      const startDate = new Date(Pengajuan['beasiswa.periode.startDate']);
+      const endDate = new Date(Pengajuan['beasiswa.periode.endDate']);
+
+      if (currentDate < startDate || currentDate > endDate) {
+         return res.redirect(
+            '/mahasiswa/daftarBeasiswa?message=Periode Pendaftaran Beasiswa Telah Berakhir'
+         );
+      }
+
       res.render('mahasiswa/statusPengajuan', {
          pengajuan: Pengajuan,
          title: 'Status Pengajuan',
       });
    } catch (error) {
       console.error(error);
+      res.status(500).send('Internal Server Error');
+   }
+};
+
+exports.getHistoryPengajuan = async (req, res) => {
+   try {
+      const pengajuanHistory = await ajuanBeasiswa.findAll({
+         where: { userId: req.session.userId },
+         include: [
+            {
+               model: beasiswa,
+               include: [periode],
+            },
+         ],
+         raw: true,
+         nest: true,
+      });
+
+      res.render('mahasiswa/history', {
+         pengajuanHistory,
+         title: 'History Pengajuan Beasiswa',
+      });
+   } catch (error) {
+      console.error('Error fetching history pengajuan:', error);
       res.status(500).send('Internal Server Error');
    }
 };

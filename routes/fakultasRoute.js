@@ -121,4 +121,18 @@ router.post(
    approvalBeasiswa
 );
 
+router.post(
+   '/mahasiswa/status/approve/:id',
+   authMiddleware,
+   requestRole('Fakultas'),
+   approvalBeasiswa
+);
+
+router.post(
+   '/mahasiswa/status/not-approve/:id',
+   authMiddleware,
+   requestRole('Fakultas'),
+   approvalBeasiswa
+);
+
 module.exports = router;
