@@ -162,7 +162,6 @@ exports.approvalBeasiswa = async (req, res) => {
                include: [
                   {
                      model: periode,
-                     attributes: ['startDate', 'endDate'],
                   },
                ],
             },
@@ -176,13 +175,9 @@ exports.approvalBeasiswa = async (req, res) => {
          raw: true,
       });
 
-      const currentDate = new Date();
-      const startDate = new Date(Pengajuan['beasiswa.periode.startDate']);
-      const endDate = new Date(Pengajuan['beasiswa.periode.endDate']);
-
-      if (currentDate < startDate || currentDate > endDate) {
+      if (!Pengajuan) {
          return res.redirect(
-            '/mahasiswa/daftarBeasiswa?message=Periode Pendaftaran Beasiswa Telah Berakhir'
+            '/mahasiswa/daftarBeasiswa?message=Anda belum melakukan pengajuan apapun'
          );
       }
 
