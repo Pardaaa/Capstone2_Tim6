@@ -357,15 +357,15 @@ exports.approveBeasiswa = async (req, res) => {
    const ajuanId = req.params.id;
 
    try {
-       await ajuan.update(
-           { statusFakultas: 'approve' },
-           { where: { id: ajuanId } }
-       );
+      await ajuan.update(
+         { statusFakultas: 'approve' },
+         { where: { id: ajuanId } }
+      );
 
-       res.redirect('/fakultas/daftarMahasiswa?message=Beasiswa approved');
+      res.redirect('back');
    } catch (error) {
-       console.error('Error approving beasiswa:', error);
-       res.status(500).send('Internal Server Error');
+      console.error('Error approving beasiswa:', error);
+      res.status(500).send('Internal Server Error');
    }
 };
 
