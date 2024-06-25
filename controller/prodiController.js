@@ -254,33 +254,31 @@ exports.updateAjuanStatus = async (req, res) => {
          suratPernyataanBeasiswaDesc,
          suratPelengkapDesc,
       } = req.body;
-      const ajuan = await PengajuanBeasiswa.findOne({
-         where: { id: req.params.id },
-      });
+
+      let ajuan = await PengajuanBeasiswa.findByPk(req.params.id);
 
       if (!ajuan) {
          console.log(`Ajuan with id ${req.params.id} not found`);
          return res.status(404).send('Ajuan not found');
       }
 
-      console.log('Updating statusAplikasi to:', statusAplikasi);
-      ajuan.statusAplikasi = statusAplikasi;
+      // Set nilai desc dari req.body atau kosongkan jika tidak ada nilai yang diberikan
+      ajuan.ipkDesc = ipkDesc || '';
+      ajuan.transkripAkademikDesc = transkripAkademikDesc || '';
+      ajuan.suratRekomendasiDosenDesc = suratRekomendasiDosenDesc || '';
+      ajuan.suratPernyataanBeasiswaDesc = suratPernyataanBeasiswaDesc || '';
+      ajuan.suratPelengkapDesc = suratPelengkapDesc || '';
 
-      ajuan.ipkDesc = ipkDesc || ajuan.ipkDesc;
-      ajuan.transkripAkademikDesc =
-         transkripAkademikDesc || ajuan.transkripAkademikDesc;
-      ajuan.suratRekomendasiDosenDesc =
-         suratRekomendasiDosenDesc || ajuan.suratRekomendasiDosenDesc;
-      ajuan.suratPernyataanBeasiswaDesc =
-         suratPernyataanBeasiswaDesc || ajuan.suratPernyataanBeasiswaDesc;
-      ajuan.suratPelengkapDesc = suratPelengkapDesc || ajuan.suratPelengkapDesc;
+      // Set status aplikasi jika diberikan dalam req.body
+      if (statusAplikasi !== undefined) {
+         ajuan.statusAplikasi = statusAplikasi;
+      }
 
+      // Simpan perubahan ke database
       await ajuan.save();
 
       console.log(`Ajuan status updated successfully for id ${req.params.id}`);
-      res.redirect(
-         `/prodi/listPengajuBeasiswa?message=Status updated successfully`
-      );
+      res.redirect('/prodi/listPengajuBeasiswa?message=Status updated successfully');
    } catch (error) {
       console.error('Error updating ajuan status:', error);
       res.status(500).send('Internal Server Error');
