@@ -55,7 +55,14 @@
                                  <%= pengajuan.Beasiswa.jenisBeasiswa %>
                               </td>
                               <td>
-                                 <%= pengajuan.statusAplikasi %>
+                                 <% if (pengajuan.statusFakultas && pengajuan.statusFakultas.trim()==="Approve" ) { %>
+                                    <b>
+                                       <%= pengajuan.statusFakultas %>,Pengajuan Beasiswa Diterima, Selamat!!!
+                                    </b>
+                                    <% } else if (pengajuan.statusAplikasi &&
+                                       pengajuan.statusAplikasi.trim()==="Pending" ) {%>
+                                       <%= pengajuan.statusAplikasi %>
+                                          <% } %>
                               </td>
                               <td class="text-center">
                                  <div class="d-flex">
