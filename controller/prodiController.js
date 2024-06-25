@@ -388,7 +388,7 @@ exports.updateBeasiswa = async (req, res) => {
          }
       );
       res.status(200).redirect(
-         '/programStudi/beasiswa?message=Update Berhasil'
+         '/prodi/beasiswa?message=Update Berhasil'
       );
    } catch (error) {
       res.status(400);
