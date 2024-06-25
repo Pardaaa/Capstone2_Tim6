@@ -95,13 +95,13 @@
                                  <%= ajuan.statusAplikasi %>
                               </td>
                               <td>
-                                 <% if (ajuan.statusAplikasi && ajuan.statusAplikasi.trim()==="Approve" ) { %>
+                                 <% if (!ajuan.statusAplikasi && ajuan.statusAplikasi.trim()==="Approve" ) { %>
                                     <form action="/fakultas/approvalBeasiswa/<%= ajuan.id %>" method="post">
                                        <button type="submit" class="btn btn-success">Approve</button>
                                     </form>
-                                    <% } else {%>
-
-                                       <% }%>
+                                    <% } else if (ajuan.statusFakultas && ajuan.statusFakultas.trim()==="approve" ) { %>
+                                       <p>Selesai</p>
+                                       <% } %>
                               </td>
                            </tr>
                            <% }) %>
