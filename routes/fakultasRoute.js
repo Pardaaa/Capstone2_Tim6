@@ -16,6 +16,7 @@ const {
    viewBeasiswa,
    getProdiBeasiswa,
    approvalBeasiswa,
+   approveBeasiswa,
    deletePeriode,
 } = require('../controller/fakultasController.js');
 const authMiddleware = require('../middleware/auth');
@@ -118,21 +119,7 @@ router.post(
    '/fakultas/approvalBeasiswa/:id',
    authMiddleware,
    requestRole('Fakultas'),
-   approvalBeasiswa
-);
-
-router.post(
-   '/mahasiswa/status/approve/:id',
-   authMiddleware,
-   requestRole('Fakultas'),
-   approvalBeasiswa
-);
-
-router.post(
-   '/mahasiswa/status/not-approve/:id',
-   authMiddleware,
-   requestRole('Fakultas'),
-   approvalBeasiswa
+   approveBeasiswa
 );
 
 module.exports = router;

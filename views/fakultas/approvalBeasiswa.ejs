@@ -95,14 +95,8 @@
                                  <%= ajuan.statusAplikasi %>
                               </td>
                               <td>
-                                 <form
-                                    action="<%= ajuan.statusAplikasi === 'Approve' ? '/mahasiswa/status/not-approve/' + ajuan.id : '/mahasiswa/status/approve/' + ajuan.id %>"
-                                    method="post">
-                                    <% if (ajuan.statusAplikasi==='Approve' ) { %>
-                                       <button type="submit" class="btn btn-danger">Not Approve</button>
-                                       <% } else { %>
-                                          <button type="submit" class="btn btn-success">Approve</button>
-                                          <% } %>
+                                 <form action="/fakultas/daftarMahasiswa/<%= ajuan.id %>" method="post">
+                                    <button type="submit" class="btn btn-success">Approve</button>
                                  </form>
 
                               </td>
