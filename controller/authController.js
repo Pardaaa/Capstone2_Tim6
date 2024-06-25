@@ -35,7 +35,7 @@ exports.login = async (req, res) => {
                 email: req.body.email
             }
         });
-        if (!users) return res.redirect('/?message=User tidak terdaftar');
+        if (!users) return res.redirect('/?message=Email tidak terdaftar');
         const match = await bcrypt.compare(req.body.password, users.password);
         if (!match) return res.redirect('/?message=Password Salah');
 

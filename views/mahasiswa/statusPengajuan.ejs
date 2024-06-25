@@ -51,14 +51,17 @@
                         <%= pengajuan['Beasiswa.Periode.periode'] %>
                      </td>
                      <td>
-                        <textarea class="form-control" rows="15"><%= pengajuan['Beasiswa.deskripsi'] %></textarea>
+                        <textarea class="form-control" rows="15"
+                           disabled><%= pengajuan['Beasiswa.deskripsi'] %></textarea>
                      </td>
                      <td>
                         <%= pengajuan['Beasiswa.jenisBeasiswa'] %>
                      </td>
                      <% if (pengajuan.statusFakultas && pengajuan.statusFakultas.trim()) { %>
                         <td>
-                           <%= pengajuan.statusFakultas %>
+                           <b>
+                              <%= pengajuan.statusFakultas %>,Pengajuan Beasiswa Diterima, Selamat!!!
+                           </b>
                         </td>
                         <% } else { %>
                            <td>
@@ -101,7 +104,7 @@
                                  <div class="d-flex">
                                     <% if (pengajuan.statusFakultas && pengajuan.statusFakultas.trim()==="Approve" ) {
                                        %>
-                                       <p>Pengajuan Beasiswa Diterima, Selamat!!!</p>
+
                                        <% } else { %>
                                           <form action="/mahasiswa/statusPengajuan/editPengajuan/<%= pengajuan.id %>"
                                              method="get">
