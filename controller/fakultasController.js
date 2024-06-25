@@ -358,7 +358,7 @@ exports.approveBeasiswa = async (req, res) => {
 
    try {
       await ajuan.update(
-         { statusFakultas: 'approve' },
+         { statusFakultas: 'Approve' },
          { where: { id: ajuanId } }
       );
 

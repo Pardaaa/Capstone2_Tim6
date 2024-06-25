@@ -214,3 +214,75 @@ exports.getHistoryPengajuan = async (req, res) => {
       res.status(500).send('Internal Server Error');
    }
 };
+
+exports.getPengajuanById = async (req, res) => {
+   try {
+      const pengajuan = await ajuanBeasiswa.findOne({
+         where: {
+            id: req.params.id,
+         },
+      });
+      res.render('mahasiswa/editPengajuan', { pengajuan, title: 'Edit Pengajuan', message: req.query.message, })
+   } catch (error) {
+      console.error(error)
+   }
+}
+
+exports.editPengajuan = async (req, res) => {
+   const pengajuan = await ajuanBeasiswa.findOne({
+      where: {
+         id: req.params.id,
+      },
+   });
+   const { ipk } = req.body
+   const transkripAkademik = req.files.transkripAkademik
+      ? req.files.transkripAkademik[0].buffer
+      : pengajuan.transkripAkademik;
+
+   const suratRekomendasiDosen = req.files.suratRekomendasiDosen
+      ? req.files.suratRekomendasiDosen[0].buffer
+      : pengajuan.suratRekomendasiDosen;
+
+   const suratPernyataanBeasiswa = req.files.suratPernyataanBeasiswa
+      ? req.files.suratPernyataanBeasiswa[0].buffer
+      : pengajuan.suratPernyataanBeasiswa;
+
+   const suratPelengkap = req.files.suratPelengkap
+      ? req.files.suratPelengkap[0].buffer
+      : pengajuan.suratPelengkap;
+   try {
+      await ajuanBeasiswa.update({
+         ipk: ipk,
+         transkripAkademik: transkripAkademik,
+         suratRekomendasiDosen: suratRekomendasiDosen,
+         suratPernyataanBeasiswa: suratPernyataanBeasiswa,
+         suratPelengkap: suratPelengkap
+      }, {
+         where: {
+            id: pengajuan.id
+         }
+      })
+
+      res.redirect(`/mahasiswa/statusPengajuan?message=Edit Berhasil`);
+   } catch (error) {
+      console.error(error)
+   }
+}
+
+exports.deletePengajuan = async (req, res) => {
+   const pengajuan = await ajuanBeasiswa.findOne({
+      where: {
+         id: req.params.id,
+      },
+   });
+   try {
+      await ajuanBeasiswa.destroy({
+         where: {
+            id: pengajuan.id,
+         },
+      });
+      res.redirect(`/mahasiswa/statusPengajuan?message=Hapus Pengajuan Berhasil`);
+   } catch (error) {
+      res.status(400);
+   }
+};

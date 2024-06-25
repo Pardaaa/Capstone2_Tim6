@@ -7,6 +7,9 @@ const {
    createPengajuanBeasiswa,
    approvalBeasiswa,
    getHistoryPengajuan,
+   getPengajuanById,
+   editPengajuan,
+   deletePengajuan
 } = require('../controller/mahasiswaController.js');
 const authMiddleware = require('../middleware/auth');
 const requestRole = require('../middleware/requestRole');
@@ -44,6 +47,26 @@ router.get(
    authMiddleware,
    requestRole('Mahasiswa'),
    approvalBeasiswa
+);
+router.get(
+   '/mahasiswa/statusPengajuan/editPengajuan/:id',
+   authMiddleware,
+   requestRole('Mahasiswa'),
+   getPengajuanById
+);
+router.post(
+   '/mahasiswa/statusPengajuan/editPengajuan/:id',
+   authMiddleware,
+   requestRole('Mahasiswa'),
+   uploadFiles,
+   editPengajuan
+);
+
+router.get(
+   '/mahasiswa/statusPengajuan/delete/:id',
+   authMiddleware,
+   requestRole('Mahasiswa'),
+   deletePengajuan
 );
 
 router.get(
